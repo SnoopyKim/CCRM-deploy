@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>
-        <p>Hello CCRM! 한글을 써두면 폰트가 티가 나겠지?</p>
-      </div>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <h1 className="text-4xl py-4">홈 화면</h1>
+      <Link href="/sign-in">로그인 화면</Link>
+      <Link href="/service-center">고객센터 화면</Link>
     </main>
   );
 }
