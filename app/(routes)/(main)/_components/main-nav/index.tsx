@@ -3,6 +3,7 @@ import React from "react";
 import MainNavItem from "./nav-item";
 import Link from "next/link";
 import AuthButton from "./auth-button.";
+import { SecondaryLinkButton } from "@/app/_components/Button";
 
 export default function MainNav() {
   return (
@@ -21,11 +22,11 @@ export default function MainNav() {
         <div className="flex flex-row items-center">
           <MainNavItem href="/my-page">마이페이지</MainNavItem>
           <AuthButton />
-          <Link href={"/dashboard"}>
-            <div className="rounded-sm bg-sub-1 text-grayscale-14 text-sm px-4 py-2 font-semibold">
-              프로그램 시작하기
-            </div>
-          </Link>
+          <SecondaryLinkButton
+            link="/program"
+            text="프로그램 시작하기"
+            fontSize={14}
+          />
         </div>
       </div>
     </div>
