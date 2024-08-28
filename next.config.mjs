@@ -7,6 +7,11 @@ const nextConfig = {
         destination: "/service-center/notice",
         permanent: true,
       },
+      {
+        source: "/my-page",
+        destination: "/my-page/member",
+        permanent: true,
+      },
     ];
   },
 };
