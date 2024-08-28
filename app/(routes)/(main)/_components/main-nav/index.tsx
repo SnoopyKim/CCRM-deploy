@@ -6,14 +6,16 @@ import AuthButton from "./auth-button.";
 
 export default function MainNav() {
   return (
-    <nav className="flex flex-1 justify-center border-b border-grayscale-11">
+    <div className="flex flex-1 justify-center border-b border-grayscale-11 bg-grayscale-14">
       <div className="flex flex-1 flex-row max-w-[1200px] items-center">
         <Link href={"/"} className="relative w-[79px] h-[22px] mr-[120px]">
           <Image src="/assets/logo.svg" alt="CCRM Logo" fill priority />
         </Link>
         <div className="flex flex-row flex-1 px-2">
           <MainNavItem href="/b2b">B2B제휴</MainNavItem>
-          <MainNavItem href="/my-page/purchase">제품 구매하기</MainNavItem>
+          <MainNavItem href="/my-page/purchase" selectable={false}>
+            제품 구매하기
+          </MainNavItem>
           <MainNavItem href="/service-center">고객센터</MainNavItem>
         </div>
         <div className="flex flex-row items-center">
@@ -26,6 +28,6 @@ export default function MainNav() {
           </Link>
         </div>
       </div>
-    </nav>
+    </div>
   );
 }
