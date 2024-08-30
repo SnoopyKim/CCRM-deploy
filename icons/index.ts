@@ -1,0 +1,17 @@
+export { default as account } from "./account-circle-filled.svg";
+export { default as accountOutline } from "./account-circle-outline.svg";
+export { default as accountPlus } from "./account-plus.svg";
+export { default as bank } from "./bank.svg";
+export { default as calendar } from "./calendar-today.svg";
+export { default as create } from "./create.svg";
+export { default as delete } from "./delete.svg";
+export { default as folder } from "./folder.svg";
+export { default as folderOutline } from "./folder-outline.svg";
+export { default as folderAccount } from "./folder-account.svg";
+export { default as heart } from "./heart.svg";
+export { default as logo } from "./logo.svg";
+export { default as mobile } from "./mobile-friendly.svg";
+export { default as flag } from "./outlined-flag.svg";
+export { default as search } from "./search.svg";
+export { default as share } from "./share-variant-outline.svg";
+export { default as today } from "./today.svg";

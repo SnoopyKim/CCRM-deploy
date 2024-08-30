@@ -1,16 +1,16 @@
-import Image from "next/image";
 import React from "react";
 import MainNavItem from "./nav-item";
 import Link from "next/link";
 import AuthButton from "./auth-button.";
 import { SecondaryLinkButton } from "@/app/_components/Button";
+import Icon from "@/app/_components/Icon";
 
 export default function MainNav() {
   return (
     <div className="flex flex-1 justify-center border-b border-grayscale-11 bg-grayscale-14">
       <div className="flex flex-1 flex-row max-w-[1200px] items-center">
-        <Link href={"/"} className="relative w-[79px] h-[22px] mr-[120px]">
-          <Image src="/assets/logo.svg" alt="CCRM Logo" fill priority />
+        <Link href={"/"} className="mr-[120px]">
+          <Icon type="logo" className="w-[80px] h-[25px]" />
         </Link>
         <div className="flex flex-row flex-1 px-2">
           <MainNavItem href="/b2b">B2B제휴</MainNavItem>
