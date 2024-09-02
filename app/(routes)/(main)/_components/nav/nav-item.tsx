@@ -6,12 +6,16 @@ import { usePathname } from "next/navigation";
 
 export default function MainNavItem({
   href,
-  selectable = true,
+  width = 100,
+  plain = false,
+  isSub = false,
   children,
 }: Readonly<{
   href: string;
-  selectable?: boolean;
-  children: React.ReactNode;
+  width?: number;
+  plain?: boolean;
+  isSub?: boolean;
+  children?: React.ReactNode;
 }>) {
   const pathname = usePathname();
   const isCurrentPath =
@@ -20,16 +24,20 @@ export default function MainNavItem({
   return (
     <div
       className={clsx(
-        "flex w-[100px] h-[72px] justify-center items-center mx-2",
+        `flex w-[${width}px] h-full justify-center items-center`,
         {
-          "border-b-2 border-sub-1": selectable && isCurrentPath,
+          "border-b-2 border-sub-1": !plain && isCurrentPath,
+          "border-b-2 border-grayscale-11": isSub && !plain && !isCurrentPath,
         }
       )}
     >
       <Link href={href}>
         <p
-          className={clsx("text-main-1 text-base hover:text-sub-1", {
-            "text-sub-1": selectable && isCurrentPath,
+          className={clsx("text-base hover:text-sub-1", {
+            "text-main-1": !isSub && !isCurrentPath,
+            "text-sub-1": !plain && isCurrentPath,
+            "text-grayscale-8": isSub && !isCurrentPath,
+            "pt-0.5": !isSub && isCurrentPath,
           })}
         >
           {children}

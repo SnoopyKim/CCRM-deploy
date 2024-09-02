@@ -1,6 +1,15 @@
-export { default as PrimaryButton } from "./primary";
-export { default as PrimaryLinkButton } from "./primary-link";
-export { default as SecondaryButton } from "./secondary";
-export { default as SecondaryLinkButton } from "./secondary-link";
-export { default as TertiaryButton } from "./tertiary";
-export { default as TertiaryLinkButton } from "./tertiary-link";
+export { default as Button } from "./button";
+export { default as LinkButton } from "./link";
+
+export const buttonStyles = {
+  color: {
+    primary: "bg-main-2 hover:bg-main-3",
+    secondary: "bg-sub-1 hover:brightness-[110%]",
+    tertiary: "bg-sub-2 hover:brightness-[110%]",
+  },
+  height: {
+    small: "h-9",
+    medium: "h-14",
+    large: "h-18",
+  },
+};

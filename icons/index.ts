@@ -15,3 +15,5 @@ export { default as flag } from "./outlined-flag.svg";
 export { default as search } from "./search.svg";
 export { default as share } from "./share-variant-outline.svg";
 export { default as today } from "./today.svg";
+export { default as left } from "./small-left.svg";
+export { default as right } from "./small-right.svg";

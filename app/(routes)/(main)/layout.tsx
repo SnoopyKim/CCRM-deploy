@@ -1,5 +1,5 @@
-import MainNav from "@/app/(routes)/(main)/_components/nav";
-import MainFooter from "./_components/footer";
+import MainNav from "@main/_components/nav";
+import MainFooter from "@main/_components/footer";
 
 export default function MainLayout({
   children,
@@ -8,10 +8,10 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0">
+      <nav className="fixed top-0 left-0 right-0 z-50">
         <MainNav />
       </nav>
-      <div className="pt-[72px]">{children}</div>
+      <section className="pt-[72px]">{children}</section>
       <footer className="flex justify-center">
         <MainFooter />
       </footer>

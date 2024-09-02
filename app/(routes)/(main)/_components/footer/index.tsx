@@ -1,4 +1,4 @@
-import Icon from "@/app/_components/Icon";
+import Icon from "@components/Icon";
 
 export default function MainFooter() {
   return (
