@@ -17,3 +17,5 @@ export { default as share } from "./share-variant-outline.svg";
 export { default as today } from "./today.svg";
 export { default as left } from "./small-left.svg";
 export { default as right } from "./small-right.svg";
+export { default as plus } from "./plus.svg";
+export { default as minus } from "./minus.svg";

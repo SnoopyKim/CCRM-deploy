@@ -26,7 +26,9 @@ export default function ServiceCenterLayout({
           </MainNavItem>
         </nav>
 
-        <div className="flex flex-col px-[100px] w-full mt-10">{children}</div>
+        <section className="flex flex-col px-[100px] w-full mt-10">
+          {children}
+        </section>
       </main>
     </div>
   );

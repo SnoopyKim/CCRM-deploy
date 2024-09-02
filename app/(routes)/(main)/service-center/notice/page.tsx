@@ -19,7 +19,7 @@ export default function NoticePage({
   return (
     <>
       <div className="flex flex-row flex-1 justify-between items-center">
-        <h2 className="text-[24px]">공지사항</h2>
+        <h2 className="text-2xl">공지사항</h2>
         <div className="w-[400px]">
           <SearchField
             placeholder="검색할 내용을 입력하세요"
@@ -59,7 +59,7 @@ export default function NoticePage({
             ))}
           </tbody>
         </table>
-        <Pagination total={80} pageIndex={page} />
+        <Pagination total={80} />
       </div>
     </>
   );
