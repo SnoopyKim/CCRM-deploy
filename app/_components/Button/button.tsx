@@ -2,19 +2,10 @@
 
 import clsx from "clsx";
 import { buttonStyles } from ".";
+import React from "react";
 
-export default function PrimaryButton({
-  text,
-  onClick,
-  width = -1,
-  height = "medium",
-  color = "primary",
-  fontSize = "text-base",
-  weight = "font-normal",
-  disabled = false,
-}: {
-  text: string;
-  width?: number;
+export interface PrimaryButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   height?: "small" | "medium" | "large";
   color?: "primary" | "secondary" | "tertiary";
   fontSize?: "text-base" | "text-sm" | "text-lg";
@@ -24,9 +15,17 @@ export default function PrimaryButton({
     | "font-medium"
     | "font-semibold"
     | "font-bold";
-  disabled?: boolean;
-  onClick: () => void;
-}) {
+}
+
+export default function PrimaryButton({
+  onClick,
+  height = "medium",
+  color = "primary",
+  fontSize = "text-base",
+  weight = "font-normal",
+  className,
+  ...props
+}: PrimaryButtonProps) {
   return (
     <button
       className={clsx(
@@ -34,16 +33,14 @@ export default function PrimaryButton({
         fontSize,
         weight,
         buttonStyles.height[height],
-        disabled
-          ? "bg-grayscale-7 pointer-events-none"
-          : buttonStyles.color[color],
-        {
-          [`w-[${width}px]`]: width !== -1,
-        }
+        buttonStyles.color[color],
+        "disabled:bg-grayscale-7 disabled:pointer-events-none",
+        className
       )}
       onClick={onClick}
+      {...props}
     >
-      {text}
+      {props.children}
     </button>
   );
 }

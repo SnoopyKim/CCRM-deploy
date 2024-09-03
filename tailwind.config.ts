@@ -15,6 +15,10 @@ const config: Config = {
       backgroundImage: {
         "service-center": "url('/images/service-center.png')",
       },
+      boxShadow: {
+        "inner-1": "inset 0 0 0 1px #1E1E1E",
+        "inner-2": "inset 0 0 0 2px #1E1E1E",
+      },
     },
     colors: {
       main: {

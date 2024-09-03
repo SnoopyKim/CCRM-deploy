@@ -24,7 +24,7 @@ export default function RootLayout({
       lang="kr"
       className={`${pretendard.variable} font-pretendard text-main-1 text-base font-light`}
     >
-      <body>{children}</body>
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }

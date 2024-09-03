@@ -7,8 +7,8 @@ export default function ServiceCenterLayout({
 }>) {
   return (
     <div className="flex flex-col items-center">
-      <main className="flex max-w-[1200px] flex-col items-center">
-        <header className="flex w-[1200px] h-[221px] bg-service-center bg-cover bg-center justify-center items-center mt-10">
+      <main className="flex max-w-[1200px] w-full flex-col items-center">
+        <header className="flex w-full h-[221px] bg-service-center bg-cover bg-center justify-center items-center mt-10">
           <div className="flex flex-col items-center text-grayscale-14 ">
             <h1 className="text-[42px]">고객센터</h1>
             <p className="pt-2 ">평일 : 10시 ~ 18시 | 주말/공휴일 휴무</p>

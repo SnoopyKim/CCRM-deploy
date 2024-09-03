@@ -1,16 +1,17 @@
 "use client";
 
 import Icon from "@components/Icon";
-import Input from "./input";
+import Input, { InputProps } from "./input";
 import React, { useState } from "react";
+
+export interface SearchFieldProps extends InputProps {
+  onSearch: (value: string) => void;
+}
 
 export default function SearchField({
   placeholder,
   onSearch,
-}: {
-  placeholder?: string;
-  onSearch: (value: string) => void;
-}) {
+}: SearchFieldProps) {
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchField } from "@/app/_components/TextField";
+import { SearchField } from "@/app/_components/Text";
 import Link from "next/link";
 import Pagination from "../_components/pagination";
 import { LinkButton } from "@/app/_components/Button";

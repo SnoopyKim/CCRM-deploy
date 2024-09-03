@@ -1,7 +1,7 @@
 "use client";
 
 import Icon from "@/app/_components/Icon";
-import TextField, { SearchField } from "@/app/_components/TextField";
+import { SearchField } from "@/app/_components/Text";
 import clsx from "clsx";
 import React, { useState } from "react";
 import Badge from "../_components/badge";
