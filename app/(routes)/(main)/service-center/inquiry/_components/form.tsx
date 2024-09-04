@@ -47,9 +47,7 @@ export default function InquiryForm() {
         required
       />
       <div className="h-10" />
-      <Button type="submit" color="primary">
-        문의하기
-      </Button>
+      <Button type="submit" color="primary" title="문의하기" />
     </form>
   );
 }

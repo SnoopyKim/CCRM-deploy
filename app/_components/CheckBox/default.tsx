@@ -1,12 +1,15 @@
 import clsx from "clsx";
 import Icon from "../Icon";
+import { InputHTMLAttributes } from "react";
 
 export default function CheckBox({
   label,
   name,
+  onClick,
 }: {
   label: string;
   name: string;
+  onClick?: (isChecked: boolean) => void;
 }) {
   return (
     <div className="flex flex-row items-center">
@@ -19,6 +22,7 @@ export default function CheckBox({
             "appearance-none h-4 w-4 border-2 border-main-1 rounded-[4px]",
             " transition-colors duration-300 bg-grayscale-14 checked:bg-main-1"
           )}
+          onClick={(e) => onClick?.(e.currentTarget.checked)}
         />
         <label htmlFor={name}>
           <Icon

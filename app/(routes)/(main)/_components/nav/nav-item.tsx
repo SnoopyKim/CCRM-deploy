@@ -24,16 +24,17 @@ export default function MainNavItem({
   return (
     <div
       className={clsx(
-        `flex w-[${width}px] h-full justify-center items-center`,
+        `group flex w-[${width}px] h-full justify-center items-center`,
         {
           "border-b-2 border-sub-1": !plain && isCurrentPath,
-          "border-b-2 border-grayscale-11": isSub && !plain && !isCurrentPath,
+          "border-b-2 border-grayscale-11 hover:border-sub-1":
+            isSub && !plain && !isCurrentPath,
         }
       )}
     >
       <Link href={href}>
         <p
-          className={clsx("text-base hover:text-sub-1", {
+          className={clsx("text-base group-hover:text-sub-1", {
             "text-main-1": !isSub && !isCurrentPath,
             "text-sub-1": !plain && isCurrentPath,
             "text-grayscale-8": isSub && !isCurrentPath,

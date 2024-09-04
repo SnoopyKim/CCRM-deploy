@@ -23,12 +23,11 @@ export default function MainNav() {
           <MainNavItem href="/my-page">마이페이지</MainNavItem>
           <AuthButton />
           <LinkButton
-            link="/program"
-            text="프로그램 시작하기"
+            href="/program"
+            title="프로그램 시작하기"
             color="secondary"
             height="small"
-            fontSize="text-sm"
-            weight="font-semibold"
+            className="font-semibold text-sm"
           />
         </div>
       </div>

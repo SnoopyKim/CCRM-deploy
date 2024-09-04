@@ -29,7 +29,7 @@ const Select = ({
           defaultValue={placeholder}
           className={clsx(
             "appearance-none h-14 p-4 border border-1 border-grayscale-11 rounded-sm outline-none",
-            "focus:border-sub-2 focus-visible:border-sub-2",
+            // "focus:border-sub-2 focus-visible:border-sub-2",
             "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none"
           )}
           {...props}

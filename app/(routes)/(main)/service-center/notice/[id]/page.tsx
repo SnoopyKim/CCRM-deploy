@@ -29,7 +29,12 @@ export default function NoticeDetailPage({
         <p className="whitespace-pre-line text-grayscale-6">{content}</p>
       </div>
       <div>
-        <Button text="이전" width={100} color="primary" onClick={router.back} />
+        <Button
+          title="이전"
+          color="primary"
+          className="w-[100px]"
+          onClick={router.back}
+        />
       </div>
     </>
   );

@@ -11,7 +11,7 @@ import GoogleSignIn from "./_components/google";
 export default function SignInPage() {
   return (
     <main className="flex flex-col w-[400px] mt-20 m-auto items-center">
-      <Icon type="logo" className="w-52 fill-main-1" />
+      <Icon type="logo" className="w-48 fill-main-1" />
       <LoginForm />
       <div className="w-full mt-4">
         <GoogleSignIn />

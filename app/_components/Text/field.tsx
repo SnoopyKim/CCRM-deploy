@@ -12,11 +12,11 @@ export default function TextField({
   ...props
 }: TextFieldProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col flex-1">
       {label && (
         <label
           htmlFor={id}
-          className="inline-block text-base font-semibold mb-2"
+          className="inline-block text-sm font-semibold mb-2 text-grayscale-6"
         >
           {label}
         </label>

@@ -43,9 +43,8 @@ export default function LoginForm() {
       <Button
         className="w-full mt-4 shadow-grayscale-10 shadow-md"
         color="primary"
-      >
-        로그인
-      </Button>
+        title="로그인"
+      />
       <div className="flex flex-col self-start mt-4 gap-2">
         <CheckBox name={"store-id"} label="아이디 저장" />
         <CheckBox name={"store-pw"} label="비밀번호 저장" />

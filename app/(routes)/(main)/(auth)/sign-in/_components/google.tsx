@@ -18,7 +18,7 @@ export default function GoogleSignIn() {
         width={20}
         height={20}
       />
-      <span className="ml-2 font-semibold">구글로 로그인</span>
+      <span className="ml-2 font-medium">구글로 로그인</span>
     </div>
   );
 }

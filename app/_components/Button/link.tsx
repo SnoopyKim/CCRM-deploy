@@ -1,48 +1,38 @@
 import clsx from "clsx";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import { buttonStyles } from ".";
 
-export default function LinkButton({
-  link,
-  text,
-  width = -1,
-  height = "medium",
-  color = "primary",
-  fontSize = "text-base",
-  weight = "font-normal",
-  disabled = false,
-}: {
-  link: string;
-  text: string;
-  width?: number;
+export interface LinkButtonProps extends LinkProps {
+  title: string;
   height?: "small" | "medium" | "large";
   color?: "primary" | "secondary" | "tertiary";
-  fontSize?: "text-base" | "text-sm" | "text-lg";
-  weight?:
-    | "font-light"
-    | "font-normal"
-    | "font-medium"
-    | "font-semibold"
-    | "font-bold";
   disabled?: boolean;
-}) {
+  className?: string;
+}
+
+export default function LinkButton({
+  href,
+  title,
+  height = "medium",
+  color = "primary",
+  disabled = false,
+  replace = false,
+  className,
+}: LinkButtonProps) {
   return (
     <Link
-      href={link}
+      href={href}
+      replace={replace}
       className={clsx(
-        "rounded-sm text-grayscale-14  px-4 py-2",
-        fontSize,
-        weight,
+        "flex justify-center items-center rounded-sm text-grayscale-14 px-4 py-2 text-base font-normal",
         buttonStyles.height[height],
         disabled
-          ? "bg-grayscale-7 pointer-events-none"
+          ? "bg-grayscale-7 pointer-events-none shadow-none"
           : buttonStyles.color[color],
-        {
-          [`w-[${width}px]`]: width !== -1,
-        }
+        className
       )}
     >
-      {text}
+      {title}
     </Link>
   );
 }

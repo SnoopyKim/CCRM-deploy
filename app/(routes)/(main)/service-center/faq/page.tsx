@@ -3,9 +3,7 @@
 import { SearchField } from "@/app/_components/Text";
 import Link from "next/link";
 import Pagination from "../_components/pagination";
-import { LinkButton } from "@/app/_components/Button";
 import clsx from "clsx";
-import Icon from "@/app/_components/Icon";
 import { useState } from "react";
 import AccordianItem from "./_components/accordian";
 
@@ -35,13 +33,13 @@ export default function FAQPage({
         </div>
       </div>
       <div className="my-10">
-        <div className="flex flex-row h-[68px] gap-2">
+        <div className="flex flex-row gap-2">
           {categories.map((category) => (
             <Link
               key={category.value}
               href={`/service-center/faq?category=${category.value}`}
               className={clsx(
-                "px-12 py-5 text-xl rounded-xl",
+                "px-6 py-3 text-lg rounded-xl",
                 currentCategory === category.value
                   ? "bg-main-2 text-grayscale-14"
                   : "text-grayscale-6 border border-grayscale-8"
