@@ -10,8 +10,8 @@ export default function InquiryForm() {
 
   const onSubmit = (formData: FormData) => {
     alert(
-      `문의를 등록하였습니다.\n1:1문의에 대한 답변은 "마이페이지 > 1:1 문의내역"에서 확인하실 수 있습니다.
-    ${(formData.values() as FormDataIterator<FormDataEntryValue>).toArray()}`
+      `문의를 등록하였습니다.\n1:1문의에 대한 답변은 "마이페이지 > 1:1 문의내역"에서 확인하실 수 있습니다.`
+      // ${(formData.values() as FormDataIterator<FormDataEntryValue>).toArray()}`
     );
     formRef.current?.reset();
   };

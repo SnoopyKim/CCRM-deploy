@@ -32,9 +32,9 @@ export default function SignUpFormPage({
 
   const handleSubmit = (formData: FormData) => {
     // TODO: 회원가입 로직
-    alert(
-      (formData.values() as FormDataIterator<FormDataEntryValue>).toArray()
-    );
+    // alert(
+    //   (formData.values() as FormDataIterator<FormDataEntryValue>).toArray()
+    // );
     router.replace("/program");
   };
 
