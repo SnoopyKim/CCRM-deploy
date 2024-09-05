@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "CCRM",
@@ -16,15 +17,20 @@ const pretendard = localFont({
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html
       lang="kr"
       className={`${pretendard.variable} font-pretendard text-main-1 text-base font-light`}
     >
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        {children}
+        {modal}
+      </body>
     </html>
   );
 }

@@ -1,4 +1,5 @@
 import Icon from "@components/Icon";
+import Link from "next/link";
 
 export default function MainFooter() {
   return (
@@ -6,11 +7,21 @@ export default function MainFooter() {
       <div>
         <Icon type="logo" className="fill-grayscale-9 w-28" />
         <div className="flex flex-row mt-5">
-          <p className="text-grayscale-8 text-sm cursor-pointer">이용약관</p>
-          <p className="text-grayscale-8 text-sm mx-2">|</p>
-          <p className="text-grayscale-8 text-sm cursor-pointer">
+          <Link
+            href="/terms"
+            scroll={false}
+            className="text-grayscale-8 text-sm cursor-pointer"
+          >
+            이용약관
+          </Link>
+          <span className="text-grayscale-8 text-sm mx-2">|</span>
+          <Link
+            href="/privacy"
+            scroll={false}
+            className="text-grayscale-8 text-sm cursor-pointer"
+          >
             개인정보처리방침
-          </p>
+          </Link>
         </div>
       </div>
       <p className="text-grayscale-8 text-sm text-end">
