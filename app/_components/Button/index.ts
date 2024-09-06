@@ -7,9 +7,4 @@ export const buttonStyles = {
     secondary: "bg-sub-1 hover:brightness-[110%]",
     tertiary: "bg-sub-2 hover:brightness-[110%]",
   },
-  height: {
-    small: "h-9",
-    medium: "h-14",
-    large: "h-18",
-  },
 };

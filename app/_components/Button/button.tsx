@@ -6,24 +6,13 @@ import React from "react";
 
 export interface PrimaryButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  height?: "small" | "medium" | "large";
   color?: "primary" | "secondary" | "tertiary";
-  fontSize?: "text-base" | "text-sm" | "text-lg";
-  weight?:
-    | "font-light"
-    | "font-normal"
-    | "font-medium"
-    | "font-semibold"
-    | "font-bold";
 }
 
 export default function PrimaryButton({
   type = "button",
   onClick,
-  height = "medium",
   color = "primary",
-  fontSize = "text-base",
-  weight = "font-normal",
   disabled,
   className,
   ...props
@@ -32,10 +21,7 @@ export default function PrimaryButton({
     <button
       type={type}
       className={clsx(
-        "rounded-sm text-grayscale-14  px-4 py-2",
-        fontSize,
-        weight,
-        buttonStyles.height[height],
+        "rounded-sm text-grayscale-14 px-4 h-14 font-normal text-base",
         buttonStyles.color[color],
         "disabled:bg-grayscale-7 disabled:pointer-events-none",
         className

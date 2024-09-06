@@ -22,7 +22,8 @@ export default function MainNavItem({
     href && (pathname == href || pathname.startsWith(`${href}/`));
 
   return (
-    <div
+    <Link
+      href={href}
       className={clsx(
         `group flex w-[${width}px] h-full justify-center items-center`,
         {
@@ -32,18 +33,16 @@ export default function MainNavItem({
         }
       )}
     >
-      <Link href={href}>
-        <p
-          className={clsx("text-base group-hover:text-sub-1", {
-            "text-main-1": !isSub && !isCurrentPath,
-            "text-sub-1": !plain && isCurrentPath,
-            "text-grayscale-8": isSub && !isCurrentPath,
-            "pt-0.5": !isSub && isCurrentPath,
-          })}
-        >
-          {children}
-        </p>
-      </Link>
-    </div>
+      <p
+        className={clsx("text-base group-hover:text-sub-1", {
+          "text-main-1": !isSub && !isCurrentPath,
+          "text-sub-1": !plain && isCurrentPath,
+          "text-grayscale-8": isSub && !isCurrentPath,
+          "pt-0.5": !isSub && isCurrentPath,
+        })}
+      >
+        {children}
+      </p>
+    </Link>
   );
 }

@@ -1,20 +1,26 @@
 "use client";
 
 import clsx from "clsx";
+import TextLabel from "./label";
 
 interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
+  caution?: string;
 }
 
-const TextArea = ({ label, error, className, ...props }: TextAreaProps) => {
+const TextArea = ({
+  label,
+  error,
+  caution,
+  className,
+  ...props
+}: TextAreaProps) => {
   return (
     <div className={clsx("flex flex-col gap-2", className)}>
       {label && (
-        <label htmlFor={props.id} className="font-semibold">
-          {label}
-        </label>
+        <TextLabel htmlFor={props.id} title={label} caution={caution} />
       )}
       <textarea
         {...props}
@@ -23,10 +29,10 @@ const TextArea = ({ label, error, className, ...props }: TextAreaProps) => {
           "focus:border-sub-2 focus-visible:border-sub-2 focus:outline-none",
           "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none",
           className,
-          { "border-red-500": error }
+          { "border-sub-4": error }
         )}
       />
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-subborder-sub-4">{error}</p>}
     </div>
   );
 };

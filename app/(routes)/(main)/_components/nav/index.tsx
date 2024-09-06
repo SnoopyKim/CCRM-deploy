@@ -14,7 +14,7 @@ export default function MainNav() {
         </Link>
         <div className="flex flex-row flex-1 h-full pl-4 gap-4">
           <MainNavItem href="/b2b">B2B제휴</MainNavItem>
-          <MainNavItem href="/my-page/purchase" plain>
+          <MainNavItem href="/my-page/shop" plain>
             제품 구매하기
           </MainNavItem>
           <MainNavItem href="/service-center">고객센터</MainNavItem>
@@ -26,8 +26,7 @@ export default function MainNav() {
             href="/program"
             title="프로그램 시작하기"
             color="secondary"
-            height="small"
-            className="font-semibold text-sm"
+            className="font-semibold text-sm h-9"
           />
         </div>
       </div>
