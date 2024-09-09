@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import cn from "@utils/cn";
 import TextLabel from "./label";
 
 interface TextAreaProps
@@ -18,13 +18,13 @@ const TextArea = ({
   ...props
 }: TextAreaProps) => {
   return (
-    <div className={clsx("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-2", className)}>
       {label && (
         <TextLabel htmlFor={props.id} title={label} caution={caution} />
       )}
       <textarea
         {...props}
-        className={clsx(
+        className={cn(
           "py-2 px-4 resize-none border border-grayscale-11 rounded-sm placeholder-grayscale-6",
           "focus:border-sub-2 focus-visible:border-sub-2 focus:outline-none",
           "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none",

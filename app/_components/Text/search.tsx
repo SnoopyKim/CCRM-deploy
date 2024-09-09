@@ -11,6 +11,8 @@ export interface SearchFieldProps extends InputProps {
 export default function SearchField({
   placeholder,
   onSearch,
+  className,
+  ...props
 }: SearchFieldProps) {
   const [searchValue, setSearchValue] = useState("");
 
@@ -25,6 +27,8 @@ export default function SearchField({
         value={searchValue}
         onChange={(e) => setSearchValue(e.currentTarget.value)}
         onEnter={handleSearch}
+        className={`${className} pr-10`}
+        {...props}
       />
       <div className="absolute right-4 cursor-pointer" onClick={handleSearch}>
         <Icon

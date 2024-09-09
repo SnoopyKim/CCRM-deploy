@@ -28,7 +28,7 @@ export default function MemberPage() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <TextLabel title="프로필사진" caution="1:1 사이즈 권장드립니다." />
+          <TextLabel title="프로필사진" caution="※ 1:1 사이즈 권장드립니다." />
           <div className="flex items-center gap-2">
             <Button title="파일선택" className="h-9 text-sm" />
             <span className="text-sm text-grayscale-6">선택된 파일 없음</span>
@@ -38,15 +38,15 @@ export default function MemberPage() {
         <TextField
           id="phone"
           type="tel"
-          label="휴대전화 번호"
-          caution="회원님의 연락처는 웹매거진의 주소가 되므로 정확하게 기입 부탁드립니다."
+          title="휴대전화 번호"
+          caution="※ 회원님의 연락처는 웹매거진의 주소가 되므로 정확하게 기입 부탁드립니다."
           defaultValue={"01012345678"}
           required
         />
-        <TextField label="회사명" defaultValue={"넷믹스"} />
-        <TextField label="지점" />
-        <TextField label="직책" />
-        <TextArea label="소개사항" />
+        <TextField title="회사명" defaultValue={"넷믹스"} />
+        <TextField title="지점" />
+        <TextField title="직책" />
+        <TextArea title="소개사항" />
         <Button type="submit" title="수정하기" className="mt-4" />
       </form>
     </>

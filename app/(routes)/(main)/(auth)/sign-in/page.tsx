@@ -2,7 +2,7 @@ import { Button } from "@/app/_components/Button";
 import { CheckBox } from "@/app/_components/CheckBox";
 import Icon from "@/app/_components/Icon";
 import { Input } from "@/app/_components/Text";
-import clsx from "clsx";
+import cn from "@utils/cn";
 import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "./_components/form";

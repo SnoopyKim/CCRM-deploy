@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import cn from "@utils/cn";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -33,8 +33,8 @@ export default function Input({
         name={id}
         type={type}
         defaultValue={props.defaultValue}
-        className={clsx(
-          "block flex-1 h-14 p-4 pr-10 text-base bg-white border border-grayscale-11 rounded-sm placeholder-grayscale-6",
+        className={cn(
+          "flex h-14 p-4 text-base bg-white border border-grayscale-11 rounded-sm placeholder-grayscale-6",
           "focus:border-sub-2 focus-visible:border-sub-2 focus:outline-none",
           "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none",
           error && "border-sub-4",

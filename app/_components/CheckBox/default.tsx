@@ -1,14 +1,18 @@
-import clsx from "clsx";
+"use client";
+
+import cn from "@utils/cn";
 import Icon from "../Icon";
 import { InputHTMLAttributes } from "react";
 
 export default function CheckBox({
   label,
   name,
+  color = "main",
   onClick,
 }: {
   label: string;
   name: string;
+  color?: "main" | "sub";
   onClick?: (isChecked: boolean) => void;
 }) {
   return (
@@ -18,9 +22,13 @@ export default function CheckBox({
           id={name}
           name={name}
           type="checkbox"
-          className={clsx(
+          className={cn(
             "appearance-none h-4 w-4 border-2 border-main-1 rounded-[4px]",
-            " transition-colors duration-300 bg-grayscale-14 checked:bg-main-1"
+            "transition-colors duration-300 bg-grayscale-14 checked:bg-main-1",
+            {
+              "border-main-1 checked:bg-main-1": color === "main",
+              "border-sub-1 checked:bg-sub-1": color === "sub",
+            }
           )}
           onClick={(e) => onClick?.(e.currentTarget.checked)}
         />

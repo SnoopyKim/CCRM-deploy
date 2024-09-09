@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import cn from "@utils/cn";
 import Link, { LinkProps } from "next/link";
 import { buttonStyles } from ".";
 
@@ -21,7 +21,7 @@ export default function LinkButton({
     <Link
       href={href}
       replace={replace}
-      className={clsx(
+      className={cn(
         "flex justify-center items-center rounded-sm text-grayscale-14 px-4 h-14 font-normal",
         disabled
           ? "bg-grayscale-7 pointer-events-none shadow-none"

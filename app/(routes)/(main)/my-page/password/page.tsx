@@ -55,7 +55,7 @@ export default function ChangePasswordPage() {
         <TextField
           id="new-password"
           type="password"
-          label="새로운 비밀번호 설정"
+          title="새로운 비밀번호 설정"
           placeholder="새 비밀번호"
           onInput={(e) => {
             if (error.confirm) {

@@ -2,11 +2,11 @@
 
 import Icon from "@/app/_components/Icon";
 import { SearchField } from "@/app/_components/Text";
-import clsx from "clsx";
+import cn from "@utils/cn";
 import React, { useState } from "react";
-import Badge from "../_components/badge";
 import Link from "next/link";
-import Pagination from "../_components/pagination";
+import { CategoryBadge } from "@/app/_components/Badge";
+import Pagination from "@/app/_components/Pagination";
 
 export default function NoticePage({
   searchParams,
@@ -40,13 +40,15 @@ export default function NoticePage({
             {Array.from({ length: 10 }).map((_, index) => (
               <tr key={index} className="h-12">
                 <td className="text-center">
-                  <Badge color={index % 2 === 0 ? "main" : "sub"}>
+                  <CategoryBadge color={index % 2 === 0 ? "main" : "sub"}>
                     {index % 2 === 0 ? "업데이트" : "공지사항"}
-                  </Badge>
+                  </CategoryBadge>
                 </td>
                 <td className="pl-4">
                   <Link
-                    href={`./notice/${(page - 1) * 10 + index + 1}`}
+                    href={`/service-center/notice/${
+                      (page - 1) * 10 + index + 1
+                    }`}
                     className="flex"
                   >
                     제목 {(page - 1) * 10 + index + 1}

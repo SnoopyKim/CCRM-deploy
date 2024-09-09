@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import cn from "@utils/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -24,7 +24,7 @@ export default function MainNavItem({
   return (
     <Link
       href={href}
-      className={clsx(
+      className={cn(
         `group flex w-[${width}px] h-full justify-center items-center`,
         {
           "border-b-2 border-sub-1": !plain && isCurrentPath,
@@ -34,7 +34,7 @@ export default function MainNavItem({
       )}
     >
       <p
-        className={clsx("text-base group-hover:text-sub-1", {
+        className={cn("text-base group-hover:text-sub-1", {
           "text-main-1": !isSub && !isCurrentPath,
           "text-sub-1": !plain && isCurrentPath,
           "text-grayscale-8": isSub && !isCurrentPath,

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/app/_components/Button";
-import { Select } from "@/app/_components/Select";
+import { SelectField } from "@/app/_components/Select";
 import { TextArea, TextField } from "@/app/_components/Text";
 import { useRef } from "react";
 
@@ -22,9 +22,9 @@ export default function InquiryForm() {
       className="flex flex-col gap-4 mt-5 px-[100px] py-10"
       action={onSubmit}
     >
-      <Select
+      <SelectField
         name="category"
-        label="문의 유형 선택하기"
+        title="문의 유형 선택하기"
         placeholder="문의 유형을 선택하세요"
         required
         options={[
@@ -35,13 +35,13 @@ export default function InquiryForm() {
       />
       <TextField
         id="title"
-        label="제목"
+        title="제목"
         placeholder="제목을 입력하세요"
         required
       />
       <TextArea
         name="contents"
-        label="내용 입력"
+        title="내용 입력"
         placeholder="내용을 입력하세요"
         className="h-40"
         required

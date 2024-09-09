@@ -7,9 +7,9 @@ export default function MyPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex max-w-[1200px] w-full m-auto pt-20">
+    <div className="grid grid-cols-4 max-w-[1200px] w-full m-auto pt-20">
       <SideNav />
-      <main className="flex flex-1 flex-col">{children}</main>
+      <main className="flex flex-col col-span-3">{children}</main>
     </div>
   );
 }

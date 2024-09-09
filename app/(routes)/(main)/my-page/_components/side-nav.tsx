@@ -1,14 +1,14 @@
 "use client";
 
 import Icon from "@/app/_components/Icon";
-import clsx from "clsx";
+import cn from "@utils/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function SideNav() {
   const pathname = usePathname();
   return (
-    <nav className="w-[300px] flex flex-col">
+    <nav className="flex flex-col col-span-1">
       <div className="flex items-center h-24 border-b border-grayscale-11 px-4 pb-4 mb-2">
         <Icon type="account" className="w-20 h-20 fill-main-1" />
         <h2 className="text-xl ml-4">홍길동 님</h2>
@@ -21,7 +21,7 @@ export default function SideNav() {
           <Link
             key={route.href}
             href={route.href}
-            className={clsx(
+            className={cn(
               "flex items-center p-2 h-[46px]",
               isCurrentPath
                 ? "text-main-2 font-semibold bg-[#F2F3F8]"

@@ -56,7 +56,7 @@ export default function SignUpFormPage({
         <TextField
           type="email"
           name="email"
-          label="아이디 설정"
+          title="아이디 설정"
           placeholder="이메일 아이디"
           value={id}
           onChange={(e) => setId(e.target.value)}
@@ -73,7 +73,7 @@ export default function SignUpFormPage({
         <TextField
           type="password"
           name="password"
-          label="비밀번호 설정"
+          title="비밀번호 설정"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -92,7 +92,7 @@ export default function SignUpFormPage({
         <TextField
           type="text"
           name="name"
-          label="필수 개인정보 입력"
+          title="필수 개인정보 입력"
           placeholder="이름"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -114,7 +114,7 @@ export default function SignUpFormPage({
         <TextField
           type="text"
           name="company"
-          label="선택 개인정보 입력"
+          title="선택 개인정보 입력"
           placeholder="회사명"
           value={company}
           onChange={(e) => setCompany(e.target.value)}

@@ -1,7 +1,7 @@
 "use client";
 
 import Icon from "@/app/_components/Icon";
-import clsx from "clsx";
+import cn from "@utils/cn";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -31,7 +31,7 @@ export default function Pagination({
   return (
     <div className="flex justify-center mt-4">
       <button
-        className={clsx(
+        className={cn(
           "flex w-10 h-10 rounded-sm bg-grayscale-13 justify-center items-center mr-5",
           {
             "pointer-events-none": pageIndex === 1,
@@ -45,7 +45,7 @@ export default function Pagination({
       {pages.map((page) => (
         <button
           key={page}
-          className={clsx(
+          className={cn(
             "w-10 h-10 mx-1 rounded-sm flex justify-center items-center",
             {
               "hover:bg-grayscale-13 text-grayscale-8": page !== pageIndex,
@@ -58,7 +58,7 @@ export default function Pagination({
         </button>
       ))}
       <button
-        className={clsx(
+        className={cn(
           "flex w-10 h-10 rounded-sm bg-grayscale-13 justify-center items-center ml-5",
           {
             "pointer-events-none": pageIndex === totalPages,

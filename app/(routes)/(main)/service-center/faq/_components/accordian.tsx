@@ -1,5 +1,5 @@
 import Icon from "@/app/_components/Icon";
-import clsx from "clsx";
+import cn from "@utils/cn";
 import { useState } from "react";
 
 export default function AccordianItem({ title }: { title: string }) {
@@ -11,7 +11,7 @@ export default function AccordianItem({ title }: { title: string }) {
         onClick={() => setIsOpen((value) => !value)}
       >
         <span
-          className={clsx(
+          className={cn(
             "text-lg font-semibold",
             isOpen ? "text-main-2" : "text-grayscale-6"
           )}
@@ -26,7 +26,7 @@ export default function AccordianItem({ title }: { title: string }) {
       </button>
       <div
         id="content-1"
-        className={clsx(
+        className={cn(
           "overflow-hidden transition-all duration-300",
           isOpen ? "max-h-20" : "max-h-0"
         )}

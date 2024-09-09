@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import cn from "@utils/cn";
 
 const badgeColors = {
   main: "border-main-3 text-main-3",
@@ -15,7 +15,7 @@ export default function CategoryBadge({
 }) {
   return (
     <div
-      className={clsx(
+      className={cn(
         "inline-block px-2 py-1 m-auto border rounded-full text-sm font-medium",
         badgeColors[color]
       )}

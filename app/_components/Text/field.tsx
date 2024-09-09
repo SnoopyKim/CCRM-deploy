@@ -1,22 +1,27 @@
 import Input, { InputProps } from "./input";
-import TextLabel from "./label";
-
-interface TextFieldProps extends InputProps {
-  label?: string;
-  caution?: string;
-}
+import TextLabel, { LabelProps } from "./label";
 
 export default function TextField({
   type = "text",
-  label,
+  htmlFor,
+  title,
   caution,
+  className,
+  cautionClassName,
   placeholder,
   id,
   ...props
-}: TextFieldProps) {
+}: InputProps & LabelProps) {
   return (
     <div className="flex flex-col flex-1 gap-2">
-      {label && <TextLabel htmlFor={id} title={label} caution={caution} />}
+      {title && (
+        <TextLabel
+          htmlFor={id}
+          title={title}
+          caution={caution}
+          cautionClassName={cautionClassName}
+        />
+      )}
       <div className="flex relative">
         <Input id={id} type={type} placeholder={placeholder} {...props} />
       </div>
