@@ -1,5 +1,6 @@
 export { default as Button } from "./button";
 export { default as LinkButton } from "./link";
+export { default as OutlineButton } from "./outline";
 
 export const buttonStyles = {
   color: {

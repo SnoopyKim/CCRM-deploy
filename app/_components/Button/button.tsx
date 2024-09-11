@@ -2,10 +2,10 @@
 
 import cn from "@utils/cn";
 import { buttonStyles } from ".";
-import React from "react";
+import { ButtonHTMLAttributes } from "react";
 
 export interface PrimaryButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: "primary" | "secondary" | "tertiary" | "main";
 }
 

@@ -12,7 +12,6 @@ export default function Input({
   id,
   type = "text",
   placeholder,
-  onChange,
   onEnter,
   error,
   disabled,

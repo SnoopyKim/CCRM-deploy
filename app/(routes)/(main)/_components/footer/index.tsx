@@ -24,11 +24,10 @@ export default function MainFooter() {
           </Link>
         </div>
       </div>
-      <p className="text-grayscale-8 text-sm text-end">
-        (주)에프피하우스 사업자등록번호 : 281-81-00947 | 통신판매신고 : 제
-        2017-부산남구-0501 호<br />| 대표 : 문경준 | 부산시 동구 조방로 14
-        동일타워 413호 | 1566-4875
-        <br />| COPYRIGHTⓒBY FPHOUSE.ALL RIGHTS RESERVED
+      <p className="text-grayscale-8 text-sm text-end whitespace-pre-line">
+        {`CCRM | (주)비가자네트웍스
+        사업자등록번호 6333-87-01853 | 원격평생교육시설 제원-670호(서울시교육청) | 통신판매신고 제2021-서울강남-01014호 
+        서울시 강남구 테헤란로20길 27 동방빌딩 | ⓒ BIGAZA Networks Co. Ltd., ALL RIGHTS RESERVED`}
       </p>
     </div>
   );

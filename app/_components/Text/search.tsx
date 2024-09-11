@@ -3,15 +3,18 @@
 import Icon from "@components/Icon";
 import Input, { InputProps } from "./input";
 import React, { useState } from "react";
+import cn from "@/app/_utils/cn";
 
 export interface SearchFieldProps extends InputProps {
   onSearch: (value: string) => void;
+  iconClassName?: string;
 }
 
 export default function SearchField({
   placeholder,
   onSearch,
   className,
+  iconClassName,
   ...props
 }: SearchFieldProps) {
   const [searchValue, setSearchValue] = useState("");
@@ -21,7 +24,7 @@ export default function SearchField({
   };
 
   return (
-    <div className="relative flex flex-1 items-center group">
+    <div className="relative flex items-center group">
       <Input
         placeholder={placeholder}
         value={searchValue}
@@ -33,7 +36,10 @@ export default function SearchField({
       <div className="absolute right-4 cursor-pointer" onClick={handleSearch}>
         <Icon
           type="search"
-          className="fill-grayscale-9 group-focus-within:fill-sub-2"
+          className={cn(
+            "fill-grayscale-9 group-focus-within:fill-sub-2",
+            iconClassName
+          )}
         />
       </div>
     </div>
