@@ -547,8 +547,32 @@ export default function MainPage() {
           </p>
         </div>
         <div className="flex flex-col max-w-[1200px] w-full mt-28 items-center">
-          <div className="w-full bg-grayscale-9 h-60">
-            {/* 사진 슬라이더 */}
+          <div className="w-full bg-grayscale-9 h-60 overflow-hidden">
+            <div className="flex animate-conveyor">
+              {[1, 2, 3].map((i) => (
+                <div key={`slider-${i}`} className="flex-shrink-0">
+                  <Image
+                    src={`/images/main/slider-${i}.png`}
+                    alt={`Conveyor Image ${i}`}
+                    width={720}
+                    height={240}
+                    className="object-contain h-60 w-auto"
+                  />
+                </div>
+              ))}
+              {/* 이미지 반복 */}
+              {[1, 2, 3].map((i) => (
+                <div key={`slider-duplicate-${i}`} className="flex-shrink-0">
+                  <Image
+                    src={`/images/main/slider-${i}.png`}
+                    alt={`Conveyor Image Duplicate ${i}`}
+                    width={720}
+                    height={240}
+                    className="object-contain h-60 w-auto"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <Link
             href="https://www.kmi.or.kr/"

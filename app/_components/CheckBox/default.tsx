@@ -2,19 +2,29 @@
 
 import cn from "@utils/cn";
 import Icon from "../Icon";
-import { InputHTMLAttributes } from "react";
+import { useEffect, useState } from "react";
 
 export default function CheckBox({
   label,
   name,
   color = "main",
-  onClick,
+  defaultChecked = false,
+  onChecked,
 }: {
   label: string;
   name: string;
   color?: "main" | "sub";
-  onClick?: (isChecked: boolean) => void;
+  // defaultChecked는 웃긴게 false든 true는 첫 값에서 render를 바꿀 수 없다.
+  // 첫 프레임에 바로 설정할게 아니라면 undefined를 초기값으로 건내야한다.
+  // 그래서 checked를 더 추천한다
+  defaultChecked?: boolean;
+  onChecked?: (isChecked: boolean) => void;
 }) {
+  const [checked, setChecked] = useState(false);
+  useEffect(() => {
+    setChecked(defaultChecked);
+  }, [defaultChecked]);
+
   return (
     <div className="flex flex-row items-center">
       <div className="relative w-4 h-[18px] mr-2">
@@ -30,7 +40,11 @@ export default function CheckBox({
               "border-sub-1 checked:bg-sub-1": color === "sub",
             }
           )}
-          onClick={(e) => onClick?.(e.currentTarget.checked)}
+          checked={checked}
+          onChange={(e) => {
+            setChecked(e.target.checked);
+            onChecked?.(e.target.checked);
+          }}
         />
         <label htmlFor={name}>
           <Icon

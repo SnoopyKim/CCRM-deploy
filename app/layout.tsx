@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import DialogManager from "./_utils/dialog/manager";
 
 export const metadata: Metadata = {
   title: "CCRM",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className="min-h-screen">
         {children}
         {modal}
+        <DialogManager />
       </body>
     </html>
   );

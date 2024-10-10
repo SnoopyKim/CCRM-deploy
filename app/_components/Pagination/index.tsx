@@ -1,74 +1,111 @@
 "use client";
 
-import Icon from "@/app/_components/Icon";
-import cn from "@utils/cn";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Icon from "../Icon";
+import cn from "@utils/cn";
 
+interface PaginationProps {
+  totalCount?: number;
+  itemsPerPage?: number;
+  currentPage?: number;
+}
 export default function Pagination({
-  total,
-  pageSize = 10,
-}: {
-  total: number;
-  pageSize?: number;
-}) {
-  const totalPages = Math.ceil(total / pageSize);
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
-  const router = useRouter();
+  totalCount = 10,
+  itemsPerPage = 10,
+  currentPage = 1,
+}: PaginationProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const pageIndex = searchParams.get("page")
-    ? parseInt(searchParams.get("page")!)
-    : 1;
+  const totalPages = Math.ceil(totalCount / itemsPerPage);
 
-  const setPage = (page: number) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("page", page.toString());
-    const newUrl = `${pathname}?${newSearchParams.toString()}`;
-    router.push(newUrl);
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPages = 10;
+    let startPage = Math.max(1, currentPage - Math.floor(maxPages / 2));
+    const endPage = Math.min(totalPages, startPage + maxPages - 1);
+
+    if (endPage - startPage + 1 < maxPages) {
+      startPage = Math.max(1, endPage - maxPages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
   };
 
+  const createPageUrl = (page: number) => {
+    return `${pathname}?page=${page}`;
+  };
+
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalCount);
+
   return (
-    <div className="flex justify-center mt-4">
-      <button
-        className={cn(
-          "flex w-10 h-10 rounded-sm bg-grayscale-13 justify-center items-center mr-5",
-          {
-            "pointer-events-none": pageIndex === 1,
-            "cursor-pointer hover:bg-grayscale-12": pageIndex !== 1,
-          }
-        )}
-        onClick={() => setPage(Math.max(1, pageIndex - 1))}
-      >
-        <Icon type="left" className="w-6 h-6 stroke-grayscale-8" />
-      </button>
-      {pages.map((page) => (
-        <button
-          key={page}
-          className={cn(
-            "w-10 h-10 mx-1 rounded-sm flex justify-center items-center",
-            {
-              "hover:bg-grayscale-13 text-grayscale-8": page !== pageIndex,
-              "bg-grayscale-12 text-grayscale-1": page === pageIndex,
-            }
+    <div
+      className="flex w-full justify-between items-center pt-4 gap-2"
+      aria-label="Pagination"
+    >
+      <div className="hidden sm:block">
+        <p className="text-sm text-grayscale-5">
+          {totalCount}개 항목 중{" "}
+          {totalCount !== 0 && (
+            <>
+              <span className="font-medium">{startItem}</span> -{" "}
+            </>
           )}
-          onClick={() => setPage(page)}
-        >
-          <p>{page}</p>
-        </button>
-      ))}
-      <button
+          <span className="font-medium">{endItem}</span>개 항목 표시
+        </p>
+      </div>
+      <div
         className={cn(
-          "flex w-10 h-10 rounded-sm bg-grayscale-13 justify-center items-center ml-5",
-          {
-            "pointer-events-none": pageIndex === totalPages,
-            "cursor-pointer hover:bg-grayscale-12": pageIndex !== totalPages,
-          }
+          "flex flex-1 justify-between sm:justify-end",
+          totalCount === 0 && "hidden"
         )}
-        onClick={() => setPage(Math.min(totalPages, pageIndex + 1))}
       >
-        <Icon type="right" className="w-6 h-6 stroke-grayscale-8" />
-      </button>
+        <Link
+          href={createPageUrl(currentPage - 1)}
+          scroll={false}
+          className={cn(
+            "rounded-full p-2 hover:bg-grayscale-12",
+            currentPage <= 1
+              ? "pointer-events-none text-grayscale-7"
+              : "text-grayscale-5"
+          )}
+        >
+          <Icon type="left" className="h-6 w-6" />
+        </Link>
+        <div className="hidden md:flex space-x-1">
+          {getPageNumbers().map((number) => (
+            <Link
+              key={number}
+              href={createPageUrl(number)}
+              scroll={false}
+              className={cn(
+                "w-10 h-10 flex justify-center items-center text-sm font-medium rounded-full",
+                number === currentPage
+                  ? "bg-grayscale-12 text-white pointer-events-none"
+                  : "text-grayscale-7 hover:bg-grayscale-12"
+              )}
+            >
+              {number}
+            </Link>
+          ))}
+        </div>
+        <Link
+          href={createPageUrl(currentPage + 1)}
+          scroll={false}
+          className={cn(
+            "rounded-full p-2 hover:bg-grayscale-12",
+            currentPage >= totalPages
+              ? "pointer-events-none text-grayscale-7"
+              : "text-grayscale-5"
+          )}
+        >
+          <Icon type="right" className="w-6 h-6 " />
+        </Link>
+      </div>
     </div>
   );
 }

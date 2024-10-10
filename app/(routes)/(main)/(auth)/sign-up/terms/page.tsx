@@ -20,7 +20,7 @@ export default function SignUpTermPage() {
           <CheckBox
             name="terms"
             label="약관을 읽었으며 동의합니다."
-            onClick={setTermsChecked}
+            onChecked={setTermsChecked}
           />
         </div>
 
@@ -32,7 +32,7 @@ export default function SignUpTermPage() {
           <CheckBox
             name="privacy"
             label="약관을 읽었으며 동의합니다."
-            onClick={setPrivacyChecked}
+            onChecked={setPrivacyChecked}
           />
         </div>
       </div>

@@ -6,11 +6,9 @@ export default function InquiryPage() {
     <>
       <h1 className="text-2xl py-2">1:1문의 화면</h1>
       <p className="text-grayscale-6 mt-10">
-        1:1문의에 의한 답변은&nbsp;
-        <Link href="/my-page/inquiry" className="underline underline-offset-2">
-          &quot;마이페이지 &gt; 1:1 문의내역&quot;
-        </Link>
-        &nbsp;에서 확인하실 수 있습니다.
+        {/* TODO: 문구 확정 필요 */}
+        1:1문의는 <strong>support@ccrm.com</strong> 에 전달되며, 이후 메일로
+        진행합니다.
       </p>
       <InquiryForm />
     </>

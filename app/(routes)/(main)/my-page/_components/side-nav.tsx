@@ -57,8 +57,4 @@ const myPageRoutes = [
     href: "/my-page/purchase",
     name: "구매내역",
   },
-  {
-    href: "/my-page/inquiry",
-    name: "1:1 문의내역",
-  },
 ];

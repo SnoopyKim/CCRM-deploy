@@ -1,20 +1,20 @@
-import { Button } from "@/app/_components/Button";
-import { CheckBox } from "@/app/_components/CheckBox";
 import Icon from "@/app/_components/Icon";
-import { Input } from "@/app/_components/Text";
-import cn from "@utils/cn";
-import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "./_components/form";
-import GoogleSignIn from "./_components/google";
+import GoogleAuthButton from "./_components/google";
+import CallbackResult from "./_components/callback-result";
+import { Suspense } from "react";
 
 export default function SignInPage() {
   return (
     <main className="flex flex-col w-[400px] mt-20 m-auto items-center">
-      <Icon type="logo" className="w-48 fill-main-1" />
+      <Icon type="logo" className="w-48 fill-main-1 mb-12" />
+      <Suspense fallback={<></>}>
+        <CallbackResult />
+      </Suspense>
       <LoginForm />
       <div className="w-full mt-4">
-        <GoogleSignIn />
+        <GoogleAuthButton>구글로 로그인</GoogleAuthButton>
       </div>
       <Link
         href="/find-password"

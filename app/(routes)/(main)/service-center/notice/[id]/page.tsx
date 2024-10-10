@@ -1,7 +1,10 @@
 "use client";
 
 import { Button } from "@/app/_components/Button";
+import NoticeModel, { NoticeCategory } from "@/app/_models/notice";
+import { getNotice } from "@/app/_services/notice";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function NoticeDetailPage({
   params,
@@ -10,23 +13,39 @@ export default function NoticeDetailPage({
     id: string;
   };
 }) {
-  const { id } = params;
   const router = useRouter();
+  const [notice, setNotice] = useState<NoticeModel>();
+  useEffect(() => {
+    const fetchNotice = async () => {
+      const { data, error } = await getNotice(params.id);
+      if (error) {
+        console.error(error);
+        return;
+      }
+      setNotice(data!);
+    };
+
+    fetchNotice();
+  }, [params.id]);
+
+  if (!notice) {
+    return <div></div>;
+  }
 
   return (
     <>
       <div className="w-full px-10 py-5 border border-grayscale-11 mb-4">
-        <h1 className="text-[28px]">제목 {id} : PC화면 정상화 공지 안내</h1>
+        <h1 className="text-[28px]">{notice.title}</h1>
         <p className="py-4">
-          카테고리 : {"업데이트"}
+          카테고리 : {NoticeCategory[notice.category]}
           <br />
-          번호 : {id}
+          번호 : {notice.id}
           <br />
-          작성일 : {"2024-00-00"}
+          작성일 : {notice.updatedAt.toISOString().split("T")[0]}
           <br />
-          작성자 : {"관리자"}
+          작성자 : {"ㄱㄷ"}
         </p>
-        <p className="whitespace-pre-line text-grayscale-6">{content}</p>
+        <p className="whitespace-pre-line text-grayscale-6">{notice.content}</p>
       </div>
       <div>
         <Button

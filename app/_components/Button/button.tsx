@@ -12,7 +12,6 @@ export interface PrimaryButtonProps
 export default function PrimaryButton({
   type = "button",
   color = "primary",
-  disabled,
   className,
   ...props
 }: PrimaryButtonProps) {

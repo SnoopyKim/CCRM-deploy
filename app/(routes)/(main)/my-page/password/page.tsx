@@ -9,15 +9,30 @@ import Captcha, {
   loadCaptcha,
   validateCaptcha,
 } from "@/app/_components/Captcha";
+import Cookies from "js-cookie";
+import useDialogStore from "@/app/_utils/dialog/store";
+import { useRouter } from "next/navigation";
 
 export default function ChangePasswordPage() {
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const { openAlert } = useDialogStore();
 
   const [error, setError] = useState({
     current: "",
     confirm: "",
     captcha: "",
   });
+
+  useEffect(() => {
+    if (!Cookies.get("ccrm-token")) {
+      openAlert({
+        title: "로그인 정보 없음",
+        description: "로그인 페이지로 이동합니다",
+      }).then(() => router.replace("/sign-in"));
+      return;
+    }
+  }, []);
 
   const onChangePassword = (formData: FormData) => {
     const newPassword = formData.get("new-password");

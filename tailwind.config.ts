@@ -19,6 +19,15 @@ const config: Config = {
         "inner-1": "inset 0 0 0 1px #1E1E1E",
         "inner-2": "inset 0 0 0 2px #1E1E1E",
       },
+      keyframes: {
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        conveyor: "scroll 20s linear infinite",
+      },
     },
     colors: {
       main: {

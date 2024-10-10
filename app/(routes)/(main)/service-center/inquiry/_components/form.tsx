@@ -4,16 +4,39 @@ import { Button } from "@/app/_components/Button";
 import { SelectField } from "@/app/_components/Select";
 import { TextArea, TextField } from "@/app/_components/Text";
 import { useRef } from "react";
+import Cookies from "js-cookie";
+import { apiRequest } from "@/app/_utils/axios/client";
+import useDialogStore from "@/app/_utils/dialog/store";
 
 export default function InquiryForm() {
   const formRef = useRef<HTMLFormElement>(null);
+  const { openAlert } = useDialogStore();
 
-  const onSubmit = (formData: FormData) => {
-    alert(
-      `문의를 등록하였습니다.\n1:1문의에 대한 답변은 "마이페이지 > 1:1 문의내역"에서 확인하실 수 있습니다.`
-      // ${(formData.values() as FormDataIterator<FormDataEntryValue>).toArray()}`
+  const onSubmit = async (formData: FormData) => {
+    const { data, error } = await apiRequest(
+      "/customer-support/one-on-one-inquiry",
+      {
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    formRef.current?.reset();
+    if (error) {
+      openAlert({
+        title: "문의 발송 실패",
+        description: error.message || "알 수 없는 오류",
+      });
+    }
+
+    if (data) {
+      openAlert({
+        title: "문의 발송 성공",
+        description: "신속히 답변 드릴 수 있도록 하겠습니다!",
+      });
+      formRef.current?.reset();
+    }
   };
 
   return (
@@ -28,26 +51,31 @@ export default function InquiryForm() {
         placeholder="문의 유형을 선택하세요"
         required
         options={[
-          { value: "1", text: "문의유형1" },
-          { value: "2", text: "문의유형2" },
-          { value: "3", text: "문의유형3" },
+          { value: "결제 문의", text: "결제 문의" },
+          { value: "프로그램 문의", text: "프로그램 문의" },
+          { value: "제휴 문의", text: "제휴 문의" },
+          { value: "기타 문의", text: "기타 문의" },
         ]}
       />
       <TextField
-        id="title"
+        id="inquiryTitle"
         title="제목"
         placeholder="제목을 입력하세요"
         required
       />
       <TextArea
-        name="contents"
+        name="inquiryContent"
         title="내용 입력"
         placeholder="내용을 입력하세요"
         className="h-40"
         required
       />
       <div className="h-10" />
-      <Button type="submit" color="primary" title="문의하기" />
+      {Cookies.get("ccrm-token") ? (
+        <Button type="submit" color="primary" title="문의하기" />
+      ) : (
+        <Button title="로그인 후 문의가 가능합니다" disabled />
+      )}
     </form>
   );
 }

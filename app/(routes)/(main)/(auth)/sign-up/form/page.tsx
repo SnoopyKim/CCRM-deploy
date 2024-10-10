@@ -1,11 +1,12 @@
 "use client";
 
-import { FormEventHandler, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import { Input, TextField } from "@/app/_components/Text";
-import { CheckBox } from "@/app/_components/CheckBox";
-import { Button, LinkButton } from "@/app/_components/Button";
+import { Button } from "@/app/_components/Button";
 import { useRouter } from "next/navigation";
+import RegisterModel from "@/app/_models/register";
+import { signUp } from "@/app/_services/auth";
+import Cookies from "js-cookie";
 
 export default function SignUpFormPage({
   params,
@@ -21,21 +22,32 @@ export default function SignUpFormPage({
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-
-  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
-  const [company, setCompany] = useState("");
-  const [position, setPosition] = useState("");
-  const [branch, setBranch] = useState("");
-  const [area, setArea] = useState("");
+  const handleSubmit = async (formData: FormData) => {
+    const register = new RegisterModel(
+      formData.get("email")?.toString() ?? "",
+      formData.get("email")?.toString() ?? "",
+      formData.get("password")?.toString() ?? "",
+      formData.get("name")?.toString() ?? "",
+      formData.get("phone")?.toString() ?? "",
+      formData.get("company")?.toString(),
+      formData.get("branch")?.toString(),
+      formData.get("position")?.toString(),
+      formData.get("region")?.toString()
+    );
+    const { data, error } = await signUp(register);
+    if (error) {
+      console.log(error.message);
+    }
+    if (data) {
+      Cookies.set("ccrm-token", data.jwtToken, {
+        expires: 30,
+      });
+      Cookies.remove("ccrm-temp-token");
 
-  const handleSubmit = (formData: FormData) => {
-    // TODO: 회원가입 로직
-    // alert(
-    //   (formData.values() as FormDataIterator<FormDataEntryValue>).toArray()
-    // );
-    router.replace("/program");
+      window.location.href = "/program";
+    }
   };
 
   const checkEmailDuplication = () => {
@@ -94,8 +106,6 @@ export default function SignUpFormPage({
           name="name"
           title="필수 개인정보 입력"
           placeholder="이름"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
           required
         />
         <div className="flex flex-row gap-2">
@@ -116,31 +126,11 @@ export default function SignUpFormPage({
           name="company"
           title="선택 개인정보 입력"
           placeholder="회사명"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
         />
-        <Input
-          type="text"
-          name="branch"
-          placeholder="지점"
-          value={branch}
-          onChange={(e) => setBranch(e.target.value)}
-        />
-        <Input
-          type="text"
-          name="position"
-          placeholder="직책"
-          value={position}
-          onChange={(e) => setPosition(e.target.value)}
-        />
+        <Input type="text" name="branch" placeholder="지점" />
+        <Input type="text" name="position" placeholder="직책" />
 
-        <Input
-          type="text"
-          name="area"
-          placeholder="지역"
-          value={area}
-          onChange={(e) => setArea(e.target.value)}
-        />
+        <Input type="text" name="region" placeholder="지역" />
       </div>
 
       <Button

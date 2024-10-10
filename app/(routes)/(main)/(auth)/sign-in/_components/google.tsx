@@ -1,16 +1,38 @@
 "use client";
 
+import { apiRequest } from "@/app/_utils/axios/client";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+export default function GoogleAuthButton({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const callGoogleApi = async () => {
+    const queryParams = {
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
+      redirect_uri: `${process.env.NEXT_PUBLIC_CLIENT_URL}/api/auth/google/callback`,
+      response_type: "code",
+      scope:
+        "openid email profile https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/contacts.readonly https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/calendar",
+      access_type: "offline",
+      prompt: "consent",
+    };
 
-export default function GoogleSignIn() {
-  const onGoogleSignIn = () => {
-    alert("구글 로그인");
+    router.push(
+      `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(
+        queryParams
+      ).toString()}`
+    );
   };
 
   return (
     <div
       className="w-full h-14 flex justify-center items-center shadow-inner-1 shadow-grayscale-10 rounded-sm bg-grayscale-14 hover:bg-grayscale-13"
-      onClick={onGoogleSignIn}
+      onClick={callGoogleApi}
     >
       <Image
         src="/images/google.png"
@@ -18,7 +40,7 @@ export default function GoogleSignIn() {
         width={20}
         height={20}
       />
-      <span className="ml-2 font-medium">구글로 로그인</span>
+      <span className="ml-2 font-medium">{children}</span>
     </div>
   );
 }

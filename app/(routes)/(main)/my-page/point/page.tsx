@@ -1,8 +1,22 @@
+"use client";
+
 import { Select } from "@components/Select";
 import PageTitle from "../_components/page-title";
+import { useEffect } from "react";
+import useDialogStore from "@/app/_utils/dialog/store";
+import { useRouter } from "next/navigation";
 
 export default function PointPage() {
+  const router = useRouter();
+  const { openAlert } = useDialogStore();
   const point = 0;
+
+  useEffect(() => {
+    openAlert({
+      title: "업데이트 예정",
+      description: "해당 페이지는 추후 공개될 예정입니다",
+    }).then(() => router.back());
+  }, []);
   return (
     <>
       <PageTitle>포인트</PageTitle>

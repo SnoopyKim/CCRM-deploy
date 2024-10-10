@@ -1,9 +1,24 @@
 import Icon from "@/app/_components/Icon";
 import cn from "@utils/cn";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function AccordianItem({ title }: { title: string }) {
+export default function AccordianItem({
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [height, setHeight] = useState("0px");
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
+    }
+  }, [isOpen]);
+
   return (
     <div className="">
       <button
@@ -25,16 +40,12 @@ export default function AccordianItem({ title }: { title: string }) {
         )}
       </button>
       <div
-        id="content-1"
-        className={cn(
-          "overflow-hidden transition-all duration-300",
-          isOpen ? "max-h-20" : "max-h-0"
-        )}
+        ref={contentRef}
+        style={{ height }}
+        className="overflow-hidden transition-all duration-300"
       >
         <div className="py-4 text-base text-grayscale-6 whitespace-pre-line">
-          Vitae congue eu consequat ac felis placerat vestibulum lectus mauris
-          ultrices. {"\n"} Cursus sit amet dictum sit amet justo donec enim diam
-          porttitor lacus luctus accumsan tortor posuere.
+          {content}
         </div>
       </div>
     </div>

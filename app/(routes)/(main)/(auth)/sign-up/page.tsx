@@ -1,7 +1,7 @@
 import { LinkButton } from "@/app/_components/Button";
 import Link from "next/link";
-import GoogleSignUp from "./_components/google";
 import Icon from "@/app/_components/Icon";
+import GoogleAuthButton from "../sign-in/_components/google";
 
 export default function SignUpPage() {
   return (
@@ -13,7 +13,7 @@ export default function SignUpPage() {
           title="이메일 회원가입"
           className="w-full"
         />
-        <GoogleSignUp />
+        <GoogleAuthButton>구글로 회원가입</GoogleAuthButton>
       </div>
       <div className="flex flex-row justify-center mt-4">
         <span className=" text-grayscale-6">이미 회원이신가요?</span>
