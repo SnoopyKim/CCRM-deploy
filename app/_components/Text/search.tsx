@@ -33,12 +33,15 @@ export default function SearchField({
         className={`${className} pr-10`}
         {...props}
       />
-      <div className="absolute right-4 cursor-pointer" onClick={handleSearch}>
+      <div
+        className="absolute right-4 cursor-pointer"
+        onClick={handleSearch}
+      >
         <Icon
           type="search"
           className={cn(
             "fill-grayscale-9 group-focus-within:fill-sub-2",
-            iconClassName
+            iconClassName,
           )}
         />
       </div>

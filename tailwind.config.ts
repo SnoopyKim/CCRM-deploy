@@ -43,6 +43,8 @@ const config: Config = {
         3: "#652CD2",
         4: "#EA4652",
         5: "#29A084",
+        6: "#FFD8CC",
+        7: "#FF6535",
       },
       grayscale: {
         1: "#1E1E1E",
