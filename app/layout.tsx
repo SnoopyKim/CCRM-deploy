@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
 import DialogManager from "./_utils/dialog/manager";
+import AuthHydration from "./_utils/auth/hydration";
 
 export const metadata: Metadata = {
   title: "CCRM",
@@ -29,7 +30,7 @@ export default function RootLayout({
       className={`${pretendard.variable} font-pretendard text-main-1 text-base font-light`}
     >
       <body className="min-h-screen">
-        {children}
+        <AuthHydration>{children}</AuthHydration>
         {modal}
         <DialogManager />
       </body>

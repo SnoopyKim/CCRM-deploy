@@ -5,27 +5,30 @@ import { Input, TextField } from "@/app/_components/Text";
 import { Button } from "@/app/_components/Button";
 import { useRouter } from "next/navigation";
 import RegisterModel from "@/app/_models/register";
-import { signUp } from "@/app/_services/auth";
-import Cookies from "js-cookie";
+import useDialogStore from "@/app/_utils/dialog/store";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function SignUpFormPage({
-  params,
   searchParams,
 }: {
-  params: {};
   searchParams: {
     terms: string;
     privacy: string;
   };
 }) {
   const router = useRouter();
+  const { openAlert } = useDialogStore();
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [phone, setPhone] = useState("");
 
+  const fetching = useAuthStore((state) => state.fetching);
+  const register = useAuthStore((state) => state.register);
+
   const handleSubmit = async (formData: FormData) => {
-    const register = new RegisterModel(
+    const model = new RegisterModel(
       formData.get("email")?.toString() ?? "",
       formData.get("email")?.toString() ?? "",
       formData.get("password")?.toString() ?? "",
@@ -36,18 +39,11 @@ export default function SignUpFormPage({
       formData.get("position")?.toString(),
       formData.get("region")?.toString()
     );
-    const { data, error } = await signUp(register);
-    if (error) {
-      console.log(error.message);
-    }
-    if (data) {
-      Cookies.set("ccrm-token", data.jwtToken, {
-        expires: 30,
-      });
-      Cookies.remove("ccrm-temp-token");
-
-      window.location.href = "/program";
-    }
+    await register(model);
+    openAlert({
+      title: "환영합니다",
+      description: "회원가입이 완료되었습니다.",
+    }).then(() => router.push("/"));
   };
 
   const checkEmailDuplication = () => {
@@ -137,7 +133,7 @@ export default function SignUpFormPage({
         type="submit"
         title="회원가입하기"
         className="mt-10 shadow-md shadow-grayscale-9"
-        disabled
+        disabled={fetching}
       />
     </form>
   );

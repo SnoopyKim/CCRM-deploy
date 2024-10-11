@@ -1,10 +1,7 @@
 "use client";
 
-import { apiRequest } from "@/app/_utils/axios/client";
 import Image from "next/image";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 export default function GoogleAuthButton({
   children,
 }: {

@@ -16,6 +16,7 @@ export default function PointPage() {
       title: "업데이트 예정",
       description: "해당 페이지는 추후 공개될 예정입니다",
     }).then(() => router.back());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

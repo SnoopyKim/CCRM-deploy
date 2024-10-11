@@ -9,14 +9,15 @@ import Captcha, {
   loadCaptcha,
   validateCaptcha,
 } from "@/app/_components/Captcha";
-import Cookies from "js-cookie";
 import useDialogStore from "@/app/_utils/dialog/store";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function ChangePasswordPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const { openAlert } = useDialogStore();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const [error, setError] = useState({
     current: "",
@@ -25,14 +26,17 @@ export default function ChangePasswordPage() {
   });
 
   useEffect(() => {
-    if (!Cookies.get("ccrm-token")) {
+    if (!(router && openAlert)) {
+      return;
+    }
+    if (!isAuthenticated) {
       openAlert({
         title: "로그인 정보 없음",
         description: "로그인 페이지로 이동합니다",
       }).then(() => router.replace("/sign-in"));
       return;
     }
-  }, []);
+  }, [isAuthenticated, router, openAlert]);
 
   const onChangePassword = (formData: FormData) => {
     const newPassword = formData.get("new-password");
@@ -53,7 +57,10 @@ export default function ChangePasswordPage() {
     }
 
     // TODO: API Call
-    alert("변경되었습니다!");
+    openAlert({
+      title: "비밀번호 변경 완료",
+      description: "비밀번호가 성공적으로 변경되었습니다",
+    });
     if (formRef.current) formRef.current.reset();
     loadCaptcha();
   };

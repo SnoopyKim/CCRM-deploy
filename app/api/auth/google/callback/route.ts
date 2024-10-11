@@ -21,9 +21,8 @@ export async function GET(request: NextRequest) {
       `https://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}/api/auth/google/signin?code=${code}&redirectUri=${process.env.NEXT_PUBLIC_CLIENT_URL}/api/auth/google/callback`,
       { method: "GET" }
     );
-
     const data = await response.json();
-
+    console.log(response.status, data);
     if (response.status === 200) {
       // 인증 성공 시 로그인화면으로 토큰 반환
       return NextResponse.redirect(

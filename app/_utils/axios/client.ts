@@ -1,7 +1,6 @@
 "use client";
 import { SimpleError } from "@/app/_types/error";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import Cookies from "js-cookie"; // 클라이언트에서 쿠키를 읽기 위한 js-cookie
 
 // Axios 인스턴스 생성
 const axiosClient = axios.create({
@@ -11,20 +10,6 @@ const axiosClient = axios.create({
     "Content-Type": "application/json",
   },
 });
-
-// 요청 인터셉터: JWT 토큰을 자동으로 헤더에 추가
-axiosClient.interceptors.request.use(
-  (config) => {
-    const token = Cookies.get("ccrm-token"); // 쿠키에서 JWT 토큰 가져오기
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 // 응답 인터셉터: 에러 처리 (필요한 경우)
 axiosClient.interceptors.response.use(
@@ -56,31 +41,36 @@ axiosClient.interceptors.response.use(
 export const apiRequest = async <T>(
   url: string,
   config?: AxiosRequestConfig
-): Promise<{ data?: T; error?: AxiosError }> => {
+): Promise<{ data?: T; error?: AxiosError<any, any> }> => {
   let response;
   let error;
-  let authenticated = true;
   try {
-    response = await axiosClient(url, config);
+    response = await axiosClient(url, {
+      ...config,
+      headers: {
+        ...config?.headers,
+        Authorization:
+          config?.headers?.Authorization ||
+          `Bearer ${
+            JSON.parse(
+              localStorage.getItem("ccrm-auth") ?? "{state:{token:null}}"
+            ).state.token
+          }`,
+      },
+    });
   } catch (_error) {
     if (axios.isAxiosError(_error)) {
       // Axios 에러 처리
-      console.error("API Error:", _error.response?.data || _error.message);
-
-      if (_error.response?.status === 401) {
-        authenticated = false;
-      }
-
+      console.error(
+        "API Error:",
+        _error.response?.data.message || _error.message
+      );
       error = _error;
     } else {
       // 기타 에러 처리
       error = new AxiosError("알 수 없는 오류가 발생했습니다.");
     }
   } finally {
-    if (!authenticated) {
-      window.location.href = "/sign-in";
-    }
-    console.log(response?.data);
     return {
       data: response?.data,
       error,

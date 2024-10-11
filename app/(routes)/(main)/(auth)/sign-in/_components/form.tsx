@@ -3,7 +3,6 @@
 import { Button } from "@/app/_components/Button";
 import { CheckBox } from "@/app/_components/CheckBox";
 import { Input } from "@/app/_components/Text";
-import { signIn } from "@/app/_services/auth";
 import {
   deleteRememberedUserEmail,
   getRememberedUserEmail,
@@ -11,22 +10,25 @@ import {
 } from "@/app/_utils/localstorage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { flushSync } from "react-dom";
-import Cookies from "js-cookie";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function LoginForm() {
   const router = useRouter();
   const [initialEmail, setInitialEmail] = useState("");
-  const [error, setError] = useState("");
+  const { isAuthenticated, fetching, error } = useAuthStore();
+  const login = useAuthStore((state) => state.login);
 
   useEffect(() => {
-    const token = Cookies.get("ccrm-token");
-    if (token) {
+    if (!router) {
+      return;
+    }
+
+    if (isAuthenticated) {
       router.replace("/program");
     }
 
     setInitialEmail(getRememberedUserEmail());
-  }, [router]);
+  }, [isAuthenticated, router]);
 
   const handleSignIn = async (formData: FormData) => {
     const email = formData.get("email")?.toString() ?? "";
@@ -38,18 +40,7 @@ export default function LoginForm() {
     } else if (initialEmail) {
       deleteRememberedUserEmail();
     }
-
-    flushSync(() => setError(""));
-
-    const { data, error } = await signIn(email, password);
-    if (error) {
-      setError(
-        (error.response?.data as { message: string }).message || error.message
-      );
-    }
-    if (data) {
-      window.location.href = "/program";
-    }
+    await login(email, password);
   };
 
   return (
@@ -75,6 +66,7 @@ export default function LoginForm() {
         className="w-full mt-4 shadow-grayscale-10 shadow-md"
         color="primary"
         title="로그인"
+        disabled={fetching}
       />
       <div className="flex flex-col self-start mt-4 gap-2">
         <CheckBox

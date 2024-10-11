@@ -27,6 +27,7 @@ export default function PurchasePage() {
     };
 
     fetchPurchaseHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -50,7 +51,7 @@ export default function PurchasePage() {
       <div className="flex flex-col gap-4 px-8  items-center">
         {(purchaseHistory?.total ?? 0) > 0 ? (
           purchaseHistory?.data?.map((payment) => (
-            <div className="flex p-4 w-full gap-4">
+            <div key={payment.id} className="flex p-4 w-full gap-4">
               <p className="text-grayscale-7 font-normal">
                 {payment.payExpDate
                   .toLocaleDateString()
@@ -76,9 +77,7 @@ export default function PurchasePage() {
             </p>
             <div className="flex-1">
               <p>{"1개월 이용권"}</p>
-              <p className="text-grayscale-7 text-sm">
-                {new Date().toLocaleTimeString()}
-              </p>
+              <p className="text-grayscale-7 text-sm">{"00:00:00"}</p>
             </div>
             <p className="font-semibold">{Number(10000).toLocaleString()}원</p>
           </div>

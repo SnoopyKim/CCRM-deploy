@@ -4,13 +4,14 @@ import { Button } from "@/app/_components/Button";
 import { SelectField } from "@/app/_components/Select";
 import { TextArea, TextField } from "@/app/_components/Text";
 import { useRef } from "react";
-import Cookies from "js-cookie";
 import { apiRequest } from "@/app/_utils/axios/client";
 import useDialogStore from "@/app/_utils/dialog/store";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function InquiryForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const { openAlert } = useDialogStore();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const onSubmit = async (formData: FormData) => {
     const { data, error } = await apiRequest(
@@ -71,7 +72,7 @@ export default function InquiryForm() {
         required
       />
       <div className="h-10" />
-      {Cookies.get("ccrm-token") ? (
+      {isAuthenticated ? (
         <Button type="submit" color="primary" title="문의하기" />
       ) : (
         <Button title="로그인 후 문의가 가능합니다" disabled />
