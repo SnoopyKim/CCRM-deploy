@@ -1,11 +1,15 @@
 "use client";
 
-import Icon from "@/app/_components/Icon";
 import { SearchField } from "@/app/_components/Text";
 import CustomerTable from "./table";
 import ColorButton from "./_components/color-button";
+import useDialogStore from "@/app/_utils/dialog/store";
+import NewCustomerDialog from "@/app/_components/Dialog/customer/new";
+import { useRouter } from "next/navigation";
 
 export default function CustomerRetrievePage() {
+  const router = useRouter();
+  const openCustom = useDialogStore((state) => state.openCustom);
   return (
     <div className="flex w-full max-w-screen-xl flex-col mx-auto mt-10">
       <div className="flex justify-between">
@@ -32,7 +36,18 @@ export default function CustomerRetrievePage() {
         <div className="flex gap-2">
           <ColorButton color="grayscale-7" icon="delete" title="고객 삭제" />
           <ColorButton color="sub-2" icon="folderOutline" title="그룹 관리" />
-          <ColorButton color="sub-1" icon="plus" title="고객 등록" />
+          <ColorButton
+            color="sub-1"
+            icon="plus"
+            title="고객 등록"
+            onClick={async () => {
+              const data = await openCustom<string>(<NewCustomerDialog />);
+
+              if (data === "self") {
+                router.push("/program/customer/new");
+              }
+            }}
+          />
         </div>
         <ColorButton color="sub-5" title="엑셀 다운로드" />
       </div>

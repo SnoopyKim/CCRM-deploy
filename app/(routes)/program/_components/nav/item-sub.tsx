@@ -19,7 +19,7 @@ export default function ProgramNavItemWithSub({
 }: ProgramNavItemPropsWithSub) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(
-    subList.some((item) => item.href === pathname)
+    subList.some((item) => pathname.startsWith(item.href))
   );
 
   const subHeight = 4 * 10 * subList.length;

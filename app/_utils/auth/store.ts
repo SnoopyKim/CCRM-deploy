@@ -53,7 +53,9 @@ const useAuthStore = create<AuthStore>()(
         if (error) {
           set({
             fetching: false,
-            error: error.response?.data?.message || "로그인 실패",
+            error:
+              (error.response?.data as { message: string })?.message ||
+              "로그인 실패",
           });
           return;
         }
@@ -68,7 +70,9 @@ const useAuthStore = create<AuthStore>()(
           if (error) {
             set({
               fetching: false,
-              error: error.response?.data?.message || "사용자 정보 오류",
+              error:
+                (error.response?.data as { message: string })?.message ||
+                "사용자 정보 오류",
             });
             return;
           }
@@ -89,7 +93,9 @@ const useAuthStore = create<AuthStore>()(
         if (error) {
           set({
             fetching: false,
-            error: error.response?.data?.message || "회원가입 오류",
+            error:
+              (error.response?.data as { message: string })?.message ||
+              "회원가입 오류",
           });
         }
         if (data) {
@@ -102,7 +108,9 @@ const useAuthStore = create<AuthStore>()(
           if (error) {
             set({
               fetching: false,
-              error: error.response?.data?.message || "사용자 정보 오류",
+              error:
+                (error.response?.data as { message: string })?.message ||
+                "사용자 정보 오류",
             });
             return;
           }
@@ -143,7 +151,9 @@ const useAuthStore = create<AuthStore>()(
         if (error) {
           set({
             fetching: false,
-            error: error.response?.data?.message || "사용자 정보 오류",
+            error:
+              (error.response?.data as { message: string })?.message ||
+              "사용자 정보 오류",
           });
           return;
         }

@@ -4,69 +4,8 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import useDialogStore, { DialogType } from "@utils/dialog/store";
-
-// 첫 번째 팝업 컴포넌트
-const AlertDialog = () => {
-  const { closeDialog, params } = useDialogStore();
-
-  const { title, description } = params;
-
-  return (
-    <div className="">
-      <div className="flex flex-col items-center p-6 gap-4">
-        <h2 className="text-lg font-medium">{title}</h2>
-        <p className="text-sm whitespace-pre-line text-center">{description}</p>
-      </div>
-      <div className="flex w-full">
-        <button
-          className="flex-1 bg-main-2 text-grayscale-14 px-4 py-3 hover:bg-main-3"
-          onClick={closeDialog}
-        >
-          확인
-        </button>
-      </div>
-    </div>
-  );
-};
-
-// 두 번째 팝업 컴포넌트
-const ConfirmDialog = () => {
-  const { closeDialog, params } = useDialogStore();
-  const { title, description, resolve } = params;
-
-  const handleConfirm = () => {
-    resolve?.(true);
-    closeDialog();
-  };
-
-  const handleCancel = () => {
-    resolve?.(false);
-    closeDialog();
-  };
-
-  return (
-    <div className="">
-      <div className="flex flex-col items-center p-6 gap-4">
-        <h2 className="text-lg font-medium">{title}</h2>
-        <p className="text-sm whitespace-pre-line text-center">{description}</p>
-      </div>
-      <div className="flex w-full">
-        <button
-          className="flex-1 bg-main-2 text-grayscale-14 px-4 py-3 hover:bg-main-3"
-          onClick={handleConfirm}
-        >
-          확인
-        </button>
-        <button
-          className="flex-1 bg-grayscale-11 text-main-1 px-4 py-3 hover:bg-grayscale-10"
-          onClick={handleCancel}
-        >
-          취소
-        </button>
-      </div>
-    </div>
-  );
-};
+import AlertDialog from "@/app/_components/Dialog/alert";
+import ConfirmDialog from "@/app/_components/Dialog/confirm";
 
 const DialogWrapper = ({ children }: { children: React.ReactNode }) => {
   const { closeDialog } = useDialogStore();
@@ -86,7 +25,7 @@ const DialogWrapper = ({ children }: { children: React.ReactNode }) => {
       onClick={handleBackdropClick} // 백드롭 클릭 시 모달 닫기
     >
       <div
-        className="bg-grayscale-14 rounded-lg shadow-lg max-w-sm overflow-hidden"
+        className="bg-grayscale-14 rounded-sm shadow-lg overflow-hidden"
         onClick={handleDialogClick} // 모달 본체 클릭 시에는 닫히지 않음
       >
         {children}
@@ -97,7 +36,7 @@ const DialogWrapper = ({ children }: { children: React.ReactNode }) => {
 
 // Dialog 관리하는 컴포넌트
 const DialogManager: React.FC = () => {
-  const { activeDialog } = useDialogStore();
+  const { activeDialog, customContent } = useDialogStore();
 
   const isDialogOpen = activeDialog !== DialogType.NONE;
 
@@ -109,12 +48,22 @@ const DialogManager: React.FC = () => {
     }
   }, [isDialogOpen]);
 
+  const openDialog = (dialog: DialogType) => {
+    switch (dialog) {
+      case DialogType.ALERT:
+        return <AlertDialog />;
+      case DialogType.CONFIRM:
+        return <ConfirmDialog />;
+      case DialogType.CUSTOM:
+        return customContent;
+      default:
+        return null;
+    }
+  };
+
   return isDialogOpen
     ? ReactDOM.createPortal(
-        <DialogWrapper>
-          {activeDialog === DialogType.ALERT ? <AlertDialog /> : null}
-          {activeDialog === DialogType.CONFIRM ? <ConfirmDialog /> : null}
-        </DialogWrapper>,
+        <DialogWrapper>{openDialog(activeDialog)}</DialogWrapper>,
         document.getElementById("dialog-container") ?? document.body // Portal을 사용하여 body에 직접 렌더링
       )
     : null;

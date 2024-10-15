@@ -7,6 +7,7 @@ export enum DialogType {
   NONE,
   ALERT,
   CONFIRM,
+  CUSTOM,
 }
 
 interface DialogState {
@@ -16,6 +17,7 @@ interface DialogState {
     description: string;
     resolve?: (value?: any) => void;
   };
+  customContent?: React.ReactNode;
   openAlert: ({
     title,
     description,
@@ -30,7 +32,8 @@ interface DialogState {
     title: string;
     description: string;
   }) => Promise<boolean>;
-  closeDialog: () => void; // 팝업 닫기
+  openCustom: <T>(content: React.ReactNode) => Promise<T>;
+  closeDialog: (returnValue?: any) => void; // 팝업 닫기
 }
 
 const useDialogStore = create<DialogState>((set) => ({
@@ -39,6 +42,7 @@ const useDialogStore = create<DialogState>((set) => ({
     title: "",
     description: "",
   },
+  customContent: undefined,
   openAlert: ({
     title,
     description,
@@ -75,9 +79,22 @@ const useDialogStore = create<DialogState>((set) => ({
       });
     });
   },
-  closeDialog: () =>
+  openCustom: <T>(content: React.ReactNode) => {
+    return new Promise<T>((resolve) => {
+      set({
+        activeDialog: DialogType.CUSTOM,
+        customContent: content,
+        params: {
+          title: "",
+          description: "",
+          resolve,
+        },
+      });
+    });
+  },
+  closeDialog: (returnValue?: any) =>
     set((state) => {
-      state.params.resolve?.();
+      state.params.resolve?.(returnValue);
       return { activeDialog: DialogType.NONE };
     }),
 }));

@@ -16,7 +16,7 @@ export default function ProgramNavItem({
   title,
   href,
 }: ProgramNavItemPropsWithHref) {
-  const isActive = usePathname() === href;
+  const isActive = usePathname().startsWith(href);
   return (
     <Link
       href={href}
