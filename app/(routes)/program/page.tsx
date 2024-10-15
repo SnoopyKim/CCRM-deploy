@@ -1,57 +1,80 @@
-import { ProgramMainSearchBar } from "./_components/nav/search";
-import { ProgramSearchResult } from "../../_types/model";
-import SearchItem from "./search/search-item";
+import Image from "next/image";
+import ProgramSearchBar from "./_components/bar/search-bar";
+import Link from "next/link";
 
 export default function ProgramPage() {
-  const searchRecommendList = ["암", "심근경색", "뇌졸중", "교통사고"];
-  const exampleData = {
-    title: "CCRM",
-    type: "질병",
-    date: "2023-09-25",
-    imageUrl:
-      "https://www.ccrm.ca/wp-content/themes/understrap-child/svg/exports/header/CCRM-LOGO.svg",
-  };
-  const searchResults: ProgramSearchResult[] = [
-    exampleData,
-    exampleData,
-    exampleData,
-    exampleData,
-    exampleData,
-    exampleData,
-    exampleData,
+  const menus = [
+    {
+      name: "고객등록",
+      href: "/program/customer",
+      icon: "/images/program/menu/customer.png",
+    },
+    {
+      name: "상담일지",
+      href: "/program/counsel",
+      icon: "/images/program/menu/councel.png",
+    },
+    {
+      name: "일정관리",
+      href: "/program/schedule",
+      icon: "/images/program/menu/schedule.png",
+    },
+    {
+      name: "메시지 발송",
+      href: "/program/message/kakao",
+      icon: "/images/program/menu/message.png",
+    },
+    {
+      name: "보상관리",
+      href: "/program/insurance/bill",
+      icon: "/images/program/menu/insurance.png",
+    },
+    {
+      name: "업무일지",
+      href: "/program/memo",
+      icon: "/images/program/menu/memo.png",
+    },
   ];
 
   return (
-    <div className="w-full justify-start">
-      {/* 검색바 */}
-      <div className="max-w-xl">
-        <ProgramMainSearchBar />
-      </div>
-      {/* 인기 검색어 */}
-      <div className="mb-6 flex">
-        <span className="flex space-x-2 mr-2 mt-2 font-bold text-main-1">
-          인기검색어
-        </span>
-        <div className="mt-2 flex space-x-2 text-main-5 font-semibold">
-          {searchRecommendList.map((element, index) => (
-            <a
-              key={element}
-              href="#"
-              className="hover:underline"
-            >
-              #{element}
-            </a>
-          ))}
+    <div className="w-full">
+      <div className="flex w-full h-full justify-center items-center">
+        <div className="flex flex-col items-center w-full max-w-screen-sm space-y-12">
+          <div className="w-36 2xl:w-48">
+            <Image
+              src={"/images/black-logo.svg"}
+              alt="logo"
+              width={0}
+              height={0}
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
+          <ProgramSearchBar />
+          <div className="grid grid-cols-3 gap-2">
+            {menus.map((menu, index) => (
+              <Link
+                key={index}
+                href={menu.href}
+                className="relative group flex flex-col items-center justify-center rounded-lg w-40 h-40 hover:bg-[#F2F5FF]"
+              >
+                <div className="w-full pt-[100%]"></div> {/* 1:1 비율 */}
+                <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center">
+                  <Image
+                    src={menu.icon}
+                    alt={menu.name}
+                    width={72}
+                    height={72}
+                  />
+                  <p className="mt-4 text-lg font-semibold text-center">
+                    {menu.name}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
-      {/* 통합 검색결과 */}
-      <div className="bg-white">
-        <h2 className="text-2xl font-bold mb-4">통합 검색결과</h2>
-        <div className="text-lg text-gray-600 pb-2 border-b border-grayscale-11">
-          고객 <span className="text-sub-1">{searchResults.length}건</span>
-        </div>
-      </div>
-      <SearchItem results={searchResults} />
+      <div>{/* 배너광고들 배치 */}</div>
     </div>
   );
 }

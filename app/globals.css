@@ -42,3 +42,15 @@ body {
   line-height: 150%;
   letter-spacing: -0.01em;
 }
+
+/* 스크롤바 숨기기 */
+.scrollbar-hide {
+  /* IE 및 Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  /* Chrome, Safari 및 Opera */
+  display: none;
+}

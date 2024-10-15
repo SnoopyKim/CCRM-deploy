@@ -1,40 +1,54 @@
-import { ProgramEducationVideo } from "@/app/_types/model";
-import Categories from "./category";
-import VideoGridView from "./category";
+"use client";
+
+import { useEffect, useState } from "react";
+import CourseGridView from "./course-grid";
+import CourseModel, { CourseCategory } from "@/app/_models/course";
+import { getCourses } from "@/app/_services/course";
+import useDialogStore from "@/app/_utils/dialog/store";
 
 export default function EducationPage() {
-  const exampleData1 = {
-    title: "부동산 공매 투자로 10억 만들기",
-    category: "재테크 · 투자",
-    author: "김강희",
-    thumbnailUrl:
-      "https://i0.wp.com/dictionaryblog.cambridge.org/wp-content/uploads/2024/08/As-clear-as-mud-e1723817611391.jpg?resize=768%2C620&ssl=1",
-    videoUrl: "https://",
-  };
-  const exampleData2 = {
-    title: "투자하고 싶은 보험 설계하기",
-    category: "보험 설계",
-    author: "박유현",
-    thumbnailUrl:
-      "https://i0.wp.com/dictionaryblog.cambridge.org/wp-content/uploads/2024/08/As-clear-as-mud-e1723817611391.jpg?resize=768%2C620&ssl=1",
-    videoUrl: "https://",
-  };
-  const videoList: ProgramEducationVideo[] = [
-    exampleData1,
-    exampleData2,
-    exampleData1,
-    exampleData2,
-    exampleData1,
-    exampleData2,
-    exampleData1,
-    exampleData2,
-  ];
+  const [courseList, setCourseList] = useState<CourseModel[]>([]);
+  const [activeCategory, setActiveCategory] = useState("all");
+  const { openAlert } = useDialogStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await getCourses(1, 100);
+      if (error) {
+        openAlert({
+          title: "인기 클래스 가져오기 오류",
+          description: error.message,
+        });
+        return;
+      }
+      setCourseList(data?.data ?? []);
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className="w-full justify-start space-y-8">
+    <div className="w-full space-y-6 pb-4">
       {/* 제목 */}
       <h1 className="text-2xl font-semibold text-main-1">실시간 인기 클래스</h1>
-      <VideoGridView videos={videoList} />
+      <div className="flex space-x-2">
+        {Object.entries({ all: "전체", ...CourseCategory }).map(
+          (category, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveCategory(category[0])}
+              className={`px-4 py-2 rounded-full border ${
+                category[0] === activeCategory
+                  ? "bg-sub-6 border-2 border-sub-7 text-sub-7"
+                  : "border-grayscale-8 text-grayscale-1 hover:bg-gray-100"
+              }`}
+            >
+              {category[1]}
+            </button>
+          )
+        )}
+      </div>
+      <CourseGridView category={activeCategory} courses={courseList} />
     </div>
   );
 }

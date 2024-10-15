@@ -3,14 +3,14 @@
 import { AxiosError } from "axios";
 import FaqModel, { FaqDTO } from "../_models/faq";
 import PageList from "../_models/page-list";
-import { apiRequest } from "@utils/axios/client";
+import { apiRequest, SimpleResponse } from "@utils/axios/client";
 
 const endpoint = "/customer-support/faq";
 
 export async function getFaqs(
   page: number,
   limit: number = 10
-): Promise<{ data: PageList<FaqModel> | undefined; error?: AxiosError }> {
+): Promise<SimpleResponse<PageList<FaqModel>>> {
   const { data, error } = await apiRequest<PageList<FaqDTO>>(endpoint, {
     method: "GET",
     params: { page, limit },

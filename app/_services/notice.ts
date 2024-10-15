@@ -3,14 +3,14 @@
 import { AxiosError } from "axios";
 import NoticeModel, { NoticeDTO } from "../_models/notice";
 import PageList from "../_models/page-list";
-import { apiRequest } from "../_utils/axios/client";
+import { apiRequest, SimpleResponse } from "../_utils/axios/client";
 
 const endpoint = "/customer-support/notice";
 
 export async function getNotices(
   page: number,
   limit: number = 10
-): Promise<{ data: PageList<NoticeModel> | undefined; error?: AxiosError }> {
+): Promise<SimpleResponse<PageList<NoticeModel>>> {
   const { data, error } = await apiRequest<PageList<NoticeDTO>>(endpoint, {
     method: "GET",
     params: { page, limit },

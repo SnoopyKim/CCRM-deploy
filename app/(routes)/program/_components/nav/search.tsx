@@ -2,7 +2,7 @@
 
 import { SearchField } from "@/app/_components/Text";
 
-export default function ProgramSearchBar() {
+export default function NavSearchBar() {
   return (
     <SearchField
       onSearch={() => {}}
@@ -12,14 +12,3 @@ export default function ProgramSearchBar() {
     />
   );
 }
-
-// export function ProgramMainSearchBar() {
-//   return (
-//     <SearchField
-//       onSearch={() => {navigate('')}}
-//       className="border border-gray-300 rectangle-lg p-4"
-//       placeholder="검색"
-//       iconClassName="fill-grayscale-10 group-focus-within:fill-grayscale-10"
-//     />
-//   );
-// }

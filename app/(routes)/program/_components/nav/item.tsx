@@ -1,5 +1,9 @@
+"use client";
+
 import Icon, { IconType } from "@/app/_components/Icon";
+import cn from "@/app/_utils/cn";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export interface ProgramNavItemPropsWithHref {
   icon: IconType;
@@ -12,11 +16,24 @@ export default function ProgramNavItem({
   title,
   href,
 }: ProgramNavItemPropsWithHref) {
+  const isActive = usePathname() === href;
   return (
-    <Link href={href} className={"flex items-center px-4 h-16"}>
-      <Icon type={icon} className="w-5 h-5 fill-grayscale-14" />
-      <span className="flex-1 ml-2 text-grayscale-14">{title}</span>
-      <Icon type="down" className="w-5 h-5 fill-grayscale-14 -rotate-90" />
+    <Link
+      href={href}
+      className={cn(
+        "flex items-center px-4 h-16 hover:opacity-80",
+        isActive && "bg-main-3"
+      )}
+    >
+      <Icon type={icon} className="w-5 h-5" />
+      <span
+        className={cn(
+          "flex-1 ml-2",
+          isActive ? "text-grayscale-14 font-normal" : "text-grayscale-11"
+        )}
+      >
+        {title}
+      </span>
     </Link>
   );
 }

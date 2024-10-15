@@ -3,6 +3,7 @@
 import Icon, { IconType } from "@/app/_components/Icon";
 import cn from "@/app/_utils/cn";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export interface ProgramNavItemPropsWithSub {
@@ -16,14 +17,19 @@ export default function ProgramNavItemWithSub({
   title,
   subList,
 }: ProgramNavItemPropsWithSub) {
-  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(
+    subList.some((item) => item.href === pathname)
+  );
 
-  const subHeight = 10 * subList.length;
+  const subHeight = 4 * 10 * subList.length;
 
   return (
     <div className="">
       <div
-        className={"flex items-center px-4 h-16"}
+        className={
+          "flex items-center px-4 h-16 cursor-pointer hover:opacity-80"
+        }
         onClick={() => setIsOpen((value) => !value)}
       >
         <Icon type={icon} className="w-5 h-5 fill-grayscale-14" />
@@ -32,23 +38,34 @@ export default function ProgramNavItemWithSub({
           type="down"
           className={cn(
             "self-end w-5 h-5 fill-grayscale-14 transition-transform duration-200 ease-linear",
-            isOpen ? "rotate-0" : "-rotate-90"
+            isOpen ? "-rotate-180" : "rotate-0"
           )}
         />
       </div>
       <div
         className={cn(
-          "overflow-hidden transition-all duration-200 ease-linear",
-          isOpen ? `max-h-${subHeight}` : "max-h-0"
+          "overflow-hidden transition-all duration-200 ease-linear"
         )}
+        style={{ maxHeight: `${isOpen ? subHeight : 0}px` }}
       >
         {subList.map(({ title, href }) => (
           <Link
             key={title}
             href={href}
-            className="w-full flex justify-between items-center pl-11 pr-4 h-10"
+            className={cn(
+              "w-full flex justify-between items-center pl-11 pr-4 h-10 hover:opacity-80",
+              pathname === href && "bg-main-3"
+            )}
           >
-            <span className="text-grayscale-14">{title}</span>
+            <span
+              className={
+                pathname === href
+                  ? "text-grayscale-14 font-normal"
+                  : "text-grayscale-11"
+              }
+            >
+              {title}
+            </span>
           </Link>
         ))}
       </div>

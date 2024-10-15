@@ -2,7 +2,7 @@
 
 import PaymentModel, { PaymentDTO } from "../_models/payment";
 import PageList from "../_models/page-list";
-import { apiRequest } from "@utils/axios/client";
+import { apiRequest, SimpleResponse } from "@utils/axios/client";
 import { AxiosError } from "axios";
 
 const endpoint = "/payment/transactions";
@@ -10,7 +10,7 @@ const endpoint = "/payment/transactions";
 export async function getPayments(
   page: number,
   limit: number = 10
-): Promise<{ data: PageList<PaymentModel> | undefined; error?: AxiosError }> {
+): Promise<SimpleResponse<PageList<PaymentModel>>> {
   const { data, error } = await apiRequest<PageList<PaymentDTO>>(endpoint, {
     method: "GET",
     params: { page, limit },

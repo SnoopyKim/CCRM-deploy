@@ -41,7 +41,7 @@ axiosClient.interceptors.response.use(
 export const apiRequest = async <T>(
   url: string,
   config?: AxiosRequestConfig
-): Promise<{ data?: T; error?: AxiosError<any, any> }> => {
+): Promise<SimpleResponse<T>> => {
   let response;
   let error;
   try {
@@ -76,6 +76,11 @@ export const apiRequest = async <T>(
       error,
     };
   }
+};
+
+export type SimpleResponse<T> = {
+  data?: T;
+  error?: AxiosError;
 };
 
 export default axiosClient;
