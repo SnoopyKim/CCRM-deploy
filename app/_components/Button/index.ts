@@ -8,5 +8,6 @@ export const buttonStyles = {
     secondary: "bg-sub-1 hover:brightness-[110%]",
     tertiary: "bg-sub-2 hover:brightness-[110%]",
     main: "bg-main-1 hover:brightness-[110%]",
+    gray: "bg-grayscale-7 hover:bg-grayscale-8",
   },
 };

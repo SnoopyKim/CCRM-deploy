@@ -1,21 +1,31 @@
 "use client";
 
-import { Select, SelectField } from "@/app/_components/Select";
-import {
-  Input,
-  SearchField,
-  TextArea,
-  TextField,
-} from "@/app/_components/Text";
-import TextLabel from "@/app/_components/Text/label";
-import ColorButton from "../../customer/_components/color-button";
+import ColorButton from "@/app/(routes)/program/customer/_components/color-button";
 import PrimaryButton from "@/app/_components/Button/button";
-import { useRouter } from "next/navigation";
+import Icon from "@/app/_components/Icon";
+import { Select, SelectField } from "@/app/_components/Select";
+import { Input, TextArea, TextField } from "@/app/_components/Text";
+import TextLabel from "@/app/_components/Text/label";
 import useDialogStore from "@/app/_utils/dialog/store";
-import { Address, useDaumPostcodePopup } from "react-daum-postcode";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Address, useDaumPostcodePopup } from "react-daum-postcode";
 
-export default function CounselPage() {
+const prevCounsels = [
+  {
+    id: 1,
+    status: "조회상담",
+    date: "2024.00.00",
+  },
+  {
+    id: 2,
+    status: "상품제안",
+    date: "2024.00.00",
+  },
+];
+
+export default function CounselEditPage() {
   const router = useRouter();
   const openPostcodePopup = useDaumPostcodePopup();
   const openAlert = useDialogStore((state) => state.openAlert);
@@ -24,7 +34,7 @@ export default function CounselPage() {
 
   const addCounsel = async () => {
     await openAlert({
-      title: "상담 등록 완료",
+      title: "상담 수정 완료",
       description: "상담 현황 페이지로 이동합니다",
     });
     router.push("/program/counsel-list");
@@ -48,58 +58,68 @@ export default function CounselPage() {
   };
 
   return (
-    <div className="w-full p-6 space-y-8">
-      <h1 className="text-3xl text-normal">상담 등록</h1>
-      <div className="flex gap-4">
-        <div className="flex flex-col gap-4 w-1/2">
-          <h2 className="text-2xl font-normal">고객정보 / 상담내용</h2>
-          <div className="flex flex-col gap-4 px-6 py-4 bg-grayscale-13">
+    <div className="flex flex-col max-w-screen-lg w-full p-6 space-y-8 mx-auto">
+      <h1 className="text-3xl text-normal">상세보기 및 수정</h1>
+      <div className="flex gap-4 flex-grow">
+        <div className="flex flex-col gap-4 w-1/3 ">
+          <h2 className="text-xl font-normal">이전 상담 내용</h2>
+          <div className="flex-1 border border-grayscale-11 px-6 py-4 space-y-4">
+            {prevCounsels.map((counsel) => (
+              <div key={counsel.id} className="flex gap-2 items-center">
+                <div className="flex gap-2 rounded-full px-2 py-1 bg-grayscale-12 items-center">
+                  <span className="bg-sub-1 rounded-full w-4 h-4"></span>
+                  <span className="text-sub-1 font-normal">
+                    {counsel.status}
+                  </span>
+                </div>
+                <span className="text-grayscale-6">-</span>
+                <span className="text-grayscale-6">{counsel.date}</span>
+                <Link
+                  href={`/program/counsel/edit/${counsel.id}`}
+                  className="p-1 rounded hover:bg-grayscale-12"
+                >
+                  <Icon type={"create"} className="w-5 h-5 fill-sub-2" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 w-2/3">
+          <h2 className="text-xl font-normal">고객정보 / 상담내용</h2>
+          <div className="flex flex-col flex-1 px-6 py-4 gap-4 bg-grayscale-13">
             <div>
               <TextLabel title="고객명" />
-              <SearchField
-                placeholder="회원명을 입력하시면 자동으로 검색이 됩니다"
-                onSearch={() => {}}
-                className="mt-2"
-              />
+              <p className="mt-2 text-xl font-semibold">김철수</p>
             </div>
             <div>
               <TextLabel title="연락처" />
               <div className="flex gap-2 justify-between items-center mt-2">
-                <div>
-                  <Input
-                    type="text"
-                    inputMode="numeric"
-                    name="mb_phone1"
-                    placeholder="010"
-                    maxLength={4}
-                    className="w-44"
-                    required
-                  />
-                </div>
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  name="mb_phone1"
+                  placeholder="010"
+                  maxLength={4}
+                  required
+                />
                 <span>-</span>
-                <div>
-                  <Input
-                    type="text"
-                    inputMode="numeric"
-                    name="mb_phone2"
-                    placeholder=""
-                    maxLength={4}
-                    className="w-44"
-                    required
-                  />
-                </div>
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  name="mb_phone2"
+                  placeholder=""
+                  maxLength={4}
+                  required
+                />
                 <span>-</span>
-                <div>
-                  <Input
-                    type="text"
-                    inputMode="numeric"
-                    name="mb_phone3"
-                    placeholder=""
-                    maxLength={4}
-                    className="w-44"
-                    required
-                  />
-                </div>
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  name="mb_phone3"
+                  placeholder=""
+                  maxLength={4}
+                  required
+                />
               </div>
             </div>
             <SelectField
@@ -128,14 +148,7 @@ export default function CounselPage() {
               <ColorButton color="sub-2" icon="aiFile" title="텍스트 변환" />
               <ColorButton color="sub-2" icon="ai" title="AI 요약" />
             </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-4 w-1/2">
-          <h2 className="text-2xl font-normal">상세 상담 정보</h2>
-          <div className="flex flex-col gap-4 px-6 py-4 bg-grayscale-13">
-            <div>
-              <TextField title="상담 일" type="date" />
-            </div>
+            <TextField title="상담 일" type="date" />
             <div>
               <TextLabel title="상담 시간" />
               <div className="flex gap-2 mt-2">
@@ -168,7 +181,6 @@ export default function CounselPage() {
                 </div>
               </div>
             </div>
-
             <div>
               <TextField
                 title="상담 장소"

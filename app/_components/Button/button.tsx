@@ -6,7 +6,7 @@ import { ButtonHTMLAttributes } from "react";
 
 export interface PrimaryButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  color?: "primary" | "secondary" | "tertiary" | "main";
+  color?: keyof (typeof buttonStyles)["color"];
 }
 
 export default function PrimaryButton({
@@ -19,7 +19,7 @@ export default function PrimaryButton({
     <button
       type={type}
       className={cn(
-        "rounded-sm text-grayscale-14 px-4 h-14 font-normal text-base",
+        "rounded-sm text-grayscale-14 px-4 h-14 font-medium text-lg",
         buttonStyles.color[color],
         "disabled:bg-grayscale-7 disabled:pointer-events-none",
         className

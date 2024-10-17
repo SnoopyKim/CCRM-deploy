@@ -25,7 +25,7 @@ const TextArea = ({
       <textarea
         {...props}
         className={cn(
-          "py-2 px-4 resize-none border border-grayscale-11 rounded-sm placeholder-grayscale-6",
+          "py-3 px-4 resize-none border border-grayscale-11 rounded-sm placeholder-grayscale-6",
           "focus:border-sub-2 focus-visible:border-sub-2 focus:outline-none",
           "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none",
           className,

@@ -584,13 +584,15 @@ export default function MainPage() {
         </div>
         <div className="flex justify-center mt-28 gap-4">
           <Link
-            href="https://www.kmi.or.kr/examination"
+            href="https://fpcenter.withkmi.or.kr"
+            target="_blank"
             className="rounded-full px-8 py-4 bg-main-1 text-grayscale-14 font-bold text-lg leading-normal"
           >
             종합건강검진 신청하기
           </Link>
           <Link
-            href="https://www.kmi.or.kr/examination/personal_examination"
+            href="https://drive.google.com/file/d/1qxrjoadupm82NuQU1MrQ2GA58DJs8YKs/view"
+            target="_blank"
             className="rounded-full px-8 py-4 shadow-inner-2 shadow-grayscale-6 text-grayscale-6 font-bold text-lg  leading-normal"
           >
             종합건강검진 유형보기

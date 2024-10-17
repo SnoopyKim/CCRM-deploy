@@ -21,8 +21,8 @@ export default function ProgramNavItem({
     <Link
       href={href}
       className={cn(
-        "flex items-center px-4 h-16 hover:opacity-80",
-        isActive && "bg-main-3"
+        "flex items-center px-4 h-16 opacity-80 hover:opacity-100",
+        isActive && "bg-main-3 opacity-100"
       )}
     >
       <Icon type={icon} className="w-5 h-5" />

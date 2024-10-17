@@ -29,3 +29,6 @@ export { default as memo } from "./memo.svg";
 export { default as message } from "./message.svg";
 export { default as register } from "./register.svg";
 export { default as schedule } from "./schedule.svg";
+export { default as ai } from "./ai.svg";
+export { default as aiFile } from "./ai-file.svg";
+export { default as aiVerbal } from "./ai-verbal.svg";

@@ -6,8 +6,13 @@ import InfoForm from "../_components/info-form";
 import Icon from "@/app/_components/Icon";
 import FamilyForm from "./_components/family-form";
 import AccountForm from "./_components/account-form";
-import FileForm from "./_components/file-form";
+import CustomerFileForm from "./_components/customer-file-form";
 import MemoForm from "./_components/memo-form";
+import HospitalHistory from "./_components/hospital-history";
+import InsuranceForm from "./_components/insurance-form";
+import CarForm from "./_components/car-form";
+import FireForm from "./_components/fire-form";
+import WaiverForm from "./_components/waiver-form";
 
 export default function CustomerEditPage() {
   return (
@@ -17,7 +22,7 @@ export default function CustomerEditPage() {
         <PrimaryButton
           color="secondary"
           title="저장"
-          className="w-40 text-lg"
+          className="w-36 text-lg"
         />
       </div>
       <div className="flex gap-4">
@@ -29,8 +34,14 @@ export default function CustomerEditPage() {
         <div className="flex flex-col gap-6 w-1/2">
           <h2 className="text-2xl font-medium">보험 및 기타정보</h2>
           <AccountForm />
-          <FileForm />
+          <CustomerFileForm />
           <MemoForm />
+          <h1 className="text-xl font-normal">보험정보</h1>
+          <HospitalHistory />
+          <InsuranceForm />
+          <CarForm />
+          <FireForm />
+          <WaiverForm />
         </div>
       </div>
     </div>

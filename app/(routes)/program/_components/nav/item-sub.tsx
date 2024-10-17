@@ -27,9 +27,10 @@ export default function ProgramNavItemWithSub({
   return (
     <div className="">
       <div
-        className={
-          "flex items-center px-4 h-16 cursor-pointer hover:opacity-80"
-        }
+        className={cn(
+          "flex items-center px-4 h-16 cursor-pointer hover:opacity-100",
+          isOpen ? "opacity-100" : "opacity-80"
+        )}
         onClick={() => setIsOpen((value) => !value)}
       >
         <Icon type={icon} className="w-5 h-5 fill-grayscale-14" />
@@ -53,8 +54,8 @@ export default function ProgramNavItemWithSub({
             key={title}
             href={href}
             className={cn(
-              "w-full flex justify-between items-center pl-11 pr-4 h-10 hover:opacity-80",
-              pathname === href && "bg-main-3"
+              "w-full flex justify-between items-center pl-11 pr-4 h-10 hover:opacity-100",
+              pathname === href ? "bg-main-3 opacity-100" : "opacity-80"
             )}
           >
             <span

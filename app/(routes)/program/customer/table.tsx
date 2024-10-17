@@ -1,4 +1,5 @@
 import { Select } from "@/app/_components/Select";
+import Link from "next/link";
 
 export default function CustomerTable() {
   return (
@@ -67,7 +68,12 @@ export default function CustomerTable() {
             <td>1999.01.01</td>
             <td className="text-sub-2">테스트 그룹</td>
             <td>
-              <u>자세히</u>
+              <Link
+                href="/program/customer/edit"
+                className="underline underline-offset-2"
+              >
+                자세히
+              </Link>
             </td>
           </tr>
         </tbody>

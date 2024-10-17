@@ -39,28 +39,14 @@ export default function Pagination({
     return `${pathname}?page=${page}`;
   };
 
-  const startItem = (currentPage - 1) * itemsPerPage + 1;
-  const endItem = Math.min(currentPage * itemsPerPage, totalCount);
-
   return (
     <div
       className="flex w-full justify-between items-center pt-4 gap-2"
       aria-label="Pagination"
     >
-      <div className="hidden sm:block">
-        <p className="text-sm text-grayscale-5">
-          {totalCount}개 항목 중{" "}
-          {totalCount !== 0 && (
-            <>
-              <span className="font-medium">{startItem}</span> -{" "}
-            </>
-          )}
-          <span className="font-medium">{endItem}</span>개 항목 표시
-        </p>
-      </div>
       <div
         className={cn(
-          "flex flex-1 justify-between sm:justify-end",
+          "flex flex-1 justify-center ",
           totalCount === 0 && "hidden"
         )}
       >
@@ -68,7 +54,7 @@ export default function Pagination({
           href={createPageUrl(currentPage - 1)}
           scroll={false}
           className={cn(
-            "rounded-full p-2 hover:bg-grayscale-12",
+            "rounded-sm p-2 hover:bg-grayscale-12 mr-8",
             currentPage <= 1
               ? "pointer-events-none text-grayscale-7"
               : "text-grayscale-5"
@@ -83,7 +69,7 @@ export default function Pagination({
               href={createPageUrl(number)}
               scroll={false}
               className={cn(
-                "w-10 h-10 flex justify-center items-center text-sm font-medium rounded-full",
+                "w-10 h-10 flex justify-center items-center text-sm font-medium rounded-sm",
                 number === currentPage
                   ? "bg-grayscale-12 text-white pointer-events-none"
                   : "text-grayscale-7 hover:bg-grayscale-12"
@@ -97,7 +83,7 @@ export default function Pagination({
           href={createPageUrl(currentPage + 1)}
           scroll={false}
           className={cn(
-            "rounded-full p-2 hover:bg-grayscale-12",
+            "rounded-sm p-2 hover:bg-grayscale-12 ml-8",
             currentPage >= totalPages
               ? "pointer-events-none text-grayscale-7"
               : "text-grayscale-5"

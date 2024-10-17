@@ -31,7 +31,7 @@ export default function AddButton<T>({
     <>
       <button
         type="button"
-        className="bg-main-1 text-grayscale-14 border border-main-1 px-4 py-1 rounded "
+        className="bg-main-1 text-grayscale-14 border border-main-1 px-4 py-1 rounded-sm"
         onClick={type === "file" ? handleFileClick : () => onAdd?.()}
       >
         추가

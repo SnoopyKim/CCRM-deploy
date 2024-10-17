@@ -24,8 +24,11 @@ const Select = ({
     id &&
       (document.getElementById(id) as HTMLSelectElement | null)?.showPicker();
   };
+
+  const widthClassName = className?.match(/w-\w+/)?.[0];
+
   return (
-    <div className="flex flex-col relative">
+    <div className={`flex flex-col relative ${widthClassName}`}>
       <select
         id={id}
         name={id}
@@ -33,8 +36,9 @@ const Select = ({
         className={cn(
           "appearance-none h-14 p-4 border border-grayscale-11 rounded-sm outline-none",
           // "focus:border-sub-2 focus-visible:border-sub-2",
-          "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none",
-          className
+          "disabled:text-grayscale-6 disabled:bg-grayscale-12",
+          className,
+          "w-full"
         )}
         {...props}
       >
