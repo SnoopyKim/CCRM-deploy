@@ -11,7 +11,7 @@ export default function CheckBox({
   defaultChecked = false,
   onChecked,
 }: {
-  label: string;
+  label?: string;
   name: string;
   color?: "main" | "sub";
   // defaultChecked는 웃긴게 false든 true는 첫 값에서 render를 바꿀 수 없다.
@@ -53,7 +53,7 @@ export default function CheckBox({
           />
         </label>
       </div>
-      <span>{label}</span>
+      {label && <span>{label}</span>}
     </div>
   );
 }

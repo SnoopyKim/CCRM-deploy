@@ -32,3 +32,6 @@ export { default as schedule } from "./schedule.svg";
 export { default as ai } from "./ai.svg";
 export { default as aiFile } from "./ai-file.svg";
 export { default as aiVerbal } from "./ai-verbal.svg";
+export { default as refresh } from "./refresh.svg";
+export { default as star } from "./star.svg";
+export { default as document } from "./document.svg";

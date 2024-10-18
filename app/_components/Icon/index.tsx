@@ -3,6 +3,7 @@
 import cn from "@utils/cn";
 
 import * as icons from "@/icons";
+import { MouseEventHandler } from "react";
 
 export type IconType = keyof typeof icons;
 
@@ -22,7 +23,12 @@ export default function Icon({
     .some((_class) => _class.startsWith("w-"));
 
   return (
-    <span onClick={onClick}>
+    <span
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.();
+      }}
+    >
       <IconComponent
         className={cn("flex-shrink-0 fill-current", className, {
           "w-6 h-6": !hasWidth, // Default size

@@ -4,7 +4,7 @@ import { buttonStyles } from ".";
 
 export interface LinkButtonProps extends LinkProps {
   title: string;
-  color?: "primary" | "secondary" | "tertiary";
+  color?: keyof (typeof buttonStyles)["color"];
   disabled?: boolean;
   className?: string;
 }

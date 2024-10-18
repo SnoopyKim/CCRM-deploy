@@ -23,7 +23,13 @@ export default function TextField({
         />
       )}
       <div className="flex relative">
-        <Input id={id} type={type} placeholder={placeholder} {...props} />
+        <Input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          className={className}
+          {...props}
+        />
       </div>
     </div>
   );

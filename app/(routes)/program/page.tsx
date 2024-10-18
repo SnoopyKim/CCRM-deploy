@@ -11,7 +11,7 @@ export default function ProgramPage() {
     },
     {
       name: "상담일지",
-      href: "/program/counsel",
+      href: "/program/counsel-list",
       icon: "/images/program/menu/councel.png",
     },
     {
