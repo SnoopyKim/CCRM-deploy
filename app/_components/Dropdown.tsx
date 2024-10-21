@@ -54,9 +54,9 @@ const Dropdown: React.FC<DropdownProps> = ({ options, children }) => {
               <button
                 key={index}
                 className={cn(
-                  "group flex items-center pl-2 pr-3 py-2 text-grayscale-5 hover:bg-grayscale-13 w-full",
-                  option.color && `text-${option.color}`
+                  "group flex items-center pl-2 pr-3 py-2 min-w-16 hover:bg-grayscale-13 w-full"
                 )}
+                style={{ color: option.color || "#555" }}
                 onClick={() => {
                   option.onClick?.();
                   setIsOpen(false); // Close dropdown after click
@@ -66,12 +66,18 @@ const Dropdown: React.FC<DropdownProps> = ({ options, children }) => {
                   <Icon
                     type={option.icon}
                     className={cn(
-                      "w-5 h-5 mr-2  text-grayscale-5 group-hover:bg-grayscale-13",
-                      option.color && `text-${option.color}`
+                      "w-5 h-5 mr-2 group-hover:bg-grayscale-13",
+                      `text-[${option.color || "#555"}]`
                     )}
                   />
                 )}
-                {option.label}
+                <span
+                  className={`flex-1 ${
+                    option.icon ? "text-left" : "text-center"
+                  }`}
+                >
+                  {option.label}
+                </span>
               </button>
             ))}
           </div>
