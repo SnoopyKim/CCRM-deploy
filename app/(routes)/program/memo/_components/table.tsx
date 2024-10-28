@@ -1,44 +1,22 @@
 "use client";
 
 import Icon from "@/app/_components/Icon";
+import { DriveItem } from "@/app/_models/drive";
+import { deleteDriveFile } from "@/app/_services/google/drive";
+import { useMemoStore } from "@/app/_utils/memo/store";
 import { useRouter } from "next/navigation";
 
-// Sample data for emails
-const memos = [
-  {
-    id: 1,
-    type: "file",
-    name: "업무일지 1",
-    currentDate: "2024-10-01",
-  },
-  {
-    id: 2,
-    type: "folder",
-    name: "사적인 폴더 ",
-    currentDate: "2024-10-01",
-  },
-  {
-    id: 3,
-    type: "file",
-    name: "업무일지 3",
-    currentDate: "2024-10-01",
-  },
-  {
-    id: 4,
-    type: "file",
-    name: "업무일지 4",
-    currentDate: "2024-10-01",
-  },
-  {
-    id: 5,
-    type: "file",
-    name: "업무일지 5",
-    currentDate: "2024-10-01",
-  },
-];
-
-export default function MemoTable() {
+export default function MemoTable({ memos = [] }: { memos?: DriveItem[] }) {
   const router = useRouter();
+  const deleteMemo = useMemoStore((state) => state.deleteMemo);
+
+  const handleDelete = async (id: string) => {
+    const success = await deleteDriveFile(id);
+    if (success) {
+      deleteMemo(id);
+    }
+  };
+
   return (
     <table className="w-full table-fixed ">
       <thead>
@@ -57,19 +35,18 @@ export default function MemoTable() {
             onClick={() => router.push(`/program/memo/${memo.id}`)}
           >
             <td className="px-4 font-normal">
-              <Icon
-                type={memo.type === "file" ? "document" : "folderOutline"}
-                className=""
-              />
+              <Icon type={"document"} className="" />
             </td>
             <td className="">{memo.name}</td>
-
-            <td className="">{memo.currentDate}</td>
+            <td className="">
+              {memo.modifiedTime?.slice(0, 10) ??
+                new Date().toISOString().slice(0, 10)}
+            </td>
             <td className="p-2">
               <Icon
                 type="delete"
                 className="w-10 h-10 p-2 hover:bg-sub-1 hover:bg-opacity-10 hover:fill-sub-1"
-                onClick={() => {}}
+                onClick={() => handleDelete(memo.id)}
               />
             </td>
           </tr>

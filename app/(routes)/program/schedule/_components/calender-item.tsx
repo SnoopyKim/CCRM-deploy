@@ -1,20 +1,13 @@
 "use client";
 
 import cn from "@/app/_utils/cn";
-import { Schedule } from "./calendar-view";
 import useDialogStore from "@/app/_utils/dialog/store";
 import ScheduleDialog from "@/app/_components/Dialog/schedule/default";
 import ScheduleInsuranceDialog from "@/app/_components/Dialog/schedule/insurance";
 import ScheduleAnniversaryDialog from "@/app/_components/Dialog/schedule/anniversary";
 import ScheduleCounselDialog from "@/app/_components/Dialog/schedule/counsel";
 import SchedulePrivateDialog from "@/app/_components/Dialog/schedule/private";
-
-const tagStyles = {
-  상담: "text-sub-2",
-  기념: "text-sub-4",
-  보험: "text-sub-3",
-  개인: "text-sub-5",
-};
+import { CalendarEvent, scheduleStyle } from "@/app/_models/calendar";
 
 export default function CalendarItem({
   date,
@@ -24,7 +17,7 @@ export default function CalendarItem({
   isCurrent = true,
 }: {
   date: Date;
-  schedules?: Schedule[];
+  schedules?: CalendarEvent[];
   color?: string;
   isFirst?: boolean;
   isCurrent?: boolean;
@@ -32,24 +25,24 @@ export default function CalendarItem({
   const openCustom = useDialogStore((state) => state.openCustom);
 
   const openScheduleDialog = async () => {
-    const data = await openCustom<string>(
+    const data = await openCustom<any>(
       <ScheduleDialog date={date} schedules={schedules} />
     );
-    switch (data) {
-      case "보험":
-        openCustom(<ScheduleInsuranceDialog />);
-        break;
-      case "기념":
-        openCustom(<ScheduleAnniversaryDialog />);
-        break;
-      case "상담":
-        openCustom(<ScheduleCounselDialog />);
-        break;
-      case "개인":
-        openCustom(<SchedulePrivateDialog />);
-        break;
-      default:
-        break;
+    if (data && data.option === "edit") {
+      switch (data.schedule.extendedProperties?.private.type) {
+        case "보험":
+          openCustom(<ScheduleInsuranceDialog schedule={data.schedule} />);
+          break;
+        case "기념":
+          openCustom(<ScheduleAnniversaryDialog schedule={data.schedule} />);
+          break;
+        case "상담":
+          openCustom(<ScheduleCounselDialog schedule={data.schedule} />);
+          break;
+        default:
+          openCustom(<SchedulePrivateDialog schedule={data.schedule} />);
+          break;
+      }
     }
   };
 
@@ -70,11 +63,18 @@ export default function CalendarItem({
             className="flex items-center gap-2 font-medium"
           >
             <span
-              className={tagStyles[schedule.type as keyof typeof tagStyles]}
+              className={
+                scheduleStyle.tag[
+                  (schedule.extendedProperties?.private.type ||
+                    "개인") as keyof typeof scheduleStyle.tag
+                ]
+              }
             >
-              [{schedule.type}]
+              [{schedule.extendedProperties?.private.type || "개인"}]
             </span>
-            <span className="flex-1 line-clamp-1">{schedule.title}</span>
+            <span className="flex-1 line-clamp-1 pt-px">
+              {schedule.summary}
+            </span>
           </div>
         ))}
         {schedules.length > 3 && (

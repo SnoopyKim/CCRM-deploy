@@ -13,6 +13,7 @@ export async function createTable(
       let columnDef = `${name} ${attributes.type}`;
       if (attributes.primaryKey) columnDef += " PRIMARY KEY";
       if (attributes.notNull) columnDef += " NOT NULL";
+      if (attributes.autoincrement) columnDef += " AUTOINCREMENT";
       return columnDef;
     })
     .join(", ");

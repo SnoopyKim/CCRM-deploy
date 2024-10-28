@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   async redirects() {
     return [
       {
@@ -17,9 +18,9 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'i0.wp.com',
-        port: '',
+        protocol: "https",
+        hostname: "i0.wp.com",
+        port: "",
         // pathname: '/account123/**',
       },
     ],

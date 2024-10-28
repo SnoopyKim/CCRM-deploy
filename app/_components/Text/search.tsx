@@ -43,6 +43,7 @@ export default function SearchField({
             "fill-grayscale-9 group-focus-within:fill-sub-2",
             iconClassName,
           )}
+          onClick={handleSearch}
         />
       </div>
     </div>

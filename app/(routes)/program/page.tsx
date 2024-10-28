@@ -49,7 +49,7 @@ export default function ProgramPage() {
               style={{ width: "100%", height: "auto" }}
             />
           </div>
-          <ProgramSearchBar />
+          {/* <ProgramSearchBar /> */}
           <div className="grid grid-cols-3 gap-2">
             {menus.map((menu, index) => (
               <Link

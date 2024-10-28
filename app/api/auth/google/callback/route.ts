@@ -5,6 +5,10 @@ import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
+  const error = url.searchParams.get("error");
+  if (error) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
   const code = url.searchParams.get("code");
   // const state = url.searchParams.get("state"); // CSRF 방지를 위한 state 파라미터 (추가 권장)
 

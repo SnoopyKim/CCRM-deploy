@@ -7,12 +7,14 @@ import { ButtonHTMLAttributes } from "react";
 export interface PrimaryButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: keyof (typeof buttonStyles)["color"];
+  onClick?: () => void; 
 }
 
 export default function PrimaryButton({
   type = "button",
   color = "primary",
   className,
+  onClick, 
   ...props
 }: PrimaryButtonProps) {
   return (
@@ -24,6 +26,7 @@ export default function PrimaryButton({
         "disabled:bg-grayscale-7 disabled:pointer-events-none",
         className
       )}
+      onClick={onClick} 
       {...props}
     >
       {props.title}

@@ -35,3 +35,5 @@ export { default as aiVerbal } from "./ai-verbal.svg";
 export { default as refresh } from "./refresh.svg";
 export { default as star } from "./star.svg";
 export { default as document } from "./document.svg";
+export { default as download } from "./download.svg";
+export { default as folderOpen } from "./folder-open.svg";

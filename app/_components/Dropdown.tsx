@@ -48,39 +48,42 @@ const Dropdown: React.FC<DropdownProps> = ({ options, children }) => {
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-0 max-w-52 rounded-md shadow-lg bg-grayscale-14 ring-1 ring-main-1 ring-opacity-5 focus:outline-none z-10">
-          <div className="p-2">
-            {options.map((option, index) => (
-              <button
-                key={index}
-                className={cn(
-                  "group flex items-center pl-2 pr-3 py-2 min-w-16 hover:bg-grayscale-13 w-full"
-                )}
-                style={{ color: option.color || "#555" }}
-                onClick={() => {
-                  option.onClick?.();
-                  setIsOpen(false); // Close dropdown after click
-                }}
+        <div className="origin-top-right absolute p-2 right-0 max-w-52 rounded-md shadow-lg bg-grayscale-14 ring-1 ring-main-1 ring-opacity-5 focus:outline-none z-10">
+          {options.map((option, index) => (
+            <div
+              key={index}
+              className={cn(
+                "group flex items-center pl-2 pr-3 py-2 gap-2 hover:bg-grayscale-13 "
+              )}
+              style={{
+                color: option.color || "#555",
+                minWidth: option.icon
+                  ? `${50 + option.label.length * 10}px`
+                  : `${25 + option.label.length * 10}px`,
+              }}
+              onClick={() => {
+                option.onClick?.();
+                setIsOpen(false); // Close dropdown after click
+              }}
+            >
+              {option.icon && (
+                <Icon
+                  type={option.icon}
+                  className={cn(
+                    "w-5 h-5 group-hover:bg-grayscale-13",
+                    `text-[${option.color || "#555"}]`
+                  )}
+                />
+              )}
+              <div
+                className={`flex-1 line-clamp-1 ${
+                  option.icon ? "text-left" : "text-center"
+                }`}
               >
-                {option.icon && (
-                  <Icon
-                    type={option.icon}
-                    className={cn(
-                      "w-5 h-5 mr-2 group-hover:bg-grayscale-13",
-                      `text-[${option.color || "#555"}]`
-                    )}
-                  />
-                )}
-                <span
-                  className={`flex-1 ${
-                    option.icon ? "text-left" : "text-center"
-                  }`}
-                >
-                  {option.label}
-                </span>
-              </button>
-            ))}
-          </div>
+                {option.label}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

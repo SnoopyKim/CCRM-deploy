@@ -8,13 +8,14 @@ export enum DialogType {
   ALERT,
   CONFIRM,
   CUSTOM,
+  LOADING,
 }
 
 interface DialogState {
   activeDialog: DialogType;
   params: {
     title: string;
-    description: string;
+    description?: string;
     resolve?: (value?: any) => void;
   };
   customContent?: React.ReactNode;
@@ -33,6 +34,7 @@ interface DialogState {
     description: string;
   }) => Promise<boolean>;
   openCustom: <T>(content: React.ReactNode) => Promise<T>;
+  openLoading: (title?: string) => void;
   closeDialog: (returnValue?: any) => void; // 팝업 닫기
 }
 
@@ -91,6 +93,9 @@ const useDialogStore = create<DialogState>((set) => ({
         },
       });
     });
+  },
+  openLoading: (title?: string) => {
+    set({ activeDialog: DialogType.LOADING, params: { title: title ?? "" } });
   },
   closeDialog: (returnValue?: any) =>
     set((state) => {

@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import useDialogStore, { DialogType } from "@utils/dialog/store";
 import AlertDialog from "@/app/_components/Dialog/alert";
 import ConfirmDialog from "@/app/_components/Dialog/confirm";
+import LoadingDialog from "@/app/_components/Dialog/loading";
 
 const DialogWrapper = ({ children }: { children: React.ReactNode }) => {
   const { closeDialog } = useDialogStore();
@@ -56,6 +57,8 @@ const DialogManager: React.FC = () => {
         return <ConfirmDialog />;
       case DialogType.CUSTOM:
         return customContent;
+      case DialogType.LOADING:
+        return <LoadingDialog />;
       default:
         return null;
     }

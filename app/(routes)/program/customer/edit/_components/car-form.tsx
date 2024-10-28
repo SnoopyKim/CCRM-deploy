@@ -3,22 +3,69 @@
 import { Select } from "@/app/_components/Select";
 import FormContainer from "./form-container";
 import AddButton from "./add-button";
-import { useState } from "react";
+import { ClientDTO, AutoInsurance } from "@/app/_models/client";
+import { useEffect, useState } from "react";
 
-export default function CarForm() {
-  const [cars, setCars] = useState<any[]>([]);
+
+export default function CarForm({
+  formData, 
+  setFormData,
+}: {
+  formData: Partial<ClientDTO> | null;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<ClientDTO> | null>>;
+}) {
+  const cars = formData?.autoInsuranceExpiration || [];
+
+  useEffect(() => {
+    if (!formData?.autoInsuranceExpiration || formData?.autoInsuranceExpiration?.length === 0) {
+      setFormData((prev) => ({
+        ...prev,
+        autoInsuranceExpiration: [{ id: 0, company: "보험사 선택", year: undefined, month: undefined, day: undefined, memo: "" }],
+      }));
+    }
+  }, [formData, setFormData]);
+
+  const handleAddCar = (car: Omit<AutoInsurance, "id">) => {
+    const updatedCars = [
+      ...cars,
+      {
+        ...car,
+        id: cars.length > 0 ? Math.max(...cars.map((car) => car.id)) + 1 : 0,
+      },
+    ];
+    setFormData((prev) => ({
+      ...prev,
+      autoInsuranceExpiration: updatedCars,
+    }));
+  };
+
+  const handleDeleteCar = (index: number) => {
+    const updatedCars = cars.filter((_) => _.id !== index);
+    setFormData((prev) => ({
+      ...prev,
+      autoInsuranceExpiration: updatedCars,
+    }));
+  };
+
   return (
     <FormContainer icon="folderOutline" title="자동차보험 만기">
-      <CarItem onAddCar={(car) => setCars([...cars, car])} />
-      {cars.map((item, i) => (
+      <CarItem
+        carIndex={cars[0]?.id||0}
+        formData={formData}
+        setFormData={setFormData}
+        onAddCar={handleAddCar}
+      />
+      {cars.slice(1).map((_) => (
         <CarItem
-          key={i}
-          car={item}
+          key={_.id}
+          carIndex={_.id} 
+          formData={formData}
+          setFormData={setFormData}
           action={
             <button
               type="button"
               className="bg-grayscale-14 text-main-1 border border-main-1 px-4 py-1 rounded-sm"
-              onClick={() => setCars(cars.filter((_, j) => j !== i))}
+              onClick={() => handleDeleteCar(_.id)}
             >
               삭제
             </button>
@@ -30,23 +77,42 @@ export default function CarForm() {
   );
 }
 
+
 const CarItem = ({
-  car,
-  onAddCar,
+  carIndex,
+  formData,
+  setFormData,
   disabled = false,
   action,
+  onAddCar,
 }: {
-  car?: any;
-  onAddCar?: (car: any) => void;
+  carIndex?: number;
+  formData: Partial<ClientDTO>| null;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<ClientDTO> | null>>;
   disabled?: boolean;
   action?: React.ReactNode;
+  onAddCar?: (car: Omit<AutoInsurance, "id">) => void;
 }) => {
+  const car = formData?.autoInsuranceExpiration?.find((c) => c.id === carIndex) || {
+    company: "보험사 선택",
+    year: undefined,
+    month: undefined,
+    day: undefined,
+    memo: "",
+  };
+
   const [editable, setEditable] = useState(!disabled);
-  const [company, setCompany] = useState(car?.company || "보험사 선택");
-  const [year, setYear] = useState<number>(car?.year || undefined);
-  const [month, setMonth] = useState<number>(car?.month || undefined);
-  const [day, setDay] = useState<number>(car?.day || undefined);
-  const [memo, setMemo] = useState(car?.memo || "");
+
+  const handleChange = (field: keyof AutoInsurance, value: any) => {
+    const updatedCars = formData?.autoInsuranceExpiration?.map((c) =>
+      c.id === carIndex ? { ...c, [field]: value } : c
+    ) || [];
+    
+    setFormData((prev) => ({
+      ...prev,
+      autoInsuranceExpiration: updatedCars,
+    }));
+  };
 
   return (
     <div className="flex gap-2 items-center">
@@ -54,16 +120,16 @@ const CarItem = ({
         <Select
           placeholder="보험사 선택"
           options={[{ value: "AIG손해보험", text: "AIG손해보험" }]}
-          value={company}
+          value={car.company}
           className="h-12 py-2"
           disabled={!editable}
-          onChange={(e) => setCompany(e.target.value)}
+          onChange={(e) => handleChange("company", e.target.value)}
         />
         <div className="flex gap-2">
           <div className="flex-1">
             <Select
               placeholder="년"
-              value={year}
+              value={car.month}
               options={[
                 { value: 2024, text: "2024" },
                 { value: 2025, text: "2025" },
@@ -72,7 +138,7 @@ const CarItem = ({
               ]}
               className="h-12 py-2"
               disabled={!editable}
-              onChange={(e) => setYear(Number(e.target.value))}
+              onChange={(e) => handleChange("year", Number(e.target.value))}
             />
           </div>
           <div className="flex-1">
@@ -82,23 +148,23 @@ const CarItem = ({
                 value: i + 1,
                 text: `${i + 1}월`,
               }))}
-              value={month}
+              value={car.month}
               className="h-12 py-2"
               disabled={!editable}
-              onChange={(e) => setMonth(Number(e.target.value))}
+              onChange={(e) => handleChange("month", Number(e.target.value))}
             />
           </div>
           <div className="flex-1">
             <Select
               placeholder="일"
-              value={day}
               options={Array.from({ length: 31 }, (_, i) => ({
                 value: i + 1,
                 text: `${i + 1}일`,
               }))}
+              value={car.day}
               className="h-12 py-2"
               disabled={!editable}
-              onChange={(e) => setDay(Number(e.target.value))}
+              onChange={(e) => handleChange("day", Number(e.target.value))}
             />
           </div>
         </div>
@@ -106,8 +172,8 @@ const CarItem = ({
           placeholder="자동차보험 특이사항 메모"
           className="w-full h-20 p-4 border border-grayscale-11 rounded-sm resize-none disabled:bg-grayscale-12 disabled:text-grayscale-6"
           disabled={!editable}
-          onChange={(e) => setMemo(e.target.value)}
-          value={memo}
+          onChange={(e) => handleChange("memo", e.target.value)}
+          value={car.memo}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -132,8 +198,11 @@ const CarItem = ({
         {onAddCar && editable && (
           <AddButton
             onAdd={() => {
-              const newCar = { company, year, month, day, memo };
-              onAddCar(newCar);
+              const newCar = {
+                company: "",
+                memo: "",
+              };
+              onAddCar(newCar); 
             }}
           />
         )}

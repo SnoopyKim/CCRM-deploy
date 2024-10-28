@@ -18,7 +18,7 @@ const TextArea = ({
   ...props
 }: TextAreaProps) => {
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-2")}>
       {label && (
         <TextLabel htmlFor={props.id} title={label} caution={caution} />
       )}

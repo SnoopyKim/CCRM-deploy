@@ -4,10 +4,62 @@ import useDialogStore from "@/app/_utils/dialog/store";
 import PrimaryButton from "../../Button/button";
 import Icon from "../../Icon";
 import { SearchField } from "../../Text";
+import { useScheduleStore } from "@/app/_utils/schedule/store";
+import { useCallback, useState } from "react";
+import { addCalendarEvent } from "@/app/_services/google/calendar";
+import TextLabel from "../../Text/label";
+import { CalendarEvent } from "@/app/_models/calendar";
 
-export default function ScheduleCounselDialog() {
+const mockCustomers = [
+  {
+    name: "홍길동",
+    phone: "010-8513-3549",
+    counsel: [
+      {
+        title: "상품 제안",
+        date: "2024-10-21",
+        location: "경기 성남시 분당구 대왕판교로 670",
+      },
+    ],
+  },
+];
+
+export default function ScheduleCounselDialog({
+  schedule,
+}: {
+  schedule?: CalendarEvent;
+}) {
   const closeDialog = useDialogStore((state) => state.closeDialog);
+  const addSchedule = useScheduleStore((state) => state.addSchedule);
 
+  const [customers, setCustomers] = useState<any>(mockCustomers);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>();
+  const [loading, setLoading] = useState(false);
+
+  const onAddSchedule = useCallback(
+    async ({ title, date }: { title: string; date: Date }) => {
+      setLoading(true);
+      date.setHours(9);
+      const { data, error } = await addCalendarEvent({
+        title: selectedCustomer.name,
+        date,
+        custom: {
+          type: "상담",
+          customer: selectedCustomer.name,
+          phone: selectedCustomer.phone,
+          additionalType: title,
+        },
+      });
+      setLoading(false);
+
+      if (!error && data) {
+        addSchedule(data);
+        closeDialog?.();
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedCustomer]
+  );
   return (
     <div className="flex flex-col w-[800px] 2xl:w-[1000px] p-8 gap-6">
       <div className="flex items-center gap-2">
@@ -27,37 +79,55 @@ export default function ScheduleCounselDialog() {
           </tr>
         </thead>
         <tbody>
-          <tr className="border-b border-grayscale-12">
-            <td className="px-4 font-normal">홍길동</td>
-            <td className="">010-8513-3549</td>
-            <td className="px-2 py-3">
-              <button
-                className="bg-grayscale-14 text-grayscale-6 w-full py-1 text-sm rounded font-normal border border-grayscale-6"
-                onClick={closeDialog}
-              >
-                등록
-              </button>
-            </td>
-          </tr>
-          <tr className="border-b border-grayscale-12">
-            <td className="px-4 font-normal">홍길동</td>
-            <td className="">010-3987-4566</td>
-            <td className="px-2 py-3">
-              <button
-                className="bg-grayscale-14 text-grayscale-6 w-full px-4 py-1 text-sm rounded font-normal border border-grayscale-6"
-                onClick={closeDialog}
-              >
-                등록
-              </button>
-            </td>
-          </tr>
+          {customers.map((customer: any) => (
+            <tr key={customer.name} className="border-b border-grayscale-12">
+              <td className="px-4 font-normal">{customer.name}</td>
+              <td className="">{customer.phone}</td>
+              <td className="px-2 py-3">
+                <button
+                  className="bg-grayscale-14 text-grayscale-6 w-full py-1 text-sm rounded font-normal border border-grayscale-6 disabled:bg-grayscale-12"
+                  disabled={customer.name === selectedCustomer?.name || loading}
+                  onClick={() => setSelectedCustomer(customer)}
+                >
+                  선택
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      {selectedCustomer && (
+        <div className="flex flex-col">
+          <TextLabel title="자동차보험 만기" />
+          <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
+            {selectedCustomer.counsel.map((counsel: any) => (
+              <div key={counsel.title} className="flex items-center gap-4 p-2">
+                <span className="font-medium">{counsel.title}</span>
+                <span>{counsel.date}</span>
+                <span className="flex-1">{counsel.location}</span>
+                <button
+                  className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
+                  onClick={() =>
+                    onAddSchedule({
+                      title: counsel.title,
+                      date: new Date(counsel.date),
+                    })
+                  }
+                  disabled={loading}
+                >
+                  등록
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <PrimaryButton
         color="gray"
         title="닫기"
         className="w-full text-lg font-medium"
         onClick={closeDialog}
+        disabled={loading}
       />
     </div>
   );

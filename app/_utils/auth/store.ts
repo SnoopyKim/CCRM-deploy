@@ -1,4 +1,4 @@
-import { create, State } from "zustand";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { UserDTO } from "@/app/_models/user"; // 사용자 정의 User 모델
 import { apiRequest } from "../axios/client";

@@ -56,8 +56,10 @@ const extensions = [
 ];
 
 export default function MemoEditor({
+  content,
   onChange,
 }: {
+  content?: string;
   onChange?: (value: string) => void;
 }) {
   return (
@@ -65,7 +67,7 @@ export default function MemoEditor({
       extensions={extensions}
       immediatelyRender={false}
       editorContainerProps={{
-        className: "border rounded py-4 px-6 w-full h-full",
+        className: "border border-main-2 rounded py-4 px-6 w-full h-full",
       }}
       editorProps={{
         attributes: {
@@ -83,6 +85,7 @@ export default function MemoEditor({
           return false;
         },
       }}
+      content={content}
       onUpdate={({ editor }) => {
         onChange?.(editor.getHTML());
       }}

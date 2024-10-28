@@ -23,7 +23,7 @@ export default function MessagePage() {
               카톡 대량 발송
             </div>
           </Link>
-          <Link
+          {/* <Link
             href={"/program/message/mail"}
             className="flex flex-col h-80 flex-1 border border-grayscale-11"
           >
@@ -38,7 +38,7 @@ export default function MessagePage() {
             <div className="flex justify-center items-center py-4 text-lg font-normal">
               메일 대량 발송
             </div>
-          </Link>
+          </Link> */}
           <Link
             href={"/program/message/sms"}
             className="flex flex-col h-80 flex-1 border border-grayscale-11"

@@ -1,26 +1,78 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import useDialogStore from "@/app/_utils/dialog/store";
 import PrimaryButton from "../../Button/button";
 import { Select } from "../../Select";
 import { SearchField } from "../../Text";
+import { ClientDTO, Family } from "@/app/_models/client";
+import { ClientDao } from "@/app/_utils/database/dao/clientDao";
 
-const mockFamily = [
-  {
-    name: "고객1",
-    phone: "010-1234-5678",
-  },
-  {
-    name: "고객2",
-    phone: "010-1234-5678",
-  },
-];
 
 export default function AddFamilyDialog() {
   const closeDialog = useDialogStore((state) => state.closeDialog);
+  const [allFamilyData, setAllFamilyData] = useState<Family[] | null>(null); 
+  const [familyData, setFamilyData] = useState<Family[] | null>(null); 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    if (!allFamilyData){
+      const clientDao = new ClientDao(); 
+
+      const fetchData = async () => {
+        try {
+          const clientDatas = await clientDao.getAllClients();
+          const allFamilyData = clientDatas.map((client) => ({
+            id: client.id!, 
+            name: client.name!, 
+            phone: client.contactNumber!, 
+            relation: "부모", 
+          }));
+          setAllFamilyData(allFamilyData);
+          setFamilyData(allFamilyData);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [allFamilyData, ]);
+
+  // 검색어에 따라 familyData를 필터링하는 함수
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm); 
+    if (allFamilyData) {
+      const filteredData = allFamilyData.filter((family) =>
+        family.name?.includes(searchTerm) || family.phone?.includes(searchTerm)
+      );
+      setFamilyData(filteredData); 
+    }
+  };
+
+  const handleRelationChange = (id: number, value: string) => {
+    if(familyData){
+      setFamilyData((prev) =>
+        (prev||[]).map((item) =>
+          item.id === id ? { ...item, relation: value } : item
+        )
+      );
+    }
+  };
 
   const onAdd = () => {
-    closeDialog?.();
+    if(familyData){
+      const selectedFamily = familyData.filter((family) => {
+        const checkbox = document.querySelector<HTMLInputElement>(
+          `#p_check${family.id}`
+        );
+        return checkbox?.checked;
+      });
+      console.log(selectedFamily);
+  
+      // 선택된 가족 데이터를 부모 컴포넌트로 전달
+      closeDialog?.(selectedFamily);
+    }
   };
 
   return (
@@ -28,7 +80,7 @@ export default function AddFamilyDialog() {
       <h1 className="text-2xl font-medium">가족 등록: 고객 선택</h1>
       <SearchField
         placeholder="이름, 연락처를 입력하세요"
-        onSearch={() => {}}
+        onSearch={handleSearch}
       />
       <table className="w-full">
         <colgroup>
@@ -49,22 +101,25 @@ export default function AddFamilyDialog() {
           </tr>
         </thead>
         <tbody>
-          {mockFamily.map((item) => (
-            <tr key={item.name} className="border-b border-grayscale-11">
+          {(familyData||[]).map((item) => (
+            <tr key={item.id} className="border-b border-grayscale-11">
               <td className="py-4">
                 <div className="flex justify-center">
-                  <input type="checkbox" name="p_check" id="p_check1" />
+                <input type="checkbox" name="p_check" id={`p_check${item.id}`} />
                 </div>
               </td>
               <td className="font-semibold">{item.name}</td>
               <td>{item.phone}</td>
-              <Select
-                options={[
-                  { value: "부모", text: "부모" },
-                  { value: "자녀", text: "자녀" },
-                  { value: "형제/자매", text: "형제/자매" },
-                ]}
-              />
+              <td>
+                <Select
+                  options={[
+                    { value: "부모", text: "부모" },
+                    { value: "자녀", text: "자녀" },
+                    { value: "형제/자매", text: "형제/자매" },
+                  ]}
+                  onChange={(event: React.ChangeEvent<HTMLSelectElement>) => handleRelationChange(item.id, event.target.value)}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

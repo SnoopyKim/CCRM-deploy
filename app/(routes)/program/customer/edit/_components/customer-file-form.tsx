@@ -2,10 +2,17 @@
 
 import Icon from "@/app/_components/Icon";
 import AddButton from "./add-button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormContainer from "./form-container";
+import { ClientDTO } from "@/app/_models/client";
 
-export default function CustomerFileForm() {
+export default function CustomerFileForm({
+  formData, 
+  setFormData,
+}: {
+  formData: Partial<ClientDTO> | null;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<ClientDTO> | null>>;
+}) {
   const [selectedFile, setSelectedFile] = useState<
     | {
         name: string;

@@ -12,14 +12,6 @@ export default function MemoSidebar({
 }) {
   return (
     <nav className="w-60 flex flex-col">
-      <div className="p-4">
-        <Link
-          href="/program/memo/new"
-          className="flex w-full h-14 justify-center items-center text-lg font-medium rounded-full bg-main-2 hover:bg-main-3 text-grayscale-14"
-        >
-          업무일지 작성
-        </Link>
-      </div>
       <ul className="mt-4 p-2 text font-medium border-t border-grayscale-11">
         <ul className="space-y-2 px-2 text-lg font-medium">
           <li>

@@ -17,7 +17,7 @@ export default function ProgramNav() {
       {/* 프로필 */}
       <Profile />
       {/* 통합검색 */}
-      <NavSearchBar />
+      {/* <NavSearchBar /> */}
       {/* NavItems */}
       <div className="w-full overflow-y-auto scroll-m-0 scrollbar-hide">
         <ProgramNavItem
@@ -60,10 +60,6 @@ export default function ProgramNav() {
             {
               title: "문자 발송",
               href: "/program/message/sms",
-            },
-            {
-              title: "메일 발송",
-              href: "/program/message/mail",
             },
           ]}
         />

@@ -1,36 +1,21 @@
+"use client"; 
+
+import React, { useEffect, useState, useRef } from "react";
+
+import { ClientDao } from "@utils/database/dao/clientDao";
 import { Select } from "@/app/_components/Select";
 import Link from "next/link";
+import ClientModel from "@/app/_models/client";
 
-export default function CustomerTable() {
+export default function CustomerTable({
+  clients, 
+  setClients,
+}: {
+  clients: ClientModel[];
+  setClients: React.Dispatch<React.SetStateAction<ClientModel[]>>;
+})  {
   return (
     <>
-      <div className="flex justify-end items-center gap-4">
-        <span>필터 :</span>
-
-        <Select
-          className="w-48 h-8 px-3 py-1 text-sm"
-          options={[
-            {
-              text: "그룹 전체",
-              value: "all",
-            },
-          ]}
-        />
-
-        <Select
-          className="w-48 h-8 px-3 py-1 text-sm"
-          options={[
-            {
-              text: "오름차순",
-              value: "asc",
-            },
-            {
-              text: "내림차순",
-              value: "desc",
-            },
-          ]}
-        />
-      </div>
       <table className="w-full mt-4">
         <colgroup>
           <col width="60px" />
@@ -56,26 +41,42 @@ export default function CustomerTable() {
           </tr>
         </thead>
         <tbody>
-          <tr className="border-b border-grayscale-11">
-            <td className="py-4">
-              <div className="flex justify-center">
-                <input type="checkbox" name="p_check" id="p_check1" />
-              </div>
-            </td>
-            <td className="font-semibold">테스트 고객</td>
-            <td className="text-sub-3">관리 고객</td>
-            <td>010-0000-1111</td>
-            <td>1999.01.01</td>
-            <td className="text-sub-2">테스트 그룹</td>
-            <td>
-              <Link
-                href="/program/customer/edit"
-                className="underline underline-offset-2"
-              >
-                자세히
-              </Link>
-            </td>
-          </tr>
+          {(clients||[]).map((client:ClientModel) => (
+            <tr key={client.id} className="border-b border-grayscale-11">
+              <td className="py-4">
+                <div className="flex justify-center">
+                  <input
+                      type="checkbox"
+                      name="p_check"
+                      id={`p_check${client.id}`}
+                      checked={client.isDeleteChecked||false}
+                      onChange={(e) => 
+                        setClients((prevClients) =>
+                          prevClients.map((c) =>
+                            c.id === client.id 
+                              ? Object.assign(Object.create(Object.getPrototypeOf(c)), c, { isDeleteChecked: e.target.checked })
+                              : c
+                          )
+                        )
+                      }
+                    />
+                </div>
+              </td>
+              <td className="font-semibold">{client.name}</td>
+              <td className="text-sub-3">{client.clientType}</td>
+              <td>{client.contactNumber}</td>
+              <td>{client.birthDate ? client.birthDate.toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric" }) : "-"}</td>
+              <td className="text-sub-2">{client.managementGroupId}</td>
+              <td>
+                <Link
+                  href={`/program/customer/edit?id=${client.id}`}
+                  className="underline underline-offset-2"
+                >
+                  자세히
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>

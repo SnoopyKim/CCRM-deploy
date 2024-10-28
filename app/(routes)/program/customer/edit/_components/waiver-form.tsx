@@ -3,22 +3,68 @@
 import { Select } from "@/app/_components/Select";
 import FormContainer from "./form-container";
 import AddButton from "./add-button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ClientDTO, ExemptionReductionEndDate } from "@/app/_models/client"; // assuming this is the path for ClientDTO and WaiverInsurance
 
-export default function WaiverForm() {
-  const [waivers, setWaivers] = useState<any[]>([]);
+export default function WaiverForm({
+  formData, 
+  setFormData,
+}: {
+  formData: Partial<ClientDTO> | null;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<ClientDTO> | null>>;
+}) {
+  const waivers = formData?.exemptionReductionEndDate || [];
+
+  useEffect(() => {
+    if (!formData?.exemptionReductionEndDate || formData?.exemptionReductionEndDate?.length === 0) {
+      setFormData((prev) => ({
+        ...prev,
+        exemptionReductionEndDate: [{ id: 0, year: undefined, month: undefined, day: undefined, memo: "" }],
+      }));
+    }
+  }, [formData, setFormData]);
+
+  const handleAddWaiver = (waiver: Omit<ExemptionReductionEndDate, "id">) => {
+    const updatedWaivers = [
+      ...waivers,
+      {
+        ...waiver,
+        id: waivers.length > 0 ? Math.max(...waivers.map((waiver) => waiver.id)) + 1 : 0,
+      },
+    ];
+    setFormData((prev) => ({
+      ...prev,
+      exemptionReductionEndDate: updatedWaivers,
+    }));
+  };
+
+  const handleDeleteWaiver = (index: number) => {
+    const updatedWaivers = waivers.filter((_) => _.id !== index);
+    setFormData((prev) => ({
+      ...prev,
+      exemptionReductionEndDate: updatedWaivers,
+    }));
+  };
+
   return (
     <FormContainer icon="folderOutline" title="면책/감액 종료일">
-      <WaiverItem onAddWaiver={(waiver) => setWaivers([...waivers, waiver])} />
-      {waivers.map((item, i) => (
+      <WaiverItem
+        waiverIndex={waivers[0]?.id || 0}
+        formData={formData}
+        setFormData={setFormData}
+        onAddWaiver={handleAddWaiver}
+      />
+      {waivers.slice(1).map((_) => (
         <WaiverItem
-          key={i}
-          waiver={item}
+          key={_.id}
+          waiverIndex={_.id} 
+          formData={formData}
+          setFormData={setFormData}
           action={
             <button
               type="button"
               className="bg-grayscale-14 text-main-1 border border-main-1 px-4 py-1 rounded-sm"
-              onClick={() => setWaivers(waivers.filter((_, j) => j !== i))}
+              onClick={() => handleDeleteWaiver(_.id)}
             >
               삭제
             </button>
@@ -30,22 +76,41 @@ export default function WaiverForm() {
   );
 }
 
+
 const WaiverItem = ({
-  waiver,
-  onAddWaiver,
+  waiverIndex,
+  formData,
+  setFormData,
   disabled = false,
   action,
+  onAddWaiver,
 }: {
-  waiver?: any;
-  onAddWaiver?: (waiver: any) => void;
+  waiverIndex?: number;
+  formData: Partial<ClientDTO> | null;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<ClientDTO> | null>>;
   disabled?: boolean;
   action?: React.ReactNode;
+  onAddWaiver?: (waiver: Omit<ExemptionReductionEndDate, "id">) => void;
 }) => {
+  const waiver = formData?.exemptionReductionEndDate?.find((w) => w.id === waiverIndex) || {
+    year: undefined,
+    month: undefined,
+    day: undefined,
+    memo: "",
+  };
+
   const [editable, setEditable] = useState(!disabled);
-  const [year, setYear] = useState<number>(waiver?.year || undefined);
-  const [month, setMonth] = useState<number>(waiver?.month || undefined);
-  const [day, setDay] = useState<number>(waiver?.day || undefined);
-  const [memo, setMemo] = useState(waiver?.memo || "");
+
+  const handleChange = (field: keyof ExemptionReductionEndDate, value: any) => {
+    const updatedWaivers = formData?.exemptionReductionEndDate?.map((w) =>
+      w.id === waiverIndex ? { ...w, [field]: value } : w
+    ) || [];
+    
+    setFormData((prev) => ({
+      ...prev,
+      exemptionReductionEndDate: updatedWaivers,
+    }));
+  };
 
   return (
     <div className="flex gap-2 items-center">
@@ -54,7 +119,7 @@ const WaiverItem = ({
           <div className="flex-1">
             <Select
               placeholder="년"
-              value={year}
+              value={waiver.year}
               options={[
                 { value: 2024, text: "2024" },
                 { value: 2025, text: "2025" },
@@ -63,7 +128,7 @@ const WaiverItem = ({
               ]}
               className="h-12 py-2"
               disabled={!editable}
-              onChange={(e) => setYear(Number(e.target.value))}
+              onChange={(e) => handleChange("year", Number(e.target.value))}
             />
           </div>
           <div className="flex-1">
@@ -73,23 +138,23 @@ const WaiverItem = ({
                 value: i + 1,
                 text: `${i + 1}월`,
               }))}
-              value={month}
+              value={waiver.month}
               className="h-12 py-2"
               disabled={!editable}
-              onChange={(e) => setMonth(Number(e.target.value))}
+              onChange={(e) => handleChange("month", Number(e.target.value))}
             />
           </div>
           <div className="flex-1">
             <Select
               placeholder="일"
-              value={day}
+              value={waiver.day}
               options={Array.from({ length: 31 }, (_, i) => ({
                 value: i + 1,
                 text: `${i + 1}일`,
               }))}
               className="h-12 py-2"
               disabled={!editable}
-              onChange={(e) => setDay(Number(e.target.value))}
+              onChange={(e) => handleChange("day", Number(e.target.value))}
             />
           </div>
         </div>
@@ -97,8 +162,8 @@ const WaiverItem = ({
           placeholder="보험 특이사항 메모"
           className="w-full h-20 p-4 border border-grayscale-11 rounded-sm resize-none disabled:bg-grayscale-12 disabled:text-grayscale-6"
           disabled={!editable}
-          onChange={(e) => setMemo(e.target.value)}
-          value={memo}
+          onChange={(e) => handleChange("memo", e.target.value)}
+          value={waiver.memo}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -123,7 +188,9 @@ const WaiverItem = ({
         {onAddWaiver && editable && (
           <AddButton
             onAdd={() => {
-              const newWaiver = { year, month, day, memo };
+              const newWaiver = {
+                memo: "",
+              };
               onAddWaiver(newWaiver);
             }}
           />

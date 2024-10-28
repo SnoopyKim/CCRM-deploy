@@ -5,11 +5,24 @@ export function generateInsertQuery(
   tableName: string,
   data: Record<string, any>
 ): string {
-  const columns = Object.keys(data).join(", ");
-  const values = Object.values(data)
-    .map((value) => (typeof value === "string" ? `'${value}'` : value))
-    .join(", ");
+  const filteredData = Object.entries(data).reduce((acc, [key, value]) => {
+    if (key !== "id") { 
+      acc[key] = value;
+    }
+    return acc;
+  }, {} as Record<string, any>);
 
+  const columns = Object.keys(filteredData).join(", ");
+  const values = Object.values(filteredData)
+    .map((value) => {
+      if (value === null || value === undefined) {
+        return 'NULL'; // NULL 처리
+      }
+      return typeof value === "string" ? `'${value}'` : value;
+    })
+    .join(", ");
+  
+  console.log(`INSERT INTO ${tableName} (${columns}) VALUES (${values})`);
   return `INSERT INTO ${tableName} (${columns}) VALUES (${values})`;
 }
 
@@ -42,11 +55,29 @@ export function generateDeleteQuery(
 // 데이터 조회 쿼리 생성 함수
 export function generateSelectQuery(
   tableName: string,
-  whereClause?: string
+  whereClause?: string,
+  columns?: string[]
 ): string {
-  let query = `SELECT * FROM ${tableName}`;
+  const selectedColumns = columns ? columns.join(", ") : "*";
+  let query = `SELECT ${selectedColumns} FROM ${tableName}`;
   if (whereClause) {
     query += ` WHERE ${whereClause}`;
   }
   return query;
+}
+
+// 결과를 key-value로 매핑하는 함수
+export function mapResultsToKeyValue(result: any): any[] {
+  if (!result || !result.length || !result[0].columns) {
+    return [];
+  }
+
+  const columns = result[0].columns;
+  return result[0].values.map((row: any[]) => {
+    const rowObject: Record<string, any> = {};
+    columns.forEach((col: string, index: number) => {
+      rowObject[col] = row[index];
+    });
+    return rowObject;
+  });
 }
