@@ -23,7 +23,7 @@ export default function NewMemoPage() {
   useEffect(() => {
     if (!directoryId) {
       const fetchDirectory = async () => {
-        openLoading("업무일지 드라이브 연동중...");
+        openLoading("메모/기록 드라이브 연동중...");
         await loadDirectory();
         closeDialog();
       };
@@ -44,7 +44,7 @@ export default function NewMemoPage() {
   };
 
   const addNewMemo = async () => {
-    openLoading("업무일지를 저장하는 중입니다...");
+    openLoading("메모/기록를 저장하는 중입니다...");
     const { data, error } = await uploadMemoFile(title, content, directoryId);
     closeDialog();
     if (error || !data) {
@@ -72,7 +72,7 @@ export default function NewMemoPage() {
           onClick={() => router.replace("/program/memo")}
         />
 
-        <h1 className="text-2xl font-medium">업무일지 작성</h1>
+        <h1 className="text-2xl font-medium">메모/기록 작성</h1>
       </div>
       <div className="flex items-end gap-4 mt-2">
         <TextField

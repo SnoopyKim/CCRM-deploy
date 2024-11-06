@@ -11,5 +11,6 @@ RUN pnpm install
 
 COPY . /app
 
-RUN pnpm build
-CMD ["pnpm", "start"]
+RUN chmod +x /app/start.sh
+
+ENTRYPOINT ["./start.sh"]

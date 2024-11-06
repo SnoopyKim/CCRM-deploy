@@ -1,28 +1,27 @@
+"use client";
+
 import useDialogStore from "@/app/_utils/dialog/store";
 import PrimaryButton from "../../Button/button";
-import { SearchField, TextField } from "../../Text";
+import { Input, SearchField, TextField } from "../../Text";
 import TextLabel from "../../Text/label";
+import { useState } from "react";
 
-export default function SmsGroupMemberDialog() {
+export default function GroupDialog({ groupName }: { groupName?: string }) {
   const closeDialog = useDialogStore((state) => state.closeDialog);
+  const [inputValue, setInputValue] = useState(groupName);
 
   return (
     <div className="flex flex-col w-[640px] gap-4">
       <div className="px-6 py-4 border-b border-b-grayscale-11">
-        <h2 className="text-xl font-normal">그룹 멤버 추가하기</h2>
+        <h2 className="text-xl font-normal">
+          {groupName ? "그룹명 수정" : "그룹 추가"}
+        </h2>
       </div>
       <div className="px-6">
-        <TextLabel title="멤버 명" />
-        <SearchField
-          className="mt-2"
-          placeholder="멤버 명을 입력하세요"
-          onSearch={() => {}}
-        />
-      </div>
-      <div className="px-6">
-        <TextField
-          title="호칭 관리"
-          placeholder="멤버 호칭을 작성해주세요. (선택)"
+        <Input
+          placeholder="그룹 이름"
+          value={inputValue||""}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
       <div className="flex justify-between px-6 pb-6">
@@ -30,13 +29,13 @@ export default function SmsGroupMemberDialog() {
           title="취소"
           color="gray"
           className="w-20 h-10 rounded text-base"
-          onClick={closeDialog}
+          onClick={() => closeDialog(null)}
         />
         <PrimaryButton
-          title="추가"
+          title="저장"
           color="primary"
           className="w-20 h-10 rounded text-base"
-          onClick={() => closeDialog()}
+          onClick={() => closeDialog(inputValue)}
         />
       </div>
     </div>

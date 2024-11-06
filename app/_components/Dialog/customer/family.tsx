@@ -8,25 +8,24 @@ import { SearchField } from "../../Text";
 import { ClientDTO, Family } from "@/app/_models/client";
 import { ClientDao } from "@/app/_utils/database/dao/clientDao";
 
-
 export default function AddFamilyDialog() {
   const closeDialog = useDialogStore((state) => state.closeDialog);
-  const [allFamilyData, setAllFamilyData] = useState<Family[] | null>(null); 
-  const [familyData, setFamilyData] = useState<Family[] | null>(null); 
+  const [allFamilyData, setAllFamilyData] = useState<Family[] | null>(null);
+  const [familyData, setFamilyData] = useState<Family[] | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    if (!allFamilyData){
-      const clientDao = new ClientDao(); 
+    if (!allFamilyData) {
+      const clientDao = new ClientDao();
 
       const fetchData = async () => {
         try {
           const clientDatas = await clientDao.getAllClients();
           const allFamilyData = clientDatas.map((client) => ({
-            id: client.id!, 
-            name: client.name!, 
-            phone: client.contactNumber!, 
-            relation: "부모", 
+            id: client.id!,
+            name: client.name!,
+            phone: client.contactNumber!,
+            relation: "부모",
           }));
           setAllFamilyData(allFamilyData);
           setFamilyData(allFamilyData);
@@ -37,23 +36,25 @@ export default function AddFamilyDialog() {
 
       fetchData();
     }
-  }, [allFamilyData, ]);
+  }, [allFamilyData]);
 
   // 검색어에 따라 familyData를 필터링하는 함수
   const handleSearch = (searchTerm: string) => {
-    setSearchTerm(searchTerm); 
+    setSearchTerm(searchTerm);
     if (allFamilyData) {
-      const filteredData = allFamilyData.filter((family) =>
-        family.name?.includes(searchTerm) || family.phone?.includes(searchTerm)
+      const filteredData = allFamilyData.filter(
+        (family) =>
+          family.name?.includes(searchTerm) ||
+          family.phone?.includes(searchTerm)
       );
-      setFamilyData(filteredData); 
+      setFamilyData(filteredData);
     }
   };
 
   const handleRelationChange = (id: number, value: string) => {
-    if(familyData){
+    if (familyData) {
       setFamilyData((prev) =>
-        (prev||[]).map((item) =>
+        (prev || []).map((item) =>
           item.id === id ? { ...item, relation: value } : item
         )
       );
@@ -61,15 +62,14 @@ export default function AddFamilyDialog() {
   };
 
   const onAdd = () => {
-    if(familyData){
+    if (familyData) {
       const selectedFamily = familyData.filter((family) => {
         const checkbox = document.querySelector<HTMLInputElement>(
           `#p_check${family.id}`
         );
         return checkbox?.checked;
       });
-      console.log(selectedFamily);
-  
+
       // 선택된 가족 데이터를 부모 컴포넌트로 전달
       closeDialog?.(selectedFamily);
     }
@@ -83,30 +83,26 @@ export default function AddFamilyDialog() {
         onSearch={handleSearch}
       />
       <table className="w-full">
-        <colgroup>
-          <col width="60px" />
-          <col width="*" />
-          <col width="*" />
-          <col width="120px" />
-        </colgroup>
-
         <thead>
-          <tr className="bg-grayscale-13 border-b border-grayscale-11">
-            <th className="py-3">
-              <input type="checkbox" name="all_select" id="all_select" />
-            </th>
-            <th className="text-left font-normal">고객명</th>
+          <tr className="table w-full table-fixed bg-grayscale-13 border-b border-grayscale-11">
+            <th className="text-left w-12 p-4"></th>
+            <th className="py-2 text-left font-normal">고객명</th>
             <th className="text-left font-normal">연락처</th>
             <th className="text-left font-normal">관계</th>
           </tr>
         </thead>
-        <tbody>
-          {(familyData||[]).map((item) => (
-            <tr key={item.id} className="border-b border-grayscale-11">
-              <td className="py-4">
-                <div className="flex justify-center">
-                <input type="checkbox" name="p_check" id={`p_check${item.id}`} />
-                </div>
+        <tbody className="block max-h-64 overflow-y-scroll">
+          {(familyData || []).map((item) => (
+            <tr
+              key={item.id}
+              className="table w-full table-fixed border-b border-grayscale-11"
+            >
+              <td className="w-12 p-4">
+                <input
+                  type="checkbox"
+                  name="p_check"
+                  id={`p_check${item.id}`}
+                />
               </td>
               <td className="font-semibold">{item.name}</td>
               <td>{item.phone}</td>
@@ -117,7 +113,10 @@ export default function AddFamilyDialog() {
                     { value: "자녀", text: "자녀" },
                     { value: "형제/자매", text: "형제/자매" },
                   ]}
-                  onChange={(event: React.ChangeEvent<HTMLSelectElement>) => handleRelationChange(item.id, event.target.value)}
+                  className="h-12 py-3"
+                  onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+                    handleRelationChange(item.id, event.target.value)
+                  }
                 />
               </td>
             </tr>

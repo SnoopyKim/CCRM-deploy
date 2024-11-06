@@ -43,6 +43,33 @@ export default function DriveItemRow({ item }: { item: DriveItem }) {
     }
   };
 
+  const getTypeString = (type: string) => {
+    if (type === "application/vnd.google-apps.folder") {
+      return "폴더";
+    }
+    if (type === "application/vnd.google-apps.document") {
+      return "문서";
+    }
+    if (type.startsWith("image")) {
+      return "이미지";
+    }
+    if (type.startsWith("video")) {
+      return "비디오";
+    }
+    if (type.startsWith("audio")) {
+      return "음성";
+    }
+    return "파일";
+  };
+
+  const getByteString = (bytes: number) => {
+    if (bytes === 0) return "0 Bytes";
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    const formattedBytes = parseFloat((bytes / Math.pow(1024, i)).toFixed(2));
+    return `${formattedBytes} ${sizes[i]}`;
+  };
+
   return (
     <tr
       key={item.id}
@@ -59,6 +86,8 @@ export default function DriveItemRow({ item }: { item: DriveItem }) {
         />
       </td>
       <td className="">{item.name}</td>
+      <td className="">{getTypeString(item.mimeType ?? "")}</td>
+      <td className="">{item.size ? getByteString(Number(item.size)) : "-"}</td>
       <td className="">
         {item.modifiedTime?.slice(0, 10) ??
           new Date().toISOString().slice(0, 10)}

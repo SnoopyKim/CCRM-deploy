@@ -1,33 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import MemoSidebar from "./_components/sidebar";
 import MemoTable from "./_components/table";
-import Dropdown from "@/app/_components/Dropdown";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { DriveDirectory } from "@/app/_models/drive";
-import { loadMemoDrive } from "@/app/_services/google/memo";
+import { useEffect } from "react";
 import { useMemoStore } from "@/app/_utils/memo/store";
 import useDialogStore from "@/app/_utils/dialog/store";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function MemoPage() {
   const { openLoading, closeDialog } = useDialogStore();
   const { directory, loadDirectory } = useMemoStore();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   useEffect(() => {
-    if (directory) return;
+    if (!isAuthenticated || directory) return;
     const fetchData = async () => {
-      openLoading("업무일지를 받아오는 중입니다...");
+      openLoading("메모/기록을 받아오는 중입니다...");
       await loadDirectory();
       closeDialog();
     };
     fetchData();
-  }, [directory]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, directory]);
 
   return (
     <div className="flex flex-col w-full max-w-screen-lg mx-auto my-10">
-      <h1 className="text-3xl font-normal">업무 일지</h1>
+      <h1 className="text-3xl font-normal">메모/기록</h1>
       <div className="flex my-6 justify-end">
         <Link
           href="/program/memo/new"

@@ -8,11 +8,11 @@ export default function SignUpPage() {
     <main className="flex flex-col min-h-[calc(100vh-5rem)] items-center justify-center">
       <Icon type="logo" className="w-48 fill-main-1" />
       <div className="flex flex-col w-[400px] mt-16 items-stretch gap-2">
-        <LinkButton
+        {/* <LinkButton
           href="/sign-up/terms"
           title="이메일 회원가입"
           className="w-full"
-        />
+        /> */}
         <GoogleAuthButton>구글로 회원가입</GoogleAuthButton>
       </div>
       <div className="flex flex-row justify-center mt-4">

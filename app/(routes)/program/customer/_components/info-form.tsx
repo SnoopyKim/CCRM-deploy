@@ -1,30 +1,32 @@
 "use client";
 
-import { useState,useEffect } from "react";
 import CheckBox from "@/app/_components/CheckBox/default";
-import SelectField from "@/app/_components/Select/select-field";
 import TextField from "@/app/_components/Text/field";
 import Input from "@/app/_components/Text/input";
 
 import { Address, useDaumPostcodePopup } from "react-daum-postcode";
-import {occupations,interests, ClientDTO, getHalfBirthday, getInsuranceAge} from "@/app/_models/client";
+import {
+  interests,
+  ClientDTO,
+  getHalfBirthday,
+  getInsuranceAge,
+} from "@/app/_models/client";
 
 export default function InfoForm({
   onSubmit,
-  formData, 
+  formData,
   setFormData,
 }: {
-  onSubmit: ((formData: any) => void)|null;
-  formData: Partial<ClientDTO>|null 
+  onSubmit: ((formData: any) => void) | null;
+  formData: Partial<ClientDTO> | null;
   setFormData: React.Dispatch<React.SetStateAction<Partial<ClientDTO> | null>>;
 }) {
-
   const openPostcodePopup = useDaumPostcodePopup();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (onSubmit) {
-      onSubmit(formData); 
+      onSubmit(formData);
     }
   };
 
@@ -46,7 +48,7 @@ export default function InfoForm({
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    handleChange("address",fullAddress);
+    handleChange("address", fullAddress);
   };
 
   return (
@@ -57,13 +59,21 @@ export default function InfoForm({
       <div className="text-xl font-normal">
         고객 정보 <span className="text-sub-1">(필수기재)</span>
       </div>
-      
-      <TextField
-        title="이름"
-        required
-        value={formData?.name||""}
-        onChange={(e) => handleChange("name", e.target.value)}
-      />
+
+      <div className="flex gap-4">
+        <TextField
+          title="이름"
+          required
+          value={formData?.name || ""}
+          onChange={(e) => handleChange("name", e.target.value)}
+        />
+        <TextField 
+          title="호칭" 
+          caution="(선택)" 
+          value={formData?.honorific || ""}
+          onChange={(e) => handleChange("honorific", e.target.value)}
+        />
+      </div>
 
       <div className="grid grid-cols-2">
         <div className="">
@@ -73,7 +83,7 @@ export default function InfoForm({
               type="radio"
               name="clientType"
               value="관리 고객"
-              checked={formData?.clientType === "관리 고객"||true}
+              checked={formData?.clientType === "관리 고객" || true}
               onChange={() => handleChange("clientType", "관리 고객")}
             />
             <label>관리고객</label>
@@ -83,7 +93,7 @@ export default function InfoForm({
               type="radio"
               name="clientType"
               value="가망 고객"
-              checked={formData?.clientType === "가망 고객"||false}
+              checked={formData?.clientType === "가망 고객" || false}
               onChange={() => handleChange("clientType", "가망 고객")}
             />
             <label>가망고객</label>
@@ -96,7 +106,7 @@ export default function InfoForm({
               type="radio"
               name="driverLicense"
               value="운전 유"
-              checked={formData?.driverLicense === "운전 유"||true}
+              checked={formData?.driverLicense === "운전 유" || true}
               onChange={() => handleChange("driverLicense", "운전 유")}
             />
             <label>운전 유</label>
@@ -106,7 +116,7 @@ export default function InfoForm({
               type="radio"
               name="driverLicense"
               value="운전 무"
-              checked={formData?.driverLicense === "운전 무"||false}
+              checked={formData?.driverLicense === "운전 무" || false}
               onChange={() => handleChange("driverLicense", "운전 무")}
             />
             <label>운전 무</label>
@@ -114,31 +124,34 @@ export default function InfoForm({
         </div>
       </div>
 
-      <SelectField
+      <TextField
         title="하시는 일"
-        placeholder="선택"
-        options={occupations}
         className="w-full"
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-          const selectedValue = event.target.value; 
+        value={formData?.occupation || ""}
+        onChange={(event) => {
+          const selectedValue = event.target.value;
           handleChange("occupation", selectedValue);
-          console.log(selectedValue); 
         }}
+        required
       />
 
       <div className="flex flex-col">
         <span className="text-sm font-semibold text-grayscale-6">
           핸드폰 연락처
         </span>
-        <div className="flex gap-4 justify-between items-center mt-2">
+        <div className="flex gap-4 items-center mt-2">
           <Input
             type="text"
             inputMode="numeric"
             placeholder="010"
             maxLength={4}
-            className="w-44"
-            value={formData?.contactNumber?.part1||""}
-            onChange={(e) => handleChange("contactNumber", { ...formData?.contactNumber, part1: e.target.value })}
+            value={formData?.contactNumber?.part1 || ""}
+            onChange={(e) =>
+              handleChange("contactNumber", {
+                ...formData?.contactNumber,
+                part1: e.target.value,
+              })
+            }
             required
           />
           <span>-</span>
@@ -146,9 +159,13 @@ export default function InfoForm({
             type="text"
             inputMode="numeric"
             maxLength={4}
-            className="w-44"
-            value={formData?.contactNumber?.part2||""}
-            onChange={(e) => handleChange("contactNumber", { ...formData?.contactNumber, part2: e.target.value })}
+            value={formData?.contactNumber?.part2 || ""}
+            onChange={(e) =>
+              handleChange("contactNumber", {
+                ...formData?.contactNumber,
+                part2: e.target.value,
+              })
+            }
             required
           />
           <span>-</span>
@@ -156,14 +173,18 @@ export default function InfoForm({
             type="text"
             inputMode="numeric"
             maxLength={4}
-            className="w-44"
-            value={formData?.contactNumber?.part3||""}
-            onChange={(e) => handleChange("contactNumber", { ...formData?.contactNumber, part3: e.target.value })}
+            value={formData?.contactNumber?.part3 || ""}
+            onChange={(e) =>
+              handleChange("contactNumber", {
+                ...formData?.contactNumber,
+                part3: e.target.value,
+              })
+            }
             required
           />
         </div>
       </div>
-    
+
       <div className="flex flex-col">
         <span className="text-sm font-semibold text-grayscale-6">주민번호</span>
         <div className="flex flex-col">
@@ -173,8 +194,13 @@ export default function InfoForm({
               inputMode="numeric"
               name="mb_resident_num"
               placeholder="주민번호 앞 6자리"
-              value={formData?.residentRegistrationNumber?.part1||""}
-              onChange={(e) => handleChange("residentRegistrationNumber", { ...formData?.residentRegistrationNumber, part1: e.target.value })}
+              value={formData?.residentRegistrationNumber?.part1 || ""}
+              onChange={(e) =>
+                handleChange("residentRegistrationNumber", {
+                  ...formData?.residentRegistrationNumber,
+                  part1: e.target.value,
+                })
+              }
               maxLength={6}
               required
             />
@@ -186,8 +212,13 @@ export default function InfoForm({
                   inputMode="numeric"
                   name="mb_resident_num2"
                   placeholder=""
-                  value={formData?.residentRegistrationNumber?.part2||""}
-                  onChange={(e) => handleChange("residentRegistrationNumber", { ...formData?.residentRegistrationNumber, part2: e.target.value })}
+                  value={formData?.residentRegistrationNumber?.part2 || ""}
+                  onChange={(e) =>
+                    handleChange("residentRegistrationNumber", {
+                      ...formData?.residentRegistrationNumber,
+                      part2: e.target.value,
+                    })
+                  }
                   maxLength={1}
                   className="w-12 mr-2"
                   required
@@ -196,12 +227,21 @@ export default function InfoForm({
               </div>
             </div>
           </div>
-          <ul className="flex flex-col">
+          <ul className="flex flex-col mt-2">
             <li className="list-inside list-disc ml-2">
-              보험 나이 <span className="text-sub-1">{getInsuranceAge(formData?.residentRegistrationNumber) || "-"}세</span>
+              보험 나이{" "}
+              <span className="text-sub-1">
+                {getInsuranceAge(formData?.residentRegistrationNumber) || "-"}세
+              </span>
               &nbsp;&nbsp;|&nbsp;&nbsp;상령일&nbsp;
               <span className="text-sub-1">
-                매년 {getHalfBirthday(formData?.residentRegistrationNumber)?.toLocaleDateString("ko-KR", { month: "long", day: "numeric" }) || "-"}
+                매년{" "}
+                {getHalfBirthday(
+                  formData?.residentRegistrationNumber
+                )?.toLocaleDateString("ko-KR", {
+                  month: "long",
+                  day: "numeric",
+                }) || "-"}
               </span>
             </li>
             <li className="list-inside list-disc ml-2">
@@ -217,7 +257,7 @@ export default function InfoForm({
           name="address1"
           placeholder="주소 검색"
           readOnly
-          value={formData?.address||""}
+          value={formData?.address || ""}
           onClick={() =>
             openPostcodePopup({ onComplete: handlePostcodeComplete })
           }
@@ -228,13 +268,15 @@ export default function InfoForm({
           placeholder="나머지 주소 입력"
           required
           className="mt-2"
-          value={formData?.addressDetail||""}
+          value={formData?.addressDetail || ""}
           onChange={(e) => handleChange("addressDetail", e.target.value)}
         />
       </div>
 
       <div className="flex flex-col">
-        <span className="text-sm font-semibold text-grayscale-6">관심 사항 / 성향 (최대 3개)</span>
+        <span className="text-sm font-semibold text-grayscale-6">
+          관심 사항 / 성향 (최대 3개)
+        </span>
         <div className="grid grid-cols-3 mt-2">
           {interests.map((item) => (
             <CheckBox
@@ -243,11 +285,14 @@ export default function InfoForm({
               label={item.text}
               checked={formData?.interests?.includes(item.value) || false}
               onChecked={(checked: boolean) => {
-                const currentInterests = formData?.interests || []
+                const currentInterests = formData?.interests || [];
                 if (checked) {
                   // 체크박스가 체크되었을 때
                   if (currentInterests.length < 3) {
-                    handleChange("interests", [...currentInterests, item.value]);
+                    handleChange("interests", [
+                      ...currentInterests,
+                      item.value,
+                    ]);
                   } else {
                     alert("최대 3개까지 선택 가능합니다.");
                     setTimeout(() => {
@@ -258,7 +303,9 @@ export default function InfoForm({
                   // 체크박스가 체크 해제되었을 때
                   handleChange(
                     "interests",
-                    currentInterests.filter((interest) => interest !== item.value)
+                    currentInterests.filter(
+                      (interest) => interest !== item.value
+                    )
                   );
                 }
               }}

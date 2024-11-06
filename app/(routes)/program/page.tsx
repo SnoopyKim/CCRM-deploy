@@ -11,7 +11,7 @@ export default function ProgramPage() {
     },
     {
       name: "상담일지",
-      href: "/program/counsel-list",
+      href: "/program/counsel/list",
       icon: "/images/program/menu/councel.png",
     },
     {
@@ -21,7 +21,7 @@ export default function ProgramPage() {
     },
     {
       name: "메시지 발송",
-      href: "/program/message/kakao",
+      href: "/program/message",
       icon: "/images/program/menu/message.png",
     },
     {
@@ -30,7 +30,7 @@ export default function ProgramPage() {
       icon: "/images/program/menu/insurance.png",
     },
     {
-      name: "업무일지",
+      name: "메모/기록",
       href: "/program/memo",
       icon: "/images/program/menu/memo.png",
     },

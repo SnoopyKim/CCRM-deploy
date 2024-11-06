@@ -72,6 +72,7 @@ export default function MemberPage() {
           defaultValue={userData?.phoneNumber ?? ""}
           required
         />
+        <TextField title="지사명" />
         <TextField title="회사명" />
         <TextField title="지점" />
         <TextField title="직책" />

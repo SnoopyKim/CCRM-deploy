@@ -1,19 +1,15 @@
-"use client"; 
+"use client";
 
-import React, { useEffect, useState, useRef } from "react";
-
-import { ClientDao } from "@utils/database/dao/clientDao";
-import { Select } from "@/app/_components/Select";
 import Link from "next/link";
-import ClientModel from "@/app/_models/client";
+import ClientModel, { getHalfBirthday } from "@/app/_models/client";
 
 export default function CustomerTable({
-  clients, 
+  clients,
   setClients,
 }: {
   clients: ClientModel[];
   setClients: React.Dispatch<React.SetStateAction<ClientModel[]>>;
-})  {
+}) {
   return (
     <>
       <table className="w-full mt-4">
@@ -23,50 +19,71 @@ export default function CustomerTable({
           <col width="140px" />
           <col width="140px" />
           <col width="140px" />
+          <col width="140px" />
           <col width="*" />
           <col width="*" />
         </colgroup>
 
         <thead>
-          <tr className="bg-grayscale-13 border-b border-grayscale-11">
-            <th className="py-2">
-              <input type="checkbox" name="all_select" id="all_select" />
-            </th>
-            <th className="text-left font-normal">고객명</th>
+          <tr className="bg-grayscale-13 border-y border-grayscale-11">
+            <th className=""></th>
+            <th className="py-2 text-left font-normal">고객명</th>
             <th className="text-left font-normal">구분</th>
             <th className="text-left font-normal">연락처</th>
+            <th className="text-left font-normal">상령일</th>
             <th className="text-left font-normal">생년월일</th>
             <th className="text-left font-normal">그룹관리</th>
             <th className="text-left font-normal">정보</th>
           </tr>
         </thead>
         <tbody>
-          {(clients||[]).map((client:ClientModel) => (
+          {(clients || []).map((client: ClientModel) => (
             <tr key={client.id} className="border-b border-grayscale-11">
               <td className="py-4">
                 <div className="flex justify-center">
                   <input
-                      type="checkbox"
-                      name="p_check"
-                      id={`p_check${client.id}`}
-                      checked={client.isDeleteChecked||false}
-                      onChange={(e) => 
-                        setClients((prevClients) =>
-                          prevClients.map((c) =>
-                            c.id === client.id 
-                              ? Object.assign(Object.create(Object.getPrototypeOf(c)), c, { isDeleteChecked: e.target.checked })
-                              : c
-                          )
+                    type="checkbox"
+                    name="p_check"
+                    id={`p_check${client.id}`}
+                    checked={client.isDeleteChecked || false}
+                    onChange={(e) =>
+                      setClients((prevClients) =>
+                        prevClients.map((c) =>
+                          c.id === client.id
+                            ? Object.assign(
+                                Object.create(Object.getPrototypeOf(c)),
+                                c,
+                                { isDeleteChecked: e.target.checked }
+                              )
+                            : c
                         )
-                      }
-                    />
+                      )
+                    }
+                  />
                 </div>
               </td>
               <td className="font-semibold">{client.name}</td>
               <td className="text-sub-3">{client.clientType}</td>
               <td>{client.contactNumber}</td>
-              <td>{client.birthDate ? client.birthDate.toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric" }) : "-"}</td>
-              <td className="text-sub-2">{client.managementGroupId}</td>
+              <td>
+                {getHalfBirthday(
+                  client.toDTO().residentRegistrationNumber
+                )?.toLocaleDateString("ko-KR", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </td>
+              <td>
+                {client.birthDate
+                  ? client.birthDate.toLocaleDateString("ko-KR", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "-"}
+              </td>
+              <td className="text-sub-2 truncate">{client.groupString}</td>
               <td>
                 <Link
                   href={`/program/customer/edit?id=${client.id}`}

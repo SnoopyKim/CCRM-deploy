@@ -14,6 +14,7 @@ export default function SignUpFormPage({
   searchParams: {
     terms: string;
     privacy: string;
+    branch: string;
   };
 }) {
   const router = useRouter();
@@ -70,12 +71,12 @@ export default function SignUpFormPage({
           onChange={(e) => setId(e.target.value)}
           required
         />
-        <Button
+        {/* <Button
           title="중복 확인"
           color="primary"
           onClick={checkEmailDuplication}
           className="mt-7"
-        />
+        /> */}
       </div>
       <div className="flex flex-col gap-2">
         <TextField
@@ -93,6 +94,11 @@ export default function SignUpFormPage({
           placeholder="비밀번호 확인"
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
+          error={
+            password !== passwordConfirm
+              ? "비밀번호가 일치하지 않습니다."
+              : ""
+          }
           required
         />
       </div>
@@ -113,19 +119,21 @@ export default function SignUpFormPage({
             onChange={(e) => setPhone(e.target.value)}
             required
           />
-          <Button title="인증 받기" color="primary" onClick={verifyPhone} />
+          {/* <Button title="인증 받기" color="primary" onClick={verifyPhone} /> */}
         </div>
       </div>
       <div className="flex flex-col gap-2">
         <TextField
           type="text"
-          name="company"
+          name="branch"
           title="선택 개인정보 입력"
-          placeholder="회사명"
+          placeholder="지사 코드"
+          defaultValue={searchParams.branch}
+          disabled={!!searchParams.branch}
         />
-        <Input type="text" name="branch" placeholder="지점" />
+        <Input type="text" name="company" placeholder="회사명" />
+        <Input type="text" name="spot" placeholder="지점" />
         <Input type="text" name="position" placeholder="직책" />
-
         <Input type="text" name="region" placeholder="지역" />
       </div>
 
@@ -133,7 +141,7 @@ export default function SignUpFormPage({
         type="submit"
         title="회원가입하기"
         className="mt-10 shadow-md shadow-grayscale-9"
-        disabled={fetching}
+        disabled={fetching && password === passwordConfirm}
       />
     </form>
   );

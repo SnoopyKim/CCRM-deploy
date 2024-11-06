@@ -6,6 +6,7 @@ import cn from "@/app/_utils/cn";
 import useDialogStore from "@/app/_utils/dialog/store";
 import { useEffect, useState } from "react";
 import BillGridView from "./bill-grid";
+import useAuthStore from "@/app/_utils/auth/store";
 
 const mockData = new InsuranceModel(
   "",
@@ -25,7 +26,10 @@ export default function InsuranceBillPage() {
   const { openAlert } = useDialogStore();
   const [activeCategory, setActiveCategory] = useState("property");
   const [insuranceList, setInsuranceList] = useState<InsuranceModel[]>([]);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   useEffect(() => {
+    if (!isAuthenticated) return;
     const fetchData = async () => {
       const { data, error } = await getInsurances(1, 100);
       if (error) {
@@ -39,7 +43,7 @@ export default function InsuranceBillPage() {
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div className="w-full max-w-screen-lg mx-auto">

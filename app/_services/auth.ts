@@ -38,3 +38,23 @@ export async function signUp(
 
   return { data, error };
 }
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string
+) {
+  const { data, error } = await apiRequest<{
+    jwtToken: string;
+    message: string;
+  }>("/auth/change-password", {
+    method: "POST",
+    data: {
+      currentPassword,
+      newPassword,
+    },
+  });
+  if (error || !data) {
+    return { error };
+  }
+  return { data: data.jwtToken };
+}

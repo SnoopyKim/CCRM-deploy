@@ -9,7 +9,7 @@ import ConfirmDialog from "@/app/_components/Dialog/confirm";
 import LoadingDialog from "@/app/_components/Dialog/loading";
 
 const DialogWrapper = ({ children }: { children: React.ReactNode }) => {
-  const { closeDialog } = useDialogStore();
+  const closeDialog = useDialogStore((state) => state.closeDialog);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // 이벤트가 모달 안쪽으로 전달되지 않도록 막음

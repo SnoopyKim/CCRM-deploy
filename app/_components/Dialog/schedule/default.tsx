@@ -108,7 +108,7 @@ export default function ScheduleDialog({
       {typedSchedules.length > 0 && (
         <ScheduleTable
           schedules={typedSchedules}
-          onEditSchedule={handleEdit}
+          // onEditSchedule={handleEdit}
           onDeleteSchedule={handleDelete}
         />
       )}
@@ -166,15 +166,18 @@ const ScheduleTable = ({
   onDeleteSchedule,
 }: {
   schedules: CalendarEvent[];
-  onEditSchedule: (schedule: CalendarEvent) => void;
+  onEditSchedule?: (schedule: CalendarEvent) => void;
   onDeleteSchedule: (id: string) => void;
 }) => {
   const renderRow = (schedule: CalendarEvent) => {
     const { type, customer, phone, additionalType } =
       schedule.extendedProperties?.private || {};
     return (
-      <tr key={schedule.id} className="border-b border-grayscale-11">
-        <td className="px-2 font-medium">{customer}</td>
+      <tr
+        key={schedule.id}
+        className="table table-fixed w-full border-b border-grayscale-11"
+      >
+        <td className="px-2 font-medium w-32">{customer}</td>
         <td
           className={
             scheduleStyle.tag[type as keyof typeof scheduleStyle.tag] +
@@ -185,14 +188,14 @@ const ScheduleTable = ({
           {additionalType && ` [${additionalType}]`}
         </td>
         <td className="">{phone}</td>
-        <td className="p-2">
+        <td className="p-2 w-28">
           <div className="flex gap-2 justify-end">
-            <button
+            {/* <button
               className="bg-grayscale-5 text-grayscale-14 px-4 py-1 text-sm rounded font-normal hover:bg-main-2"
               onClick={() => onEditSchedule(schedule)}
             >
               수정
-            </button>
+            </button> */}
             <button
               className="bg-grayscale-14 px-4 py-1 text-sm rounded font-normal border border-grayscale-5 text-grayscale-5 hover:text-grayscale-14 hover:border-main-2 hover:bg-main-2"
               onClick={() => onDeleteSchedule(schedule.id)}
@@ -206,16 +209,18 @@ const ScheduleTable = ({
   };
 
   return (
-    <table className="w-full table-fixed">
+    <table className="w-full">
       <thead>
-        <tr className="bg-grayscale-12">
-          <th className="text-left p-2">고객명</th>
+        <tr className="table table-fixed w-full bg-grayscale-12">
+          <th className="text-left p-2 w-32">고객명</th>
           <th className="text-left ">구분</th>
           <th className="text-left ">연락처</th>
-          <th className="text-left "></th>
+          <th className="text-left w-28"></th>
         </tr>
       </thead>
-      <tbody>{schedules.map(renderRow)}</tbody>
+      <tbody className="block w-full max-h-80 overflow-y-scroll">
+        {schedules.map(renderRow)}
+      </tbody>
     </table>
   );
 };

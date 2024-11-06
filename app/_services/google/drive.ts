@@ -101,7 +101,7 @@ export async function getDriveFiles(directoryId: string) {
     params: {
       q: `'${directoryId}' in parents`,
       fields:
-        "files(id, name, mimeType, parents, modifiedTime, webContentLink)",
+        "files(id, name, mimeType, parents,size,  modifiedTime, webContentLink)",
     },
   });
   if (error) {
@@ -195,4 +195,19 @@ export async function deleteDriveFile(fileId: string) {
   });
 
   return !error;
+}
+
+export async function getDriveUsage() {
+  const { data, error } = await googleRequest("/drive/v3/about", {
+    method: "GET",
+    params: {
+      fields: "storageQuota",
+    },
+  });
+
+  if (error) {
+    return { error };
+  }
+
+  return { data };
 }

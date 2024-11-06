@@ -6,7 +6,7 @@ import { Input, TextArea } from "@/app/_components/Text";
 import Link from "next/link";
 import ColorButton from "../../../customer/_components/color-button";
 import Icon from "@/app/_components/Icon";
-import SmsGroupMemberDialog from "@/app/_components/Dialog/sms/group-member";
+import GroupMemberDialog from "@/app/_components/Dialog/group/member";
 import useDialogStore from "@/app/_utils/dialog/store";
 
 // 실제 알리고 API 응답 객체
@@ -52,7 +52,7 @@ export default function MailSendPage({ params }: { params: { id: string } }) {
         </div>
         <div
           className="px-4 py-3 border border-sub-2 text-sub-2 cursor-pointer"
-          onClick={() => openCustom(<SmsGroupMemberDialog />)}
+          onClick={() => openCustom(<GroupMemberDialog />)}
         >
           멤버 추가하기
         </div>

@@ -55,12 +55,12 @@ export default function ProgramNavItemWithSub({
             href={href}
             className={cn(
               "w-full flex justify-between items-center pl-11 pr-4 h-10 hover:opacity-100",
-              pathname === href ? "bg-main-3 opacity-100" : "opacity-80"
+              pathname.startsWith(href) ? "bg-main-3 opacity-100" : "opacity-80"
             )}
           >
             <span
               className={
-                pathname === href
+                pathname.startsWith(href)
                   ? "text-grayscale-14 font-normal"
                   : "text-grayscale-11"
               }

@@ -36,11 +36,11 @@ export default function ProgramNav() {
           subList={[
             {
               title: "상담 등록",
-              href: "/program/counsel",
+              href: "/program/counsel/new",
             },
             {
               title: "상담 현황",
-              href: "/program/counsel-list",
+              href: "/program/counsel/list",
             },
           ]}
         />
@@ -81,7 +81,7 @@ export default function ProgramNav() {
             },
           ]}
         />
-        <ProgramNavItem icon="memo" title="업무 일지" href="/program/memo" />
+        <ProgramNavItem icon="memo" title="메모/기록" href="/program/memo" />
         <ProgramNavItem icon="archive" title="자료실" href="/program/archive" />
       </div>
     </nav>

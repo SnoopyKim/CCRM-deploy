@@ -11,35 +11,46 @@ import { ClientDao } from "@/app/_utils/database/dao/clientDao";
 import CustomerTable from "./table";
 import ClientModel from "@/app/_models/client";
 import { Select } from "@/app/_components/Select";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function CustomerRetrievePage() {
   const router = useRouter();
   const openCustom = useDialogStore((state) => state.openCustom);
   const [totalClients, setTotalClients] = useState<ClientModel[]>([]);
   const [clients, setClients] = useState<ClientModel[]>([]);
-  const isExecuted = useRef(false); 
+  const isExecuted = useRef(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const clientDao = new ClientDao();
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
     setFilterClients();
     if (!isExecuted.current) {
       isExecuted.current = true;
       setupDatabase().catch(console.error);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalClients,searchTerm,sortOrder]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, totalClients, searchTerm, sortOrder]);
 
   const setupDatabase = async () => {
-      const fetchedClients=await clientDao.getAllClients();
-      setTotalClients(fetchedClients);
-      setClients(fetchedClients);
+    let fetchedClients = await clientDao.getAllClients();
+    fetchedClients = await Promise.all(
+      fetchedClients.map(async (client) => {
+        client.groupString = await client.getManagementGroupsString();
+        return client;
+      })
+    );
+    setTotalClients(fetchedClients);
+    setClients(fetchedClients);
   };
-  
+
   const setFilterClients = () => {
-    console.log("setFilterClients");
     //검색어 필터링
     const filteredClients = totalClients.filter(
       (client) =>
@@ -53,14 +64,14 @@ export default function CustomerRetrievePage() {
       return 0;
     });
     setClients(sortedClients);
-  }
+  };
 
   const deleteCheckedClient = async () => {
     const checkedClients = clients
-      .filter(client => client.isDeleteChecked && client.id !== undefined)
-      .map(client => client.id as number);
-    if(checkedClients&&checkedClients.length>=0){
-      await clientDao.deleteClients(checkedClients);
+      .filter((client) => client.isDeleteChecked && client.id !== undefined)
+      .map((client) => client.id as number);
+    if (checkedClients && checkedClients.length >= 0) {
+      await clientDao.deleteClientsTransaction(checkedClients);
       await setupDatabase();
     }
   };
@@ -74,11 +85,27 @@ export default function CustomerRetrievePage() {
           </span>
           <div className="w-0.5 bg-grayscale-11 h-4"></div>
           <span className="leading-none">
-            관리고객 <strong>{totalClients.filter(client => client.clientType === "관리 고객").length}명</strong>
+            관리고객{" "}
+            <strong>
+              {
+                totalClients.filter(
+                  (client) => client.clientType === "관리 고객"
+                ).length
+              }
+              명
+            </strong>
           </span>
           <div className="w-0.5 bg-grayscale-11 h-4"></div>
           <span className="leading-none">
-            가망고객 <strong>{totalClients.filter(client => client.clientType === "가망 고객").length}명</strong>
+            가망고객{" "}
+            <strong>
+              {
+                totalClients.filter(
+                  (client) => client.clientType === "가망 고객"
+                ).length
+              }
+              명
+            </strong>
           </span>
         </div>
         <SearchField
@@ -89,13 +116,18 @@ export default function CustomerRetrievePage() {
       </div>
       <div className="flex justify-between mt-4 font-normal">
         <div className="flex gap-2">
-          <ColorButton 
-            color="grayscale-7" 
+          <ColorButton
+            color="gray"
             icon="delete"
-            title="고객 삭제" 
+            title="고객 삭제"
             onClick={deleteCheckedClient}
           />
-          <ColorButton color="sub-2" icon="folderOutline" title="그룹 관리" />
+          <ColorButton
+            color="sub-2"
+            icon="folderOutline"
+            title="그룹 관리"
+            onClick={() => router.push("/program/group")}
+          />
           <ColorButton
             color="sub-1"
             icon="plus"
@@ -109,7 +141,11 @@ export default function CustomerRetrievePage() {
             }}
           />
         </div>
-        <ColorButton  onClick={downloadDatabase} color="sub-5" title="엑셀 다운로드" />
+        <ColorButton
+          onClick={downloadDatabase}
+          color="sub-5"
+          title="엑셀 다운로드"
+        />
       </div>
       <div className="overflow-x-auto mt-4">
         <div className="flex justify-end items-center gap-4">
@@ -142,7 +178,7 @@ export default function CustomerRetrievePage() {
             }}
           />
         </div>
-        <CustomerTable clients={clients} setClients={setClients}/>
+        <CustomerTable clients={clients} setClients={setClients} />
       </div>
     </div>
   );

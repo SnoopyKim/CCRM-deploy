@@ -9,7 +9,7 @@ import {
   uploadFile,
   uploadFolder,
 } from "@/app/_services/google/drive";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import DriveItemRow from "./_components/drive-item";
 import { useGoogleDriveStore } from "@/app/_utils/gdrive/store";
 import {
@@ -19,20 +19,22 @@ import {
   DRIVE_NAME_MEMO,
 } from "@/app/_constants/gdrive";
 import cn from "@/app/_utils/cn";
-import { flushSync } from "react-dom";
 import useDialogStore from "@/app/_utils/dialog/store";
+import useAuthStore from "@/app/_utils/auth/store";
 
 export default function ArchivePage() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const { directory, loadDirectory, addFile } = useGoogleDriveStore();
   const { openLoading, closeDialog } = useDialogStore();
 
   useEffect(() => {
-    if (directory) return;
+    if (!isAuthenticated || directory) return;
     const fetchDriveFiles = async () => {
       openLoading("드라이브 자료들을 가져오는 중입니다...");
       const { data: folderData, error: folderError } = await loadMainDrive();
       if (folderError || !folderData) {
         console.error(folderError);
+        closeDialog();
         return;
       }
       const { data, error } = await getDriveFiles(folderData.id);
@@ -45,7 +47,8 @@ export default function ArchivePage() {
       loadDirectory(folderData);
     };
     fetchDriveFiles();
-  }, [directory]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, directory]);
 
   const handleFolderAdd = async () => {
     const folderName = window.prompt("폴더 이름을 입력하세요");
@@ -126,9 +129,11 @@ export default function ArchivePage() {
         <table className="w-full table-fixed ">
           <thead>
             <tr className="bg-grayscale-12">
-              <th className="text-left px-4 py-2 w-20">유형</th>
-              <th className="text-left">이름</th>
-              <th className="text-left w-48">수정 날짜</th>
+              <th className="text-left px-4 w-20"></th>
+              <th className="text-left py-2">이름</th>
+              <th className="text-left w-28">유형</th>
+              <th className="text-left w-32">크기</th>
+              <th className="text-left w-36">수정 날짜</th>
               <th className="text-left w-28"></th>
             </tr>
           </thead>
@@ -143,6 +148,8 @@ export default function ArchivePage() {
                     <Icon type={"down"} className="rotate-90" />
                   </td>
                   <td className="">상위 폴더로</td>
+                  <td className="">-</td>
+                  <td className="">-</td>
                   <td className="">-</td>
                   <td className="p-2"></td>
                 </tr>

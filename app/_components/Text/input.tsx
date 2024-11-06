@@ -33,7 +33,7 @@ export default function Input({
         type={type}
         defaultValue={props.defaultValue}
         className={cn(
-          "flex h-14 p-4 text-base bg-white border border-grayscale-11 rounded-sm placeholder-grayscale-6",
+          "flex w-full h-14 p-4 text-base bg-white border border-grayscale-11 rounded-sm placeholder-grayscale-6",
           "focus:border-sub-2 focus-visible:border-sub-2 focus:outline-none",
           "disabled:text-grayscale-9 disabled:bg-grayscale-13 disabled:border-none",
           error && "border-sub-4",

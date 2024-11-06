@@ -21,7 +21,6 @@ export default function AddAccountDialog() {
       number: accountNumber,
       isPrimary: isPrimary,
     };
-    console.log(newAccount);
     closeDialog?.(newAccount);
   };
 

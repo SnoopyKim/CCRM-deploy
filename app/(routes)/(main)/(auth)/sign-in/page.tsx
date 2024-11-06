@@ -14,9 +14,9 @@ export default function SignInPage() {
       </Suspense>
       <LoginForm />
       <div className="w-full mt-4">
-        <GoogleAuthButton>구글로 로그인</GoogleAuthButton>
+        <GoogleAuthButton>구글로 로그인 / 회원가입</GoogleAuthButton>
       </div>
-      <Link
+      {/* <Link
         href="/find-password"
         className="mt-8 text-grayscale-6 underline underline-offset-2"
       >
@@ -27,7 +27,7 @@ export default function SignInPage() {
         className="mt-4 text-grayscale-6 underline underline-offset-2"
       >
         회원가입
-      </Link>
+      </Link> */}
     </main>
   );
 }

@@ -22,7 +22,6 @@ export function generateInsertQuery(
     })
     .join(", ");
   
-  console.log(`INSERT INTO ${tableName} (${columns}) VALUES (${values})`);
   return `INSERT INTO ${tableName} (${columns}) VALUES (${values})`;
 }
 

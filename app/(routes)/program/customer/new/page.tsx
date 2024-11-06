@@ -4,7 +4,12 @@ import { useRouter } from "next/navigation";
 import InfoForm from "../_components/info-form";
 import useDialogStore from "@/app/_utils/dialog/store";
 import { ClientDao } from "@utils/database/dao/clientDao";
-import ClientModel, { Anniversary, getBirthday, ClientDTO, getHalfBirthday } from "@/app/_models/client";
+import ClientModel, {
+  Anniversary,
+  getBirthday,
+  ClientDTO,
+  getHalfBirthday,
+} from "@/app/_models/client";
 import { useState } from "react";
 
 export default function NewCustomerPage() {
@@ -13,7 +18,7 @@ export default function NewCustomerPage() {
   const clientDao = new ClientDao();
 
   // useState에서 기본값을 Partial<ClientDTO>로 설정
-  const [formData, setFormData] = useState<Partial<ClientDTO|null>>({
+  const [formData, setFormData] = useState<Partial<ClientDTO | null>>({
     clientType: "관리 고객",
     driverLicense: "운전 유",
     contactNumber: {
@@ -29,8 +34,8 @@ export default function NewCustomerPage() {
 
     // 생일 계산 후 추가
     const birthDate = formData.residentRegistrationNumber
-    ? getBirthday(formData.residentRegistrationNumber)
-    : null;
+      ? getBirthday(formData.residentRegistrationNumber)
+      : null;
     if (birthDate) {
       anniversary.push({
         id: 0,
@@ -53,17 +58,20 @@ export default function NewCustomerPage() {
       });
     }
 
-    await clientDao.insertClient(ClientModel.fromDTO({
-      ...formData,
-      anniversary,
-    }));
+    // TODO: DB에 추가하고 ID를 반환하게 해서 해당 edit page로 이동해야 함.
+    const newId = await clientDao.insertClient(
+      ClientModel.fromDTO({
+        ...formData,
+        anniversary,
+      })
+    );
 
     await openAlert({
       title: "고객 정보 추가 완료",
       description: "고객 정보 관리 화면으로 이동합니다",
     });
 
-    router.replace("/program/customer");
+    router.replace("/program/customer?id=" + newId);
   };
 
   return (
@@ -71,7 +79,11 @@ export default function NewCustomerPage() {
       <div className="flex gap-4">
         <div className="flex flex-col gap-6 w-1/2">
           <h2 className="text-2xl font-medium">고객 기본 정보</h2>
-          <InfoForm onSubmit={onSubmit} formData={formData} setFormData={setFormData} />
+          <InfoForm
+            onSubmit={onSubmit}
+            formData={formData}
+            setFormData={setFormData}
+          />
         </div>
       </div>
     </div>

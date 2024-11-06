@@ -33,7 +33,7 @@ interface DialogState {
     title: string;
     description: string;
   }) => Promise<boolean>;
-  openCustom: <T>(content: React.ReactNode) => Promise<T>;
+  openCustom: <T>(content: React.ReactNode) => Promise<T | undefined>;
   openLoading: (title?: string) => void;
   closeDialog: (returnValue?: any) => void; // 팝업 닫기
 }
@@ -82,7 +82,7 @@ const useDialogStore = create<DialogState>((set) => ({
     });
   },
   openCustom: <T>(content: React.ReactNode) => {
-    return new Promise<T>((resolve) => {
+    return new Promise<T | undefined>((resolve) => {
       set({
         activeDialog: DialogType.CUSTOM,
         customContent: content,

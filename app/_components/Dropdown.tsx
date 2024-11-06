@@ -42,7 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, children }) => {
     <div className="relative text-left" ref={dropdownRef}>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex cursor-pointer rounded hover:bg-gray-200"
+        className="cursor-pointer rounded hover:bg-grayscale-13"
       >
         {children}
       </div>

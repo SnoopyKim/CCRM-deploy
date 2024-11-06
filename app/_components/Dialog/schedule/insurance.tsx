@@ -6,9 +6,15 @@ import Icon from "../../Icon";
 import { SearchField } from "../../Text";
 import { addCalendarEvent } from "@/app/_services/google/calendar";
 import { useScheduleStore } from "@/app/_utils/schedule/store";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TextLabel from "../../Text/label";
 import { CalendarEvent } from "@/app/_models/calendar";
+import { ClientDao } from "@/app/_utils/database/dao/clientDao";
+import ClientModel, {
+  AutoInsurance,
+  ExemptionReductionEndDate,
+  FireInsurance,
+} from "@/app/_models/client";
 
 const mockCustomers = [
   {
@@ -50,9 +56,17 @@ export default function ScheduleInsuranceDialog({
   const closeDialog = useDialogStore((state) => state.closeDialog);
   const addSchedule = useScheduleStore((state) => state.addSchedule);
 
-  const [customers, setCustomers] = useState<any>(mockCustomers);
-  const [selectedCustomer, setSelectedCustomer] = useState<any>();
+  const [customers, setCustomers] = useState<ClientModel[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<ClientModel>();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (customers.length > 0) return;
+    new ClientDao().getAllClients().then((clients) => {
+      if (clients.length === 0) return;
+      setCustomers(clients);
+    });
+  }, [customers]);
 
   const onAddSchedule = useCallback(
     async ({
@@ -64,6 +78,7 @@ export default function ScheduleInsuranceDialog({
       date: Date;
       memo: string;
     }) => {
+      if (!selectedCustomer) return;
       setLoading(true);
       const { data, error } = await addCalendarEvent({
         title: selectedCustomer.name,
@@ -71,7 +86,7 @@ export default function ScheduleInsuranceDialog({
         custom: {
           type: "보험",
           customer: selectedCustomer.name,
-          phone: selectedCustomer.phone,
+          phone: selectedCustomer.contactNumber,
           additionalType: insurance,
           memo,
         },
@@ -93,109 +108,49 @@ export default function ScheduleInsuranceDialog({
         <Icon type="flag" className="w-8 h-8 fill-sub-3" />
         <h1 className="text-2xl font-normal">보험만기 등록</h1>
       </div>
-      <SearchField
-        placeholder="이름, 연락처를 입력하세요"
-        onSearch={() => {}}
-        disabled={loading}
-      />
-      <table className="w-full table-fixed">
-        <thead>
-          <tr className="bg-grayscale-12">
-            <th className="text-left px-4 py-2">고객명</th>
-            <th className="text-left ">연락처</th>
-            <th className="text-left w-28"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map((customer: any) => (
-            <tr key={customer.name} className="border-b border-grayscale-12">
-              <td className="px-4 font-normal">{customer.name}</td>
-              <td className="">{customer.phone}</td>
-              <td className="px-2 py-3">
-                <button
-                  className="bg-grayscale-14 text-grayscale-6 w-full py-1 text-sm rounded font-normal border border-grayscale-6 disabled:bg-grayscale-12"
-                  disabled={customer.name === selectedCustomer?.name || loading}
-                  onClick={() => setSelectedCustomer(customer)}
-                >
-                  선택
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
 
-      {selectedCustomer && (
-        <div className="flex flex-col">
-          <TextLabel title="자동차보험 만기" />
-          <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
-            {selectedCustomer.car.map((car: any) => (
-              <div key={car.date} className="flex items-center gap-4 p-2">
-                <span>{car.company}</span>
-                <span>만기일: {car.date}</span>
-                <span className="flex-1 line-clamp-1">{car.memo}</span>
-                <button
-                  className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
-                  onClick={() =>
-                    onAddSchedule({
-                      insurance: "자동차보험 만기",
-                      date: new Date(car.date),
-                      memo: car.memo,
-                    })
-                  }
-                  disabled={loading}
+      {selectedCustomer ? (
+        <InsuranceListView
+          customer={selectedCustomer}
+          onAdd={onAddSchedule}
+          onBack={() => setSelectedCustomer(undefined)}
+        />
+      ) : (
+        <>
+          <SearchField
+            placeholder="이름, 연락처를 입력하세요"
+            onSearch={() => {}}
+            disabled={loading}
+          />
+          <table className="w-full">
+            <thead>
+              <tr className="table table-fixed w-full bg-grayscale-12">
+                <th className="text-left px-4 py-2">고객명</th>
+                <th className="text-left ">연락처</th>
+                <th className="text-left w-28"></th>
+              </tr>
+            </thead>
+            <tbody className="block w-full max-h-80 overflow-y-scroll">
+              {customers.map((customer) => (
+                <tr
+                  key={customer.name}
+                  className="table table-fixed w-full border-b border-grayscale-12"
                 >
-                  등록
-                </button>
-              </div>
-            ))}
-          </div>
-          <TextLabel title="화재보험 만기" className="mt-2" />
-          <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
-            {selectedCustomer.fire.map((fire: any) => (
-              <div key={fire.date} className="flex items-center gap-4 p-2">
-                <span>{fire.company}</span>
-                <span>만기일: {fire.date}</span>
-                <span className="flex-1 line-clamp-1">{fire.memo}</span>
-                <button
-                  className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
-                  onClick={() =>
-                    onAddSchedule({
-                      insurance: "화재보험 만기",
-                      date: new Date(fire.date),
-                      memo: fire.memo,
-                    })
-                  }
-                  disabled={loading}
-                >
-                  등록
-                </button>
-              </div>
-            ))}
-          </div>
-          <TextLabel title="면책/감액 종료일" className="mt-2" />
-          <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
-            {selectedCustomer.waiver.map((waiver: any) => (
-              <div key={waiver.date} className="flex items-center gap-4 p-2">
-                <span>종료일: {waiver.date}</span>
-                <span className="flex-1 line-clamp-1">{waiver.memo}</span>
-                <button
-                  className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
-                  onClick={() =>
-                    onAddSchedule({
-                      insurance: "면책/감액 종료일",
-                      date: new Date(waiver.date),
-                      memo: waiver.memo,
-                    })
-                  }
-                  disabled={loading}
-                >
-                  등록
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+                  <td className="px-4 font-normal">{customer.name}</td>
+                  <td className="">{customer.contactNumber}</td>
+                  <td className="px-2 py-3 w-28">
+                    <button
+                      className="bg-grayscale-14 text-grayscale-6 w-full py-1 text-sm rounded font-normal border border-grayscale-6 hover:bg-grayscale-12"
+                      onClick={() => setSelectedCustomer(customer)}
+                    >
+                      선택
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
       <PrimaryButton
         color="gray"
@@ -207,3 +162,133 @@ export default function ScheduleInsuranceDialog({
     </div>
   );
 }
+
+function getDateStringFromObj(obj: any): string {
+  // 텍스트 형식으로 반환 (예: "2024-11-01")
+  return `${obj.year ?? 2025}-${String(obj.month ?? 1).padStart(
+    2,
+    "0"
+  )}-${String(obj.day ?? 1).padStart(2, "0")}`;
+}
+
+function getDateFromObj(obj: any): Date {
+  const defaultDate = new Date();
+  // JavaScript Date 객체로 반환
+  return new Date(
+    obj.year ?? defaultDate.getFullYear(),
+    (obj.month ?? defaultDate.getMonth()) - 1,
+    obj.day ?? defaultDate.getDate()
+  );
+}
+
+const InsuranceListView = ({
+  customer,
+  onAdd,
+  onBack,
+}: {
+  customer: ClientModel;
+  onAdd: (data: { insurance: string; date: Date; memo: string }) => void;
+  onBack: () => void;
+}) => {
+  const cars: AutoInsurance[] = JSON.parse(
+    customer.autoInsuranceExpiration ?? "[]"
+  );
+
+  const fires: FireInsurance[] = JSON.parse(
+    customer.fireInsuranceExpiration ?? "[]"
+  );
+
+  const exemptions: ExemptionReductionEndDate[] = JSON.parse(
+    customer.exemptionReductionEndDate ?? "[]"
+  );
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2">
+        <Icon
+          type="down"
+          className="rotate-90 w-10 h-10 p-2 fill-main-1 rounded hover:bg-grayscale-12 cursor-pointer"
+          onClick={onBack}
+        />
+        <span className="text-xl font-normal">{customer.name}</span>
+        <span>{customer.contactNumber}</span>
+      </div>
+      <TextLabel title="자동차보험 만기" className="mt-4" />
+      <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
+        {cars.length === 0 && (
+          <span className="text-grayscale-6">등록된 자동차보험이 없습니다</span>
+        )}
+        {cars.map((car, i) => (
+          <div key={`car-${i}`} className="flex items-center gap-4 p-2">
+            <span>{car.company}</span>
+            <span>만기일: {getDateStringFromObj(car)}</span>
+            <span className="flex-1 line-clamp-1">{car.memo}</span>
+            <button
+              className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
+              onClick={() =>
+                onAdd({
+                  insurance: "자동차보험 만기",
+                  date: getDateFromObj(car),
+                  memo: car.memo,
+                })
+              }
+            >
+              등록
+            </button>
+          </div>
+        ))}
+      </div>
+      <TextLabel title="화재보험 만기" className="mt-2" />
+      <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
+        {fires.length === 0 && (
+          <span className="text-grayscale-6">등록된 화재보험이 없습니다</span>
+        )}
+        {fires.map((fire, i) => (
+          <div key={`fire-${i}`} className="flex items-center gap-4 p-2">
+            <span>{fire.company}</span>
+            <span>만기일: {getDateStringFromObj(fire)}</span>
+            <span className="flex-1 line-clamp-1">{fire.memo}</span>
+            <button
+              className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
+              onClick={() =>
+                onAdd({
+                  insurance: "화재보험 만기",
+                  date: getDateFromObj(fire),
+                  memo: fire.memo,
+                })
+              }
+            >
+              등록
+            </button>
+          </div>
+        ))}
+      </div>
+      <TextLabel title="면책/감액 종료일" className="mt-2" />
+      <div className="mt-2 px-4 py-2 border border-grayscale-11 rounded divide-y divide-grayscale-11">
+        {exemptions.length === 0 && (
+          <span className="text-grayscale-6">
+            등록된 면책/감액 종료일이 없습니다
+          </span>
+        )}
+        {exemptions.map((exempt, i) => (
+          <div key={`exempt-${i}`} className="flex items-center gap-4 p-2">
+            <span>종료일: {getDateStringFromObj(exempt)}</span>
+            <span className="flex-1 line-clamp-1">{exempt.memo}</span>
+            <button
+              className="bg-main-2 text-grayscale-14 px-4 py-1.5 text-sm rounded font-normal hover:bg-main-3"
+              onClick={() =>
+                onAdd({
+                  insurance: "면책/감액 종료일",
+                  date: getDateFromObj(exempt),
+                  memo: exempt.memo,
+                })
+              }
+            >
+              등록
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

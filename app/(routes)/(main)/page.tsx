@@ -1,10 +1,12 @@
 import { Button, LinkButton } from "@components/Button";
 import Image from "next/image";
 import Link from "next/link";
+import FloatingBar from "./_components/floating-bar";
 
 export default function MainPage() {
   return (
     <div className="flex min-h-screen flex-col">
+      <FloatingBar />
       <div className="w-full aspect-[192/160] bg-[url('/images/main/main-visual.svg')] bg-no-repeat bg-bottom bg-cover">
         <div className="flex flex-col mt-20 gap-14 items-center ">
           <h1 className="text-6xl font-bold whitespace-pre-line leading-normal text-center">
@@ -12,7 +14,7 @@ export default function MainPage() {
             업무 효율 극대화
           </h1>
           <LinkButton
-            href="/sign-in"
+            href="/program"
             title="CCRM 체험하기"
             color="primary"
             className="rounded-full flex-shrink-0 w-44 font-semibold bg-main-2 text-lg"
@@ -218,7 +220,7 @@ export default function MainPage() {
           />
         </div>
       </div>
-      {/* 업무일지 */}
+      {/* 메모/기록 */}
       <div className="w-full mt-80 grid grid-cols-2 h-[800px]">
         <div className="pl-[20%] pr-10  flex flex-col gap-8 justify-center">
           <Image
@@ -228,7 +230,7 @@ export default function MainPage() {
             alt=""
           />
           <div>
-            <h2 className="text-4xl font-bold">업무일지 관리</h2>
+            <h2 className="text-4xl font-bold">메모/기록 관리</h2>
             <p className="text-2xl text-grayscale-6 mt-6 whitespace-pre-line font-normal leading-normal">
               생각나는 모든 것들을 글로벌 프로그램 Nortion 연동을 통해{"\n"}
               빠르고 간편하게 기록해 보세요(모바일-PC실시간 동기화)

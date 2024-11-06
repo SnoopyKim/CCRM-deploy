@@ -12,12 +12,14 @@ import Captcha, {
 import useDialogStore from "@/app/_utils/dialog/store";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/app/_utils/auth/store";
+import { changePassword } from "@/app/_services/auth";
 
 export default function ChangePasswordPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const { openAlert } = useDialogStore();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const saveToken = useAuthStore((state) => state.saveToken);
 
   const [error, setError] = useState({
     current: "",
@@ -38,8 +40,9 @@ export default function ChangePasswordPage() {
     }
   }, [isAuthenticated, router, openAlert]);
 
-  const onChangePassword = (formData: FormData) => {
-    const newPassword = formData.get("new-password");
+  const onChangePassword = async (formData: FormData) => {
+    const currentPassword = formData.get("current-password") as string;
+    const newPassword = formData.get("new-password") as string;
     const newPasswordConfirm = formData.get("new-password-confirm");
 
     if (newPasswordConfirm && newPassword !== newPasswordConfirm) {
@@ -56,8 +59,19 @@ export default function ChangePasswordPage() {
       return;
     }
 
-    // TODO: API Call
-    openAlert({
+    const { data: newToken, error } = await changePassword(
+      currentPassword,
+      newPassword
+    );
+    if (error || !newToken) {
+      openAlert({
+        title: "비밀번호 변경 실패",
+        description: error?.message ?? "알 수 없는 오류입니다",
+      });
+      return;
+    }
+    saveToken(newToken);
+    await openAlert({
       title: "비밀번호 변경 완료",
       description: "비밀번호가 성공적으로 변경되었습니다",
     });
@@ -73,7 +87,12 @@ export default function ChangePasswordPage() {
         action={onChangePassword}
         className="flex flex-col items-stretch px-20 py-10 gap-4"
       >
-        <Input type="password" placeholder="현재 비밀번호 입력" required />
+        <Input
+          id="current-password"
+          type="password"
+          placeholder="현재 비밀번호 입력"
+          required
+        />
         <TextField
           id="new-password"
           type="password"

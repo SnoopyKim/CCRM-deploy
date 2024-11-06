@@ -32,5 +32,4 @@ export const clientSchema: TableSchema = {
 
   createdAt: { type: "TEXT", notNull: true },
   updatedAt: { type: "TEXT", notNull: true },
-  managementGroupId: { type: "INTEGER" },
 };

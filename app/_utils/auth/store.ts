@@ -161,7 +161,7 @@ const useAuthStore = create<AuthStore>()(
       },
 
       saveToken: (token: string) => {
-        set({ token });
+        set({ token, isAuthenticated: true });
       },
       saveTempToken: (tempToken: string) => {
         set({ tempToken });

@@ -32,7 +32,7 @@ const Select = ({
       <select
         id={id}
         name={id}
-        //defaultValue={placeholder}
+        defaultValue={placeholder}
         className={cn(
           "appearance-none h-14 p-4 border border-grayscale-11 rounded-sm outline-none",
           // "focus:border-sub-2 focus-visible:border-sub-2",

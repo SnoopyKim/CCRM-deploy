@@ -81,7 +81,7 @@ export default function MemoEditPage({ params }: { params: { id: string } }) {
           onClick={() => router.replace("/program/memo")}
         />
 
-        <h1 className="text-2xl font-medium">업무일지 작성</h1>
+        <h1 className="text-2xl font-medium">메모/기록 작성</h1>
       </div>
       <div className="flex items-end gap-4 mt-2">
         <TextField
