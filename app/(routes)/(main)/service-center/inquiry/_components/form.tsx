@@ -43,7 +43,7 @@ export default function InquiryForm() {
   return (
     <form
       ref={formRef}
-      className="flex flex-col gap-4 mt-5 px-[100px] py-10"
+      className="flex flex-col gap-4 mt-10 px-[100px] max-lg:px-4"
       action={onSubmit}
     >
       <SelectField

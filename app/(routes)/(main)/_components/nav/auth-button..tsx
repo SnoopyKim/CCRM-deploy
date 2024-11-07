@@ -11,7 +11,7 @@ export default function AuthButton() {
   const { isAuthenticated, logout } = useAuthStore();
 
   const textStyle =
-    "w-[120px] underline underline-offset-[3px] mx-4 text-center hover:text-sub-1";
+    "underline underline-offset-[3px] text-center hover:text-sub-1";
 
   const logOut = async () => {
     const result = await openConfirm({

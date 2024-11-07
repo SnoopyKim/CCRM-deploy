@@ -6,12 +6,12 @@ export default function MessagePage() {
     <div className="flex flex-col max-w-screen-lg w-full mx-auto my-10">
       <h1 className="text-2xl font-normal">메시지 대량 발송 소개</h1>
       <div className="flex flex-1 flex-col justify-center">
-        <div className="flex gap-4">
+        <div className="flex max-lg:flex-col gap-4">
           <Link
             href={"/program/message/kakao"}
             className="flex flex-col h-80 flex-1 border border-grayscale-11"
           >
-            <div className="flex flex-1 justify-center items-center bg-[#FEE141]">
+            <div className="flex lg:flex-1 justify-center items-center bg-[#FEE141] max-lg:h-40">
               <Image
                 src={"/images/program/message/ic_kakao.svg"}
                 alt=""
@@ -43,7 +43,7 @@ export default function MessagePage() {
             href={"/program/message/sms"}
             className="flex flex-col h-80 flex-1 border border-grayscale-11"
           >
-            <div className="flex flex-1 justify-center items-center bg-[#B0FFBD]">
+            <div className="flex lg:flex-1 justify-center items-center bg-[#B0FFBD] max-lg:h-40">
               <Image
                 src={"/images/program/message/ic_sms.svg"}
                 alt=""

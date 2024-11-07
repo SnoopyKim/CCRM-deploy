@@ -52,7 +52,7 @@ const Select = ({
       </select>
       <Icon
         type="down"
-        className="w-5 h-5 absolute fill-grayscale-8 right-4 top-1/2 -translate-y-1/2"
+        className="w-5 h-5 max-lg:w-4 max-lg:h-4 absolute fill-grayscale-8 right-4 top-1/2 -translate-y-1/2"
         onClick={onClickIcon}
       />
     </div>

@@ -52,7 +52,7 @@ export default function ColorButton({
 }) {
   return (
     <div
-      className={`bg-grayscale-14 border ${colors[color].border} px-4 py-2.5 flex items-center gap-2 cursor-pointer`}
+      className={`bg-grayscale-14 border ${colors[color].border} px-4 py-2.5 flex justify-center items-center gap-2 cursor-pointer`}
       onClick={onClick}
     >
       {icon && (

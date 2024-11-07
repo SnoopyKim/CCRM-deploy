@@ -9,9 +9,8 @@ import { useEffect, useState } from "react";
 import AddFamilyDialog from "@/app/_components/Dialog/customer/family";
 import { Anniversary, ClientDTO, Family } from "@/app/_models/client";
 
-
 export default function FamilyForm({
-  formData, 
+  formData,
   setFormData,
 }: {
   formData: Partial<ClientDTO> | null;
@@ -21,7 +20,6 @@ export default function FamilyForm({
 
   const familyList = formData?.family || [];
   const anniversaryList = formData?.anniversary || [];
-
 
   useEffect(() => {
     if (!formData?.anniversary || formData?.anniversary?.length === 0) {
@@ -38,7 +36,9 @@ export default function FamilyForm({
     if (selectedFamily) {
       const filteredSelectedFamily = selectedFamily.filter(
         (newFamily: Family) =>
-          !familyList.some((existingFamily) => existingFamily.id === newFamily.id)
+          !familyList.some(
+            (existingFamily) => existingFamily.id === newFamily.id
+          )
       );
 
       setFormData((prev) => ({
@@ -50,7 +50,7 @@ export default function FamilyForm({
 
   return (
     <div className="flex flex-col bg-grayscale-13 p-6 gap-4">
-      <div className="text-xl font-normal">가족 및 일정 등록</div> 
+      <div className="text-xl font-normal">가족 및 일정 등록</div>
 
       {/* 가족 목록 */}
       <div className="flex flex-col border border-grayscale-11 p-4 rounded-sm gap-2">
@@ -96,18 +96,24 @@ export default function FamilyForm({
         </div>
         <div className="border border-grayscale-11 rounded-sm p-4 space-y-2">
           {anniversaryList.map((item, index) => (
-            <div key={item.id} className="flex gap-4 items-center">
+            <div
+              key={item.id}
+              className="flex max-lg:flex-col max-lg:items-stretch gap-4 max-lg:gap-2 items-center"
+            >
               <input
                 type="text"
                 placeholder="기념일 명"
                 value={item.name}
                 className="flex-1 border border-grayscale-11 rounded-sm px-4 py-2 h-10"
-                onChange={(e) => 
+                onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    anniversary: formData?.anniversary?.map((a) =>
-                      a.id === item.id ? { ...a, ['name']: e.target.value } : a
-                    ) || [],
+                    anniversary:
+                      formData?.anniversary?.map((a) =>
+                        a.id === item.id
+                          ? { ...a, ["name"]: e.target.value }
+                          : a
+                      ) || [],
                   }))
                 }
               />
@@ -119,12 +125,15 @@ export default function FamilyForm({
                   }))}
                   value={item.month}
                   className="px-4 py-2 h-10"
-                  onChange={(e) => 
+                  onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      anniversary: formData?.anniversary?.map((a) =>
-                        a.id === item.id ? { ...a, ['month']: Number(e.target.value) } : a
-                      ) || [],
+                      anniversary:
+                        formData?.anniversary?.map((a) =>
+                          a.id === item.id
+                            ? { ...a, ["month"]: Number(e.target.value) }
+                            : a
+                        ) || [],
                     }))
                   }
                 />
@@ -137,12 +146,15 @@ export default function FamilyForm({
                   }))}
                   value={item.day}
                   className="px-4 py-2 h-10"
-                  onChange={(e) => 
+                  onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      anniversary: formData?.anniversary?.map((a) =>
-                        a.id === item.id ? { ...a, ['day']: Number(e.target.value) } : a
-                      ) || [],
+                      anniversary:
+                        formData?.anniversary?.map((a) =>
+                          a.id === item.id
+                            ? { ...a, ["day"]: Number(e.target.value) }
+                            : a
+                        ) || [],
                     }))
                   }
                 />
@@ -155,9 +167,17 @@ export default function FamilyForm({
                       ...prev,
                       anniversary: [
                         ...(prev?.anniversary || []),
-                        { id: anniversaryList.length > 0
-                          ? Math.max(...anniversaryList.map((item) => item.id)) + 1
-                          : 0, name: "", month: 1, day: 1 },
+                        {
+                          id:
+                            anniversaryList.length > 0
+                              ? Math.max(
+                                  ...anniversaryList.map((item) => item.id)
+                                ) + 1
+                              : 0,
+                          name: "",
+                          month: 1,
+                          day: 1,
+                        },
                       ],
                     }));
                   }}
@@ -170,7 +190,9 @@ export default function FamilyForm({
                   onClick={() =>
                     setFormData((prev) => ({
                       ...prev,
-                      anniversary: anniversaryList.filter((i) => i.id !== item.id),
+                      anniversary: anniversaryList.filter(
+                        (i) => i.id !== item.id
+                      ),
                     }))
                   }
                 >
@@ -179,7 +201,6 @@ export default function FamilyForm({
               )}
             </div>
           ))}
-
         </div>
       </div>
     </div>

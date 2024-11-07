@@ -10,9 +10,9 @@ export default function SignUpTermPage() {
   const [privacyChecked, setPrivacyChecked] = useState(false);
 
   return (
-    <div className="flex flex-col w-[600px] xl:w-[1200px] m-auto items-center">
-      <div className="flex flex-col mt-20 gap-8 xl:flex-row xl:gap-2">
-        <div className="flex flex-col w-[596px] ">
+    <div className="flex flex-col w-full xl:max-w-[1200px] m-auto items-center">
+      <div className="flex flex-col mt-20 gap-8 xl:flex-row xl:gap-2 px-8 xl:px-0">
+        <div className="flex flex-col w-full xl:w-[596px]">
           <h1 className="text-2xl">회원가입 약관</h1>
           <p className="my-4 max-h-[400px] overflow-y-scroll  p-2 border border-grayscale-11 whitespace-pre-line text-grayscale-3">
             {termsContent}
@@ -24,7 +24,7 @@ export default function SignUpTermPage() {
           />
         </div>
 
-        <div className="flex flex-col w-[596px] ">
+        <div className="flex flex-col w-full xl:w-[596px]">
           <h1 className="text-2xl">개인정보 처리 방침 안내</h1>
           <p className="my-4 max-h-[400px] overflow-y-scroll  p-2 border border-grayscale-11 whitespace-pre-line text-grayscale-3">
             {privacyContent}
@@ -36,14 +36,16 @@ export default function SignUpTermPage() {
           />
         </div>
       </div>
-      <LinkButton
-        href="/sign-up/form?terms=true&privacy=true"
-        as="/sign-up/form"
-        replace
-        title="회원가입하기"
-        disabled={!termsChecked || !privacyChecked}
-        className="w-[400px] mt-10 shadow-md shadow-grayscale-9"
-      />
+      <div className="w-[400px] max-lg:w-full max-lg:px-8 mt-10">
+        <LinkButton
+          href="/sign-up/form?terms=true&privacy=true"
+          as="/sign-up/form"
+          replace
+          title="회원가입하기"
+          disabled={!termsChecked || !privacyChecked}
+          className="w-full shadow-md shadow-grayscale-9"
+        />
+      </div>
     </div>
   );
 }

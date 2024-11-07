@@ -11,8 +11,8 @@ export default function CustomerTable({
   setClients: React.Dispatch<React.SetStateAction<ClientModel[]>>;
 }) {
   return (
-    <>
-      <table className="w-full mt-4">
+    <div className="w-full overflow-x-auto mt-4">
+      <table className="w-full">
         <colgroup>
           <col width="60px" />
           <col width="*" />
@@ -26,20 +26,34 @@ export default function CustomerTable({
 
         <thead>
           <tr className="bg-grayscale-13 border-y border-grayscale-11">
-            <th className=""></th>
-            <th className="py-2 text-left font-normal">고객명</th>
-            <th className="text-left font-normal">구분</th>
-            <th className="text-left font-normal">연락처</th>
-            <th className="text-left font-normal">상령일</th>
-            <th className="text-left font-normal">생년월일</th>
-            <th className="text-left font-normal">그룹관리</th>
-            <th className="text-left font-normal">정보</th>
+            <th className="p-2"></th>
+            <th className="py-2 text-left whitespace-nowrap px-2 font-normal">
+              고객명
+            </th>
+            <th className="text-left whitespace-nowrap px-2 font-normal">
+              구분
+            </th>
+            <th className="text-left whitespace-nowrap px-2 font-normal">
+              연락처
+            </th>
+            <th className="text-left whitespace-nowrap px-2 font-normal">
+              상령일
+            </th>
+            <th className="text-left whitespace-nowrap px-2 font-normal">
+              생년월일
+            </th>
+            <th className="text-left whitespace-nowrap px-2 font-normal">
+              그룹관리
+            </th>
+            <th className="text-left whitespace-nowrap px-2 font-normal">
+              정보
+            </th>
           </tr>
         </thead>
         <tbody>
           {(clients || []).map((client: ClientModel) => (
             <tr key={client.id} className="border-b border-grayscale-11">
-              <td className="py-4">
+              <td className="px-2 py-4">
                 <div className="flex justify-center">
                   <input
                     type="checkbox"
@@ -62,10 +76,16 @@ export default function CustomerTable({
                   />
                 </div>
               </td>
-              <td className="font-semibold">{client.name}</td>
-              <td className="text-sub-3">{client.clientType}</td>
-              <td>{client.contactNumber}</td>
-              <td>
+              <td className="px-2 whitespace-nowrap font-semibold">
+                {client.name}
+              </td>
+              <td className="px-2 whitespace-nowrap text-sub-3">
+                {client.clientType}
+              </td>
+              <td className="px-2 whitespace-nowrap ">
+                {client.contactNumber}
+              </td>
+              <td className="px-2 whitespace-nowrap ">
                 {getHalfBirthday(
                   client.toDTO().residentRegistrationNumber
                 )?.toLocaleDateString("ko-KR", {
@@ -74,7 +94,7 @@ export default function CustomerTable({
                   day: "numeric",
                 })}
               </td>
-              <td>
+              <td className="px-2 whitespace-nowrap ">
                 {client.birthDate
                   ? client.birthDate.toLocaleDateString("ko-KR", {
                       year: "numeric",
@@ -83,8 +103,8 @@ export default function CustomerTable({
                     })
                   : "-"}
               </td>
-              <td className="text-sub-2 truncate">{client.groupString}</td>
-              <td>
+              <td className="px-2 text-sub-2 truncate">{client.groupString}</td>
+              <td className="px-2 whitespace-nowrap">
                 <Link
                   href={`/program/customer/edit?id=${client.id}`}
                   className="underline underline-offset-2"
@@ -96,6 +116,6 @@ export default function CustomerTable({
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }

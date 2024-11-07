@@ -71,7 +71,7 @@ export default function GroupMemberDialog() {
   const closeDialog = useDialogStore((state) => state.closeDialog);
 
   return (
-    <div className="flex flex-col w-[640px] gap-4">
+    <div className="flex flex-col w-[640px] max-md:w-96 gap-4">
       <div className="px-6 py-4 border-b border-b-grayscale-11">
         <h2 className="text-xl font-normal">그룹 고객 추가</h2>
       </div>

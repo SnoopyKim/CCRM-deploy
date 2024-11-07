@@ -36,7 +36,7 @@ export default function CustomerEditPage() {
 
       //데이터가 이상하면 404
       if (!clientId || isNaN(clientId)) {
-        router.push("/program/404");
+        router.replace("/program/customer");
         return;
       }
 
@@ -44,16 +44,15 @@ export default function CustomerEditPage() {
         try {
           const clientData = await clientDao.getClient(clientId);
           if (!clientData) {
-            router.push("/program/404");
+            router.replace("/program/customer");
           } else {
-            
-            console.log(clientData)
-            console.log(clientData.toDTO())
+            console.log(clientData);
+            console.log(clientData.toDTO());
             setFormData(clientData.toDTO());
           }
         } catch (error) {
           console.error(error);
-          router.push("/program/404");
+          router.replace("/program/customer");
         }
       };
 
@@ -79,7 +78,7 @@ export default function CustomerEditPage() {
   }
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full lg:p-6">
       <div className="flex justify-end gap-4 font-normal">
         <ColorButton color="sub-5" title="엑셀 다운로드" />
         <PrimaryButton
@@ -89,8 +88,8 @@ export default function CustomerEditPage() {
           onClick={handleSave}
         />
       </div>
-      <div className="flex gap-4">
-        <div className="flex flex-col gap-6 w-1/2">
+      <div className="flex max-lg:flex-col gap-4 max-lg:mt-4">
+        <div className="flex flex-col gap-6 lg:w-1/2">
           <h2 className="text-2xl font-medium">고객 기본 정보</h2>
           <InfoForm
             onSubmit={null}
@@ -99,7 +98,7 @@ export default function CustomerEditPage() {
           />
           <FamilyForm formData={formData} setFormData={setFormData} />
         </div>
-        <div className="flex flex-col gap-6 w-1/2">
+        <div className="flex flex-col gap-6 lg:w-1/2 max-lg:text-sm">
           <h2 className="text-2xl font-medium">보험 및 기타정보</h2>
           <AccountForm formData={formData} setFormData={setFormData} />
           <CustomerFileForm formData={formData} setFormData={setFormData} />

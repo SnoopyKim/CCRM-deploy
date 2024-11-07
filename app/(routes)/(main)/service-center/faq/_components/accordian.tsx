@@ -27,16 +27,24 @@ export default function AccordianItem({
       >
         <span
           className={cn(
-            "text-lg font-semibold",
+            "text-lg max-lg:text-base font-semibold text-start",
             isOpen ? "text-main-2" : "text-grayscale-6"
           )}
         >
           {title}
         </span>
         {isOpen ? (
-          <Icon type="minus" className="w-5 h-5 stroke-main-2" />
+          <Icon
+            type="minus"
+            className="w-5 h-5 stroke-main-2"
+            onClick={() => setIsOpen((value) => !value)}
+          />
         ) : (
-          <Icon type="plus" className="w-5 h-5 stroke-grayscale-6" />
+          <Icon
+            type="plus"
+            className="w-5 h-5 stroke-grayscale-6"
+            onClick={() => setIsOpen((value) => !value)}
+          />
         )}
       </button>
       <div

@@ -11,7 +11,7 @@ export default function GroupDialog({ groupName }: { groupName?: string }) {
   const [inputValue, setInputValue] = useState(groupName);
 
   return (
-    <div className="flex flex-col w-[640px] gap-4">
+    <div className="flex flex-col w-[640px] max-md:w-96 gap-4">
       <div className="px-6 py-4 border-b border-b-grayscale-11">
         <h2 className="text-xl font-normal">
           {groupName ? "그룹명 수정" : "그룹 추가"}
@@ -20,7 +20,7 @@ export default function GroupDialog({ groupName }: { groupName?: string }) {
       <div className="px-6">
         <Input
           placeholder="그룹 이름"
-          value={inputValue||""}
+          value={inputValue || ""}
           onChange={(e) => setInputValue(e.target.value)}
         />
       </div>

@@ -20,7 +20,7 @@ export default function SmsChargeDialog() {
   const [selectIdx, setSelectIdx] = useState(0);
 
   return (
-    <div className="flex flex-col w-[720px] items-stretch p-8 gap-4">
+    <div className="flex flex-col md:w-[720px] items-stretch p-8 gap-4">
       <div className="flex items-start justify-between">
         <h1 className="text-2xl font-medium">문자 충전</h1>
         <PrimaryButton

@@ -21,7 +21,7 @@ export default function CourseGridView({
       ? courses
       : courses.filter((video) => video.category === category);
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {filteredCourses.map((video, index) => (
         <CourseItem key={index} number={index + 1} video={video} />
       ))}

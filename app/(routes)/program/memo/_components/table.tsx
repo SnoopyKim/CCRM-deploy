@@ -23,7 +23,7 @@ export default function MemoTable({ memos = [] }: { memos?: DriveItem[] }) {
         <tr className="bg-grayscale-12">
           <th className="text-left px-4 py-2 w-20">유형</th>
           <th className="text-left">이름</th>
-          <th className="text-left w-48">최근 발송 날짜</th>
+          <th className="text-left w-28 lg:w-48">최근 발송 날짜</th>
           <th className="text-left w-14"></th>
         </tr>
       </thead>
@@ -37,7 +37,7 @@ export default function MemoTable({ memos = [] }: { memos?: DriveItem[] }) {
             <td className="px-4 font-normal">
               <Icon type={"document"} className="" />
             </td>
-            <td className="">{memo.name}</td>
+            <td className="truncate">{memo.name}</td>
             <td className="">
               {memo.modifiedTime?.slice(0, 10) ??
                 new Date().toISOString().slice(0, 10)}

@@ -1,5 +1,6 @@
 "use client";
 
+import PrimaryButton from "@/app/_components/Button/button";
 import CheckBox from "@/app/_components/CheckBox/default";
 import Icon from "@/app/_components/Icon";
 import { Select } from "@/app/_components/Select";
@@ -46,6 +47,7 @@ export default function SmsEditor() {
             )}
           </div>
         </div>
+        <PrimaryButton title="전송하기" className="w-full" />
       </div>
     </div>
   );

@@ -161,8 +161,8 @@ export default function CounselPage() {
   return (
     <div className="w-full p-6 space-y-8">
       <h1 className="text-3xl text-normal">상담 등록</h1>
-      <div className="flex gap-4">
-        <div className="flex flex-col gap-4 w-1/2">
+      <div className="flex max-lg:flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:w-1/2">
           <h2 className="text-2xl font-normal">고객정보 / 상담내용</h2>
           <div className="flex flex-col gap-4 px-6 py-4 bg-grayscale-13">
             <div>
@@ -188,43 +188,43 @@ export default function CounselPage() {
             </div>
             <div>
               <TextLabel title="연락처" />
-              <div className="flex gap-2 justify-between items-center mt-2">
-                <div>
+              <div className="flex gap-2 items-center mt-2">
+                <div className="flex-1">
                   <Input
                     type="text"
                     inputMode="numeric"
                     name="mb_phone1"
                     placeholder="010"
                     maxLength={4}
-                    className="w-44 disabled:text-main-1"
+                    className="disabled:text-main-1"
                     value={formData.client?.contactNumber?.part1 || ""}
                     disabled
                     required
                   />
                 </div>
                 <span>-</span>
-                <div>
+                <div className="flex-1">
                   <Input
                     type="text"
                     inputMode="numeric"
                     name="mb_phone2"
                     placeholder=""
                     maxLength={4}
-                    className="w-44 disabled:text-main-1"
+                    className=" disabled:text-main-1"
                     value={formData.client?.contactNumber?.part2 || ""}
                     required
                     disabled
                   />
                 </div>
                 <span>-</span>
-                <div>
+                <div className="flex-1">
                   <Input
                     type="text"
                     inputMode="numeric"
                     name="mb_phone3"
                     placeholder=""
                     maxLength={4}
-                    className="w-44 disabled:text-main-1"
+                    className=" disabled:text-main-1"
                     value={formData.client?.contactNumber?.part3 || ""}
                     disabled
                     required
@@ -257,7 +257,7 @@ export default function CounselPage() {
             </div> */}
           </div>
         </div>
-        <div className="flex flex-col gap-4 w-1/2">
+        <div className="flex flex-col gap-4 lg:w-1/2">
           <h2 className="text-2xl font-normal">상세 상담 정보</h2>
           <div className="flex flex-col gap-4 px-6 py-4 bg-grayscale-13">
             <div>

@@ -14,28 +14,29 @@ export default function FAQPage() {
 
   return (
     <>
-      <div className="flex flex-row flex-1 justify-between items-center">
+      <div className="flex max-lg:flex-col flex-1 justify-between items-center">
         <h2 className="text-2xl">자주 묻는 질문 (FAQ)</h2>
-        <div className="w-[400px]">
+        <div className="max-w-[400px] w-full max-lg:mt-4">
           <SearchField
             placeholder="검색할 내용을 입력하세요"
             onSearch={() => {}}
+            className="max-lg:h-12"
           />
         </div>
       </div>
-      <div className="flex flex-row gap-2 my-10">
+      <div className="flex w-full gap-2 mt-4 mb-8 overflow-x-scroll scrollbar-hide">
         {Object.entries({ all: "전체", ...FaqCategory }).map((ce) => (
           <div
             key={ce[0]}
             onClick={() => setCategory(ce[0])}
             className={cn(
-              "px-6 py-3 text-lg rounded-xl",
+              "px-4 py-2 text-lg max-lg:text-base rounded-xl",
               category === ce[0]
                 ? "bg-main-2 text-grayscale-14"
                 : "text-grayscale-6 border border-grayscale-8"
             )}
           >
-            {ce[1]}
+            <span className="block whitespace-nowrap">{ce[1]}</span>
           </div>
         ))}
       </div>

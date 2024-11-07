@@ -72,7 +72,7 @@ export default function ScheduleAnniversaryDialog({
   );
 
   return (
-    <div className="flex flex-col w-[720px] p-8 gap-6">
+    <div className="flex flex-col md:w-[720px] p-8 gap-6">
       <div className="flex items-center gap-2">
         <Icon type="heart" className="w-8 h-8 fill-sub-4" />
         <h1 className="text-2xl font-normal">기념일 등록</h1>

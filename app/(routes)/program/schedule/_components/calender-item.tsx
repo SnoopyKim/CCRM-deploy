@@ -49,18 +49,18 @@ export default function CalendarItem({
   return (
     <div
       className={cn(
-        `flex flex-col aspect-square p-2 text-${color} hover:bg-grayscale-13 cursor-pointer`,
+        `flex flex-col max-md:h-20 md:aspect-square p-1 lg:p-2 text-${color} hover:bg-grayscale-13 cursor-pointer`,
         isFirst && "border-t border-l border-grayscale-12",
         !isCurrent && "opacity-50"
       )}
       onClick={openScheduleDialog}
     >
-      <span className="font-normal">{date.getDate()}</span>
-      <div className="flex flex-1 flex-col mt-2 text-sm gap-1 overflow-y-hidden">
+      <span className="font-normal text-xs md:text-sm">{date.getDate()}</span>
+      <div className="flex flex-1 flex-col md:mt-2 text-[0.5rem] md:text-sm lg:gap-1 overflow-y-hidden">
         {schedules.slice(0, 3).map((schedule, i) => (
           <div
             key={`schedule-${date}-${i}`}
-            className="flex items-center gap-2 font-medium"
+            className="flex items-center gap-1 lg:gap-2 font-medium"
           >
             <span
               className={

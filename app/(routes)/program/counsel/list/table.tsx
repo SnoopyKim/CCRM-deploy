@@ -17,23 +17,17 @@ export default function CounselTable({
   setOrderBy: (orderBy: string) => void;
 }) {
   return (
-    <div className="flex flex-col">
-      <table className="w-full mt-4">
-        <colgroup>
-          <col className="w-0" />
-          <col className="w-32" />
-          <col className="w-40" />
-          <col className="" />
-          <col className="w-32" />
-          <col className="w-40" />
-        </colgroup>
+    <div className="w-full overflow-x-auto mt-4">
+      <table className="w-full">
         <thead>
           <tr className="bg-grayscale-12 border-b border-grayscale-11">
-            <td className="px-4 py-2"></td>
-            <td className="py-2 font-medium">고객명</td>
-            <td>
+            <th className="px-4 py-2 w-12"></th>
+            <th className="px-4 py-2 font-medium text-left whitespace-nowrap w-24">
+              고객명
+            </th>
+            <th className="px-4 text-left w-40">
               <div
-                className="inline-flex items-center gap-2 rounded hover:bg-grayscale-11 px-2 py-1"
+                className="inline-flex items-center gap-2 rounded hover:bg-grayscale-11 px-2 py-1 font-medium whitespace-nowrap"
                 onClick={() => setOrderBy(orderBy === "asc" ? "desc" : "asc")}
               >
                 <span>상담 일자</span>
@@ -46,10 +40,16 @@ export default function CounselTable({
                   onClick={() => setOrderBy(orderBy === "asc" ? "desc" : "asc")}
                 />
               </div>
-            </td>
-            <td className="px-2">상담 제목</td>
-            <td>상담 진행</td>
-            <td>내용</td>
+            </th>
+            <th className="px-4 whitespace-nowrap font-medium text-left">
+              상담 제목
+            </th>
+            <th className="px-4 whitespace-nowrap font-medium text-left w-28">
+              상담 진행
+            </th>
+            <th className="px-4 whitespace-nowrap font-medium text-left w-40">
+              내용
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -58,16 +58,18 @@ export default function CounselTable({
               <td className="px-4">
                 <input type="checkbox" />
               </td>
-              <td className="font-medium">
+              <td className="px-4 font-medium whitespace-nowrap">
                 {consultation.client?.name || "-"}
               </td>
-              <td>{consultation.consultationTime}</td>
-              <td className="px-2">
+              <td className="px-4 whitespace-nowrap">
+                {consultation.consultationTime}
+              </td>
+              <td className="px-4 whitespace-nowrap">
                 <p className="overflow-hidden line-clamp-1">
                   {consultation.title}
                 </p>
               </td>
-              <td className="py-3">
+              <td className="px-4 py-3 whitespace-nowrap">
                 {consultation.consultationStatus === "COMPLETED" ? ( // 상담 완료 여부 판단
                   <div className="inline-flex px-2 py-1 rounded bg-grayscale-12 text-grayscale-6 text-sm font-medium">
                     상담 완료
@@ -78,7 +80,7 @@ export default function CounselTable({
                   </div>
                 )}
               </td>
-              <td>
+              <td className="px-4 whitespace-nowrap">
                 <Link
                   href={`/program/counsel/edit/${consultation.id}`}
                   className="hover:underline"

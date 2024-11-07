@@ -11,7 +11,7 @@ export default function Discount() {
         className="text-main-1 text-lg font-semibold"
         caution="※ 사용한 마일리지에 대해 환불/재발행은 불가능합니다."
       />
-      <div className="flex flex-col px-8 py-4 items-start">
+      <div className="flex flex-col lg:px-8 py-4 items-start">
         <div className="grid grid-cols-2 gap-4 w-full">
           <SelectField
             id="coupon"

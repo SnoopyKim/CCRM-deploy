@@ -39,8 +39,8 @@ export default function ProgramPage() {
   return (
     <div className="w-full">
       <div className="flex w-full h-full justify-center items-center">
-        <div className="flex flex-col items-center w-full max-w-screen-sm space-y-12">
-          <div className="w-36 2xl:w-48">
+        <div className="flex flex-col items-center w-full max-w-screen-sm space-y-12 max-lg:-mt-10">
+          <div className="w-40 2xl:w-48">
             <Image
               src={"/images/black-logo.svg"}
               alt="logo"
@@ -50,7 +50,7 @@ export default function ProgramPage() {
             />
           </div>
           {/* <ProgramSearchBar /> */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 lg:gap-2">
             {menus.map((menu, index) => (
               <Link
                 key={index}

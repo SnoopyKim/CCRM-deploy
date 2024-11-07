@@ -4,7 +4,7 @@ import { useState } from "react";
 import useDialogStore from "@/app/_utils/dialog/store";
 import PrimaryButton from "../../Button/button";
 import { Select } from "../../Select";
-import { Input  } from "../../Text";
+import { Input } from "../../Text";
 import { CheckBox } from "../../CheckBox";
 
 const mockBank = ["국민은행", "우리은행", "신한은행", "기업은행", "하나은행"];
@@ -25,7 +25,7 @@ export default function AddAccountDialog() {
   };
 
   return (
-    <div className="flex flex-col w-[720px] items-stretch p-8 gap-6">
+    <div className="flex flex-col md:w-[720px] items-stretch p-8 gap-6">
       <h1 className="text-2xl font-medium">계좌정보 등록</h1>
       <CheckBox
         label="자주 사용하는 계좌"

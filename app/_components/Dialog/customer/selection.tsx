@@ -31,7 +31,7 @@ export default function CustomerSelectionDialog() {
   }, [customers]);
 
   return (
-    <div className="flex flex-col w-[720px] items-stretch p-8 gap-6">
+    <div className="flex flex-col md:w-[720px] items-stretch p-8 gap-6">
       <h1 className="text-2xl font-medium">고객 선택</h1>
       <SearchField
         placeholder="이름, 연락처를 입력하세요"

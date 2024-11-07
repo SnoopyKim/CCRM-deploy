@@ -96,7 +96,7 @@ export default function SchedulePrivateDialog({
       .slice(0, 16);
 
   return (
-    <div className="flex flex-col w-[720px] p-8">
+    <div className="flex flex-col md:w-[720px] p-8">
       <div className="flex items-center gap-2">
         <Icon type="accountOutline" className="w-8 h-8 fill-sub-5" />
         <h1 className="text-2xl font-normal">

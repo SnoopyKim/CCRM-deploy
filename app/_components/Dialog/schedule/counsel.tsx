@@ -74,7 +74,7 @@ export default function ScheduleCounselDialog({
     [selectedCustomer]
   );
   return (
-    <div className="flex flex-col w-[800px] 2xl:w-[1000px] p-8 gap-6">
+    <div className="flex flex-col md:w-[600px] lg:w-[800px] 2xl:w-[1000px] p-8 gap-6">
       <div className="flex items-center gap-2">
         <Icon type="calendar" className="w-8 h-8 fill-sub-2" />
         <h1 className="text-2xl font-normal">상담 등록</h1>

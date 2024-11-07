@@ -57,7 +57,7 @@ const FloatingBar: React.FC = () => {
 
   return (
     <div
-      className={`fixed right-10 bottom-40 z-10 flex flex-col gap-4 transition-opacity duration-300 ${
+      className={`fixed right-10 bottom-40 flex flex-col gap-4 transition-opacity duration-300 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >

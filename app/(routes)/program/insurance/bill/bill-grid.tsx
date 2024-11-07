@@ -12,7 +12,7 @@ export default function BillGridView({
   const filteredBills = bills.filter((bill) => bill.category === category);
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
       {filteredBills.map((bill, index) => (
         <Link
           key={index}
@@ -24,8 +24,8 @@ export default function BillGridView({
           <p className="flex-1 mx-2 text-lg text-grayscale-6">
             {bill.insurerName}
           </p>
-          <span className="text-sub-1">★</span>
-          <span className="text-sub-2">▣</span>
+          {/* <span className="text-sub-1">★</span>
+          <span className="text-sub-2">▣</span> */}
         </Link>
       ))}
     </div>

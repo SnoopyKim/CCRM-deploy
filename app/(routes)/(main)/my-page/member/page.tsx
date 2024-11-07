@@ -45,7 +45,7 @@ export default function MemberPage() {
     <>
       <PageTitle> 회원 정보 확인/수정</PageTitle>
 
-      <form action={onModify} className="flex flex-col px-20 py-10 gap-4">
+      <form action={onModify} className="flex flex-col lg:px-20 py-10 gap-4">
         <div className="flex flex-col gap-2">
           <TextLabel title="Email(회원 ID)" />
           <span>{userData?.email ?? "-"}</span>

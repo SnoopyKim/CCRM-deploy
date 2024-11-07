@@ -12,7 +12,7 @@ export default function ShopPage() {
   return (
     <>
       <PageTitle>제품 구매</PageTitle>
-      <div className="flex flex-col px-20 py-10 gap-8 items-stretch">
+      <div className="flex flex-col lg:px-20 py-10 gap-8 items-stretch">
         <Product />
         <div className="flex flex-col gap-4">
           <TextLabel

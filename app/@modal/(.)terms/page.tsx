@@ -10,7 +10,7 @@ export default function TermsModal() {
     <Modal>
       <div className="flex flex-col items-stretch">
         <h1 className="text-2xl">이용약관</h1>
-        <p className="flex-1 my-4 p-2 w-[600px] border border-grayscale-11 max-h-[40vh] overflow-y-scroll whitespace-pre-line">
+        <p className="flex-1 my-4 p-2 max-w-[600px] w-full border border-grayscale-11 max-h-[40vh] overflow-y-scroll whitespace-pre-line">
           {termsContent}
         </p>
         <Button title="확인" onClick={() => router.back()} />

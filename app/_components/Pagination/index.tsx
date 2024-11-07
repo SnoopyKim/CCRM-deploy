@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Icon from "../Icon";
 import cn from "@utils/cn";
+import useWindowSize from "@/app/_utils/window-size";
 
 interface PaginationProps {
   totalCount?: number;
@@ -17,10 +18,11 @@ export default function Pagination({
 }: PaginationProps) {
   const pathname = usePathname();
   const totalPages = Math.ceil(totalCount / itemsPerPage);
+  const { width: windowWidth } = useWindowSize();
 
   const getPageNumbers = () => {
     const pageNumbers = [];
-    const maxPages = 10;
+    const maxPages = windowWidth < 768 ? 5 : 10;
     let startPage = Math.max(1, currentPage - Math.floor(maxPages / 2));
     const endPage = Math.min(totalPages, startPage + maxPages - 1);
 
@@ -62,7 +64,7 @@ export default function Pagination({
         >
           <Icon type="left" className="h-6 w-6" />
         </Link>
-        <div className="hidden md:flex space-x-1">
+        <div className="flex space-x-1">
           {getPageNumbers().map((number) => (
             <Link
               key={number}

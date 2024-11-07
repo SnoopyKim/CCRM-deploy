@@ -10,30 +10,32 @@ export default function SideNav() {
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
   return (
-    <nav className="flex flex-col col-span-1">
+    <nav className="flex flex-col col-span-1 max-lg:px-8">
       <div className="flex items-center h-24 border-b border-grayscale-11 px-4 pb-4 mb-2">
         <Icon type="account" className="w-20 h-20 fill-main-1" />
-        <h2 className="text-xl ml-4">{user?.name || "-"} 님</h2>
+        <h2 className="text-xl font-normal ml-4">{user?.name || "-"} 님</h2>
       </div>
-      {myPageRoutes.map((route) => {
-        const isCurrentPath =
-          route.href &&
-          (pathname == route.href || pathname.startsWith(`${route.href}/`));
-        return (
-          <Link
-            key={route.href}
-            href={route.href}
-            className={cn(
-              "flex items-center p-2 h-[46px]",
-              isCurrentPath
-                ? "text-main-2 font-semibold bg-[#F2F3F8]"
-                : "text-grayscale-6"
-            )}
-          >
-            {route.name}
-          </Link>
-        );
-      })}
+      <div className="grid grid-cols-1 max-lg:grid-cols-2 gap-x-2 mb-4">
+        {myPageRoutes.map((route) => {
+          const isCurrentPath =
+            route.href &&
+            (pathname == route.href || pathname.startsWith(`${route.href}/`));
+          return (
+            <Link
+              key={route.href}
+              href={route.href}
+              className={cn(
+                "flex items-center p-2 h-[46px]",
+                isCurrentPath
+                  ? "text-main-2 font-semibold bg-[#F2F3F8]"
+                  : "text-grayscale-6"
+              )}
+            >
+              {route.name}
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }

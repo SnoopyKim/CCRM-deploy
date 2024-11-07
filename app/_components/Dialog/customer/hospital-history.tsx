@@ -13,7 +13,7 @@ export default function AddHosiptalHistoryDialog() {
   const [selectedResult, setSelectedResult] = useState("");
 
   return (
-    <div className="flex flex-col w-[720px] items-stretch p-8 gap-6">
+    <div className="flex flex-col md:w-[720px] items-stretch p-8 gap-6">
       <h1 className="text-2xl font-medium">병원내역 등록</h1>
       <div className="flex flex-col gap-2">
         <h2 className="text-xl font-normal">질병명을 검색해주세요</h2>

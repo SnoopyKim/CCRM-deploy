@@ -122,7 +122,7 @@ export default function CounselListPage() {
   });
 
   return (
-    <div className="flex flex-col w-full max-w-screen-xl mx-auto mt-10 gap-6">
+    <div className="flex flex-col w-full max-w-screen-xl mx-auto mt-10 max-lg:mt-4 gap-6">
       <div>
         <h1 className="text-2xl font-normal">상담 현황</h1>
         <p className="mt-1 text-grayscale-6">
@@ -131,13 +131,13 @@ export default function CounselListPage() {
       </div>
       <div className="flex-grow">
         <Suspense fallback={<></>}>
-          <div className="flex justify-between">
+          <div className="flex max-lg:flex-col justify-between">
             <SearchField
               placeholder="검색할 내용을 입력하세요"
               onSearch={setSearchTerm}
-              className="w-80 h-10 py-1"
+              className="lg:w-80 h-10 py-1"
             />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 max-lg:mt-2">
               필터 :
               <Select
                 id="isFinished"
@@ -191,14 +191,13 @@ export default function CounselListPage() {
         <p className="mt-2 text-lg font-normal">
           {currentYear}년도 &lt;월별 상담 횟수&gt;
         </p>
-
         <div className="w-full mt-4 grid grid-cols-12 border border-grayscale-11 divide-x divide-grayscale-11">
           {monthlyConsultations.map((data) => (
             <div key={data.month} className="divide-y divide-grayscale-11">
-              <div className="flex h-12 items-center justify-center bg-grayscale-13 ">
+              <div className="flex h-12 items-center justify-center whitespace-nowrap bg-grayscale-13">
                 {data.month}월
               </div>
-              <div className="flex h-12 items-center justify-center">
+              <div className="flex h-12 items-center justify-center whitespace-nowrap">
                 {data.count}회
               </div>
             </div>

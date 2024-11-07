@@ -24,7 +24,7 @@ export default function CourseItem({
         />
       </div>
       <div className="my-2">
-        <div className="flex items-center">
+        <div className="w-full flex items-center">
           <h2 className="text-2xl font-bold">{number}</h2>
           <p className="ml-4 text overflow-hidden text-ellipsis whitespace-nowrap">
             {video.title}

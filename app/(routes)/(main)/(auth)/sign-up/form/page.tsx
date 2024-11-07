@@ -58,7 +58,7 @@ export default function SignUpFormPage({
   return (
     <form
       action={handleSubmit}
-      className="flex flex-col gap-10 w-[400px] m-auto mt-12"
+      className="flex flex-col gap-10 max-w-[480px] m-auto mt-12 p-10"
     >
       <h1 className="text-2xl">회원가입 정보 입력</h1>
       <div className="flex flex-row gap-2">

@@ -6,7 +6,7 @@ import { Select, SelectField } from "../../Select";
 export default function AddInsuranceDialog() {
   const closeDialog = useDialogStore((state) => state.closeDialog);
   return (
-    <div className="flex flex-col w-[720px] items-stretch p-8 gap-8">
+    <div className="flex flex-col md:w-[720px] items-stretch p-8 gap-8">
       <div>
         <h1 className="text-2xl font-medium">보장성보험 상세내역</h1>
         <p className="mt-1 text-grayscale-5">고객님의 보장설계를 진행합니다.</p>

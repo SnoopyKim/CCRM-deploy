@@ -116,7 +116,7 @@ const CalendarView = () => {
 
   return (
     <div className="flex flex-col w-full h-full ">
-      <div className="flex items-center mt-2 mb-4">
+      <div className="flex max-lg:flex-col items-center mt-2 mb-4">
         <div className="flex flex-col items-center">
           <h2 className="text-xl text-grayscale-6 font-normal">
             {selectedYear}
@@ -135,7 +135,7 @@ const CalendarView = () => {
             />
           </div>
         </div>
-        <div className="flex flex-1 gap-2 justify-end">
+        <div className="grid grid-cols-2 md:flex flex-1 gap-2 lg:justify-end max-lg:mt-4">
           <Option
             icon="flag"
             text="보험만기"
@@ -195,7 +195,7 @@ const Option = ({
   return (
     <div
       className={cn(
-        "w-40 flex flex-col items-center py-3 gap-1 cursor-pointer border hover:bg-opacity-5",
+        "w-40 flex flex-col items-center py-2 md:py-3 gap-1 cursor-pointer border hover:bg-opacity-5",
         scheduleStyle.option[text as keyof typeof scheduleStyle.option]
       )}
       onClick={onClick}

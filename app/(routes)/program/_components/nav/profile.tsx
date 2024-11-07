@@ -57,7 +57,7 @@ export default function Profile() {
           height={56}
           alt=""
         />
-        <span className="ml-3 text-lg font-normal">
+        <span className="ml-3 text-lg font-normal text-grayscale-14">
           {user?.name ?? "홍길동"} 님
         </span>
       </div>

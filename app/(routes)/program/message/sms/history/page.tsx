@@ -14,25 +14,28 @@ export default function SmsHistoryPage() {
           기간별 상담 내역 조회를 하실 수 있습니다.
         </h3>
       </div>
-      <div className="flex items-center gap-2">
-        <input
-          type="date"
-          defaultValue={new Date().toISOString().slice(0, 10)}
-          className="h-12 px-4 py-2 border border-grayscale-11"
-        />
-        <span>~</span>
-        <input
-          type="date"
-          defaultValue={new Date().toISOString().slice(0, 10)}
-          className="h-12 px-4 py-2 border border-grayscale-11"
-        />
-        <div className="flex-1"></div>
-        <SearchField
-          id="search"
-          placeholder="검색할 내용을 입력하세요"
-          onSearch={() => {}}
-          className="w-80 h-12"
-        />
+      <div className="flex max-lg:flex-col justify-between">
+        <div className="flex items-center gap-2">
+          <input
+            type="date"
+            defaultValue={new Date().toISOString().slice(0, 10)}
+            className="h-12 px-4 py-2 border border-grayscale-11 max-lg:flex-1"
+          />
+          <span>~</span>
+          <input
+            type="date"
+            defaultValue={new Date().toISOString().slice(0, 10)}
+            className="h-12 px-4 py-2 border border-grayscale-11 max-lg:flex-1"
+          />
+        </div>
+        <div>
+          <SearchField
+            id="search"
+            placeholder="검색할 내용을 입력하세요"
+            onSearch={() => {}}
+            className="lg:w-80 h-12 max-lg:mt-2"
+          />
+        </div>
       </div>
       <div className="flex flex-col p-10 items-center">
         <h2 className="text-2xl text-grayscale-6 font-normal">

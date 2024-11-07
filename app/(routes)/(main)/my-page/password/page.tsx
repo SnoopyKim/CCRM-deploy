@@ -85,7 +85,7 @@ export default function ChangePasswordPage() {
       <form
         ref={formRef}
         action={onChangePassword}
-        className="flex flex-col items-stretch px-20 py-10 gap-4"
+        className="flex flex-col items-stretch lg:px-20 py-10 gap-4"
       >
         <Input
           id="current-password"

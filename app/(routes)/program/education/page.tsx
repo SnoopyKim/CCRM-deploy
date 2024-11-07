@@ -67,24 +67,30 @@ const CourseHome = ({ courses }: { courses: CourseModel[] }) => {
   return (
     <div className="w-full space-y-6 pb-4">
       <h1 className="text-2xl font-semibold text-main-1">실시간 인기 클래스</h1>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="flex gap-4 overflow-x-auto">
         {courses.slice(0, 5).map((course, i) => (
-          <CourseItem key={i} number={i + 1} video={course} />
+          <div key={i} className="w-60">
+            <CourseItem number={i + 1} video={course} />
+          </div>
         ))}
       </div>
       <hr />
       <h1 className="text-2xl font-semibold text-main-1">MD Pick</h1>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="flex gap-4 overflow-x-auto">
         {courses.slice(5, 10).map((course, i) => (
-          <CourseItem key={i} number={i + 1} video={course} />
+          <div key={i} className="w-60">
+            <CourseItem number={i + 1} video={course} />
+          </div>
         ))}
       </div>
       <hr />
 
       <h1 className="text-2xl font-semibold text-main-1">자기계발 마스터</h1>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="flex gap-4 overflow-x-auto">
         {courses.slice(10, 15).map((course, i) => (
-          <CourseItem key={i} number={i + 1} video={course} />
+          <div key={i} className="w-60">
+            <CourseItem number={i + 1} video={course} />
+          </div>
         ))}
       </div>
     </div>

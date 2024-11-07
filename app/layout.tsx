@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import DialogManager from "./_utils/dialog/manager";
 import AuthHydration from "./_utils/auth/hydration";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "CCRM",
@@ -29,7 +30,10 @@ export default function RootLayout({
       lang="kr"
       className={`${pretendard.variable} font-pretendard text-main-1 text-sm 2xl:text-base font-light`}
     >
-      <body className="w-screen min-h-screen">
+      <Head>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+      </Head>
+      <body className="w-full min-h-screen overflow-x-hidden">
         <AuthHydration>{children}</AuthHydration>
         {modal}
         <DialogManager />

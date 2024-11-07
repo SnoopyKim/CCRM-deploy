@@ -10,7 +10,7 @@ export default function PrivacyModal() {
     <Modal>
       <div className="flex flex-col items-stretch">
         <h1 className="text-2xl">개인정보 처리 방침</h1>
-        <p className="flex-1 my-4 p-2 w-[600px] border border-grayscale-11 max-h-[40vh] overflow-y-scroll whitespace-pre-line">
+        <p className="flex-1 my-4 p-2 max-w-[600px] w-full border border-grayscale-11 max-h-[40vh] overflow-y-scroll whitespace-pre-line">
           {privacyContent}
         </p>
         <Button title="확인" onClick={() => router.back()} />

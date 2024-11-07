@@ -16,7 +16,7 @@ export default function CategoryBadge({
   return (
     <div
       className={cn(
-        "inline-block px-2 py-1 m-auto border rounded-full text-sm font-medium",
+        "inline-block px-2 py-1 m-auto border rounded-full text-sm max-lg:text-xs font-medium",
         badgeColors[color]
       )}
     >

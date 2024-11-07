@@ -51,8 +51,8 @@ export default function InsuranceBillPage() {
         <div>
           <h1 className="text-2xl font-semibold text-main-1">보험금 청구</h1>
           <div className="flex gap-2">
-            <span className="text-sub-1 text-sm">★ 가상팩스번호</span>
-            <span className="text-sub-2 text-sm">▣ 단체실손 가능</span>
+            {/* <span className="text-sub-1 text-sm">★ 가상팩스번호</span>
+            <span className="text-sub-2 text-sm">▣ 단체실손 가능</span> */}
           </div>
         </div>
         <div className="flex border border-grayscale-11 divide-x divide-grayscale-11">

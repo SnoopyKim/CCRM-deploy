@@ -85,10 +85,14 @@ export default function DriveItemRow({ item }: { item: DriveItem }) {
           className=""
         />
       </td>
-      <td className="">{item.name}</td>
-      <td className="">{getTypeString(item.mimeType ?? "")}</td>
-      <td className="">{item.size ? getByteString(Number(item.size)) : "-"}</td>
-      <td className="">
+      <td className="px-4 whitespace-nowrap">{item.name}</td>
+      <td className="px-4 whitespace-nowrap">
+        {getTypeString(item.mimeType ?? "")}
+      </td>
+      <td className="px-4 whitespace-nowrap">
+        {item.size ? getByteString(Number(item.size)) : "-"}
+      </td>
+      <td className="px-4 whitespace-nowrap">
         {item.modifiedTime?.slice(0, 10) ??
           new Date().toISOString().slice(0, 10)}
       </td>

@@ -155,8 +155,8 @@ export default function CounselEditPage({
   return (
     <div className="flex flex-col max-w-screen-lg w-full p-6 space-y-8 mx-auto">
       <h1 className="text-3xl text-normal">상세보기 및 수정</h1>
-      <div className="flex gap-4 flex-grow">
-        <div className="flex flex-col gap-4 w-1/3 ">
+      <div className="flex max-lg:flex-col gap-4 flex-grow">
+        <div className="flex flex-col gap-4 lg:w-1/3 ">
           <h2 className="text-xl font-normal">이전 상담 내용</h2>
           <div className="flex-1 border border-grayscale-11 px-6 py-4 space-y-4">
             {consultations.map((consultation) => (
@@ -189,7 +189,7 @@ export default function CounselEditPage({
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-4 w-2/3">
+        <div className="flex flex-col gap-4 lg:w-2/3">
           <h2 className="text-xl font-normal">고객정보 / 상담내용</h2>
           <div className="flex flex-col flex-1 px-6 py-4 gap-4 bg-grayscale-13">
             <div>

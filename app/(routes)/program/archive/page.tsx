@@ -101,7 +101,7 @@ export default function ArchivePage() {
           {directory?.name || DRIVE_NAME_HOME}
         </strong>
       </h2>
-      <div className="flex justify-end gap-4">
+      <div className="flex lg:justify-end max-lg:mt-4 gap-4">
         <div
           className={cn(
             "text-grayscale-14 px-6 py-2 rounded text-lg font-medium bg-main-2 hover:bg-main-3 cursor-pointer"
@@ -125,16 +125,16 @@ export default function ArchivePage() {
           className="hidden"
         />
       </div>
-      <div className="mt-4">
-        <table className="w-full table-fixed ">
+      <div className="mt-4 w-full overflow-x-auto">
+        <table className="w-full">
           <thead>
             <tr className="bg-grayscale-12">
               <th className="text-left px-4 w-20"></th>
-              <th className="text-left py-2">이름</th>
-              <th className="text-left w-28">유형</th>
-              <th className="text-left w-32">크기</th>
-              <th className="text-left w-36">수정 날짜</th>
-              <th className="text-left w-28"></th>
+              <th className="text-left px-4 py-2">이름</th>
+              <th className="text-left px-4 w-28">유형</th>
+              <th className="text-left px-4 w-32">크기</th>
+              <th className="text-left px-4 w-36">수정 날짜</th>
+              <th className="text-left px-4 w-28"></th>
             </tr>
           </thead>
           <tbody>

@@ -78,8 +78,8 @@ export default function CustomerRetrievePage() {
 
   return (
     <div className="flex w-full max-w-screen-xl flex-col mx-auto mt-10">
-      <div className="flex justify-between">
-        <div className="flex h-14 items-center gap-3 px-5 py-3 bg-grayscale-13 border border-grayscale-11 font-normal">
+      <div className="flex max-lg:flex-col justify-between">
+        <div className="flex h-14 justify-center items-center gap-3 px-5 py-3 max-lg:mb-4 bg-grayscale-13 border border-grayscale-11 font-normal">
           <span className="text-sub-2 leading-none">
             전체고객 <strong>{totalClients.length}명</strong>
           </span>
@@ -110,36 +110,42 @@ export default function CustomerRetrievePage() {
         </div>
         <SearchField
           placeholder="검색할 내용을 입력하세요"
-          className="w-[400px]"
+          className="lg:w-[400px]"
           onSearch={setSearchTerm}
         />
       </div>
-      <div className="flex justify-between mt-4 font-normal">
-        <div className="flex gap-2">
-          <ColorButton
-            color="gray"
-            icon="delete"
-            title="고객 삭제"
-            onClick={deleteCheckedClient}
-          />
-          <ColorButton
-            color="sub-2"
-            icon="folderOutline"
-            title="그룹 관리"
-            onClick={() => router.push("/program/group")}
-          />
-          <ColorButton
-            color="sub-1"
-            icon="plus"
-            title="고객 등록"
-            onClick={async () => {
-              const data = await openCustom<string>(<NewCustomerDialog />);
+      <div className="flex max-lg:flex-col justify-between mt-4 font-normal">
+        <div className="flex gap-2 max-lg:mb-2">
+          <div className="max-lg:flex-1">
+            <ColorButton
+              color="gray"
+              icon="delete"
+              title="고객 삭제"
+              onClick={deleteCheckedClient}
+            />
+          </div>
+          <div className="max-lg:flex-1">
+            <ColorButton
+              color="sub-2"
+              icon="folderOutline"
+              title="그룹 관리"
+              onClick={() => router.push("/program/group")}
+            />
+          </div>
+          <div className="max-lg:flex-1">
+            <ColorButton
+              color="sub-1"
+              icon="plus"
+              title="고객 등록"
+              onClick={async () => {
+                const data = await openCustom<string>(<NewCustomerDialog />);
 
-              if (data === "self") {
-                router.push("/program/customer/new");
-              }
-            }}
-          />
+                if (data === "self") {
+                  router.push("/program/customer/new");
+                }
+              }}
+            />
+          </div>
         </div>
         <ColorButton
           onClick={downloadDatabase}
@@ -151,32 +157,35 @@ export default function CustomerRetrievePage() {
         <div className="flex justify-end items-center gap-4">
           <span>필터 :</span>
 
-          <Select
-            className="w-48 h-8 px-3 py-1 text-sm"
-            options={[
-              {
-                text: "그룹 전체",
-                value: "all",
-              },
-            ]}
-          />
-
-          <Select
-            className="w-48 h-8 px-3 py-1 text-sm"
-            options={[
-              {
-                text: "오름차순",
-                value: "asc",
-              },
-              {
-                text: "내림차순",
-                value: "desc",
-              },
-            ]}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setSortOrder(e.target.value);
-            }}
-          />
+          <div className="w-48 max-lg:w-36">
+            <Select
+              className="h-8 px-3 py-1 text-sm"
+              options={[
+                {
+                  text: "그룹 전체",
+                  value: "all",
+                },
+              ]}
+            />
+          </div>
+          <div className="w-48 max-lg:w-36">
+            <Select
+              className="h-8 px-3 py-1 text-sm"
+              options={[
+                {
+                  text: "오름차순",
+                  value: "asc",
+                },
+                {
+                  text: "내림차순",
+                  value: "desc",
+                },
+              ]}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setSortOrder(e.target.value);
+              }}
+            />
+          </div>
         </div>
         <CustomerTable clients={clients} setClients={setClients} />
       </div>

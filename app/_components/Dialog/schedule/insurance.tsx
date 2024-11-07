@@ -103,7 +103,7 @@ export default function ScheduleInsuranceDialog({
   );
 
   return (
-    <div className="flex flex-col w-[800px] 2xl:w-[1000px] p-8 gap-4">
+    <div className="flex flex-col sm:w-[640px] xl:w-[800px] 2xl:w-[1000px] p-8 gap-4">
       <div className="flex items-center gap-2">
         <Icon type="flag" className="w-8 h-8 fill-sub-3" />
         <h1 className="text-2xl font-normal">보험만기 등록</h1>
@@ -130,7 +130,7 @@ export default function ScheduleInsuranceDialog({
                 <th className="text-left w-28"></th>
               </tr>
             </thead>
-            <tbody className="block w-full max-h-80 overflow-y-scroll">
+            <tbody className="block w-full max-h-60 lg:max-h-80 overflow-y-scroll">
               {customers.map((customer) => (
                 <tr
                   key={customer.name}

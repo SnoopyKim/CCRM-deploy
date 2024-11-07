@@ -53,16 +53,16 @@ const CategoryTree = () => {
 
   return (
     <div className="w-full max-w-screen-lg mx-auto">
-      <div className="space-y-8 pb-4">
+      <div className="space-y-6 pb-4">
         <div>
           <h1 className="text-2xl font-semibold text-main-1">질병코드</h1>
           <p className="text-grayscale-6">2021년 8차 개정안 내용입니다.</p>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex max-lg:flex-col justify-between lg:items-center">
           <div className="flex items-center gap-2">
             <div
               className={cn(
-                "w-36 h-16 flex justify-center items-center rounded border text-lg",
+                "w-24 lg:w-36 h-12 lg:h-16 flex justify-center items-center rounded border text-lg",
                 firstCategory
                   ? "border-main-2 text-main-1"
                   : "border-grayscale-9 text-grayscale-6"
@@ -75,7 +75,7 @@ const CategoryTree = () => {
                 <span className="text-lg">&gt;</span>
                 <div
                   className={cn(
-                    "w-36 h-16 flex justify-center items-center rounded border text-lg",
+                    "w-24 lg:w-36 h-12 lg:h-16 flex justify-center items-center rounded border text-lg",
                     secondCategory
                       ? "border-main-2 text-main-1"
                       : "border-grayscale-9 text-grayscale-6"
@@ -90,7 +90,7 @@ const CategoryTree = () => {
                 <span className="text-lg">&gt;</span>
                 <div
                   className={cn(
-                    "w-36 h-16 flex justify-center items-center rounded border text-lg",
+                    "w-24 lg:w-36 h-12 lg:h-16 flex justify-center items-center rounded border text-lg",
                     thirdCategory
                       ? "border-main-2 text-main-1"
                       : "border-grayscale-9 text-grayscale-6"
@@ -101,7 +101,7 @@ const CategoryTree = () => {
               </>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 max-lg:justify-end max-lg:mt-2">
             <button
               onClick={() => {
                 setFirstCategory(undefined);

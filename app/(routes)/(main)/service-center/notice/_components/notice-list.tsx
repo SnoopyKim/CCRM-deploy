@@ -29,16 +29,16 @@ export default function NoticeList() {
   }, [pageNum]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 max-lg:mt-4">
       <table className="w-full">
         <thead>
-          <tr className="bg-main-2 text-grayscale-14 h-12 divide-x divide-grayscale-11">
-            <th className="w-[100px]">카테고리</th>
+          <tr className="bg-main-2 text-grayscale-14 h-12 divide-x divide-grayscale-11 max-lg:text-sm">
+            <th className="w-24 max-lg:w-20">카테고리</th>
             <th className="pl-4 text-start">제목</th>
-            <th className="w-[100px]">작성일</th>
+            <th className="w-24 max-lg:w-20">작성일</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-grayscale-11">
+        <tbody className="divide-y divide-grayscale-11 max-lg:text-xs">
           {(notices?.data ?? []).map((notice, _) => (
             <tr key={notice.id} className="h-12">
               <td className="text-center">
@@ -56,7 +56,7 @@ export default function NoticeList() {
                   {notice.title}
                 </Link>
               </td>
-              <td className="text-center text-sm text-grayscale-6">
+              <td className="text-center text-grayscale-6">
                 {notice.updatedAt.toISOString().split("T")[0]}
               </td>
             </tr>

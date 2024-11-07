@@ -54,7 +54,7 @@ export default function ScheduleDialog({
   };
 
   return (
-    <div className="relative flex flex-col w-[800px] 2xl:w-[1000px] p-8 gap-6 ">
+    <div className="relative flex flex-col md:w-[600px] lg:w-[800px] 2xl:w-[1000px] p-8 gap-6 ">
       {loading && (
         <div className="absolute top-0 left-0 w-full h-full bg-grayscale-11 bg-opacity-50 flex items-center justify-center">
           <div className="w-20 h-20 border-8 border-main-2 border-t-transparent rounded-full animate-spin"></div>
@@ -177,7 +177,7 @@ const ScheduleTable = ({
         key={schedule.id}
         className="table table-fixed w-full border-b border-grayscale-11"
       >
-        <td className="px-2 font-medium w-32">{customer}</td>
+        <td className="px-2 font-medium w-20 lg:w-32">{customer}</td>
         <td
           className={
             scheduleStyle.tag[type as keyof typeof scheduleStyle.tag] +
@@ -187,8 +187,8 @@ const ScheduleTable = ({
           {type}
           {additionalType && ` [${additionalType}]`}
         </td>
-        <td className="">{phone}</td>
-        <td className="p-2 w-28">
+        <td className="max-lg:w-28">{phone}</td>
+        <td className="p-2 w-20 lg:w-28">
           <div className="flex gap-2 justify-end">
             {/* <button
               className="bg-grayscale-5 text-grayscale-14 px-4 py-1 text-sm rounded font-normal hover:bg-main-2"
@@ -212,10 +212,10 @@ const ScheduleTable = ({
     <table className="w-full">
       <thead>
         <tr className="table table-fixed w-full bg-grayscale-12">
-          <th className="text-left p-2 w-32">고객명</th>
+          <th className="text-left p-2 w-20 lg:w-32">고객명</th>
           <th className="text-left ">구분</th>
-          <th className="text-left ">연락처</th>
-          <th className="text-left w-28"></th>
+          <th className="text-left max-lg:w-28">연락처</th>
+          <th className="text-left w-20 lg:w-28"></th>
         </tr>
       </thead>
       <tbody className="block w-full max-h-80 overflow-y-scroll">
